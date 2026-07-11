@@ -10,16 +10,48 @@
       "description": "Rasun is a restaurant dedicated to celebrating the rich and vibrant flavours of traditional Bangla cuisine. At Rasun, we offer an authentic culinary experience, featuring time-honoured recipes prepared with fresh, locally sourced ingredients. Guests can enjoy a warm and inviting dine-in experience or opt for the convenience of takeaway, ensuring a delightful experience with every meal. Beyond dining, Rasun serves as an excellent venue for hosting parties and celebrations, providing the perfect setting for creating unforgettable memories.",
       "buttons": [
         { "label": "CONTACT US", "path": "#contact" },
-        { "label": "FOOD MENU", "path": "#food-menu" }
+        { "label": "FOOD MENU", "path": "/menus/rasun-menu.pdf" }
       ],
       "contactBar": {
         "phone": "+8801840440090",
         "phoneAvailability": "Available At 9am – 10pm",
         "email": "info@hotelshuktara.com"
-      }
+      },
+      "gallery": [
+        "/images/facilities/restaurant/gallery-1.jpg",
+        "/images/facilities/restaurant/gallery-2.jpg",
+        "/images/facilities/restaurant/gallery-3.jpg",
+        "/images/facilities/restaurant/gallery-4.jpg",
+        "/images/facilities/restaurant/gallery-5.jpg"
+      ]
     },
     {
       "id": 2,
+      "slug": "skylight",
+      "name": "SKYLIGHT RESTAURANT",
+      "pageTitle": "SKYLIGHT RESTAURANT",
+      "tagline": "EXQUISITE THAI CUISINE WITH BREATHTAKING PANORAMIC VIEWS",
+      "image": "/images/facilities/skylight.png",
+      "description": "Indulge in exquisite Thai cuisine at Skylight, the rooftop gem of Hotel Shuktara Dhaka. With breathtaking panoramic views of the city, Skylight offers the perfect setting to savour a delectable meal in a luxurious ambiance. Our menu showcases an array of authentic Thai dishes, expertly prepared and bursting bursts of vibrant flavours.\n\nBeyond dining, Skylight serves as an exceptional venue for hosting parties and celebrations. Whether you're enjoying a memorable meal or planning an unforgettable event, Skylight promises an experience like no other.",
+      "buttons": [
+        { "label": "CONTACT US", "path": "#contact" },
+        { "label": "FOOD MENU", "path": "/menus/skylight-menu.pdf" }
+      ],
+      "contactBar": {
+        "phone": "+8801840440090",
+        "phoneAvailability": "Available At 9am – 10pm",
+        "email": "info@hotelshuktara.com"
+      },
+      "gallery": [
+        "/images/facilities/skylight/gallery-1.jpg",
+        "/images/facilities/skylight/gallery-2.jpg",
+        "/images/facilities/skylight/gallery-3.jpg",
+        "/images/facilities/skylight/gallery-4.jpg",
+        "/images/facilities/skylight/gallery-5.jpg"
+      ]
+    },
+    {
+      "id": 3,
       "slug": "gym",
       "name": "GYM",
       "pageTitle": "GYM",
@@ -32,7 +64,7 @@
       "contactBar": null
     },
     {
-      "id": 3,
+      "id": 4,
       "slug": "conference-room",
       "name": "CONFERENCE ROOM",
       "pageTitle": "CONFERENCE ROOM",

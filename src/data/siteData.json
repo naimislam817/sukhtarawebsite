@@ -21,6 +21,7 @@
       "path": "#",
       "dropdown": [
         { "label": "RASUN RESTAURANT", "path": "/facilities/restaurant" },
+        { "label": "SKYLIGHT RESTAURANT", "path": "/facilities/skylight" },
         { "label": "GYM", "path": "/facilities/gym" },
         { "label": "CONFERENCE ROOM", "path": "/facilities/conference-room" }
       ]
