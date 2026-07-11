@@ -1,0 +1,40 @@
+{
+  "hotelName": "Hotel Shuktara (Pvt.) Ltd.",
+  "logo": "/images/logo.jpg",
+  "contact": {
+    "address": "H# 20/A, Indira Road, Sher-E-Bangla Nagar, Dhaka- 1215.",
+    "city": "Dhaka",
+    "country": "Bangladesh",
+    "emails": ["info@hotelshuktara.com", "reservation@hotelshuktara.com"],
+    "phones": ["+8801400334422", "+8801998888777"]
+  },
+  "socialLinks": {
+    "facebook": "https://facebook.com/hotelshuktara",
+    "twitter": "https://twitter.com/hotelshuktara",
+    "tripadvisor": "https://tripadvisor.com/hotelshuktara",
+    "instagram": "https://instagram.com/hotelshuktara"
+  },
+  "navLinks": [
+    { "label": "ROOMS", "path": "/rooms" },
+    {
+      "label": "FACILITIES & SERVICES",
+      "path": "#",
+      "dropdown": [
+        { "label": "RASUN RESTAURANT", "path": "/facilities/restaurant" },
+        { "label": "GYM", "path": "/facilities/gym" },
+        { "label": "CONFERENCE ROOM", "path": "/facilities/conference-room" }
+      ]
+    }
+  ],
+  "footerLinks": [
+    { "label": "Accommodation", "path": "/rooms" },
+    { "label": "Gallery", "path": "/gallery" },
+    { "label": "Special Offers", "path": "/offers" },
+    { "label": "Terms & Conditions", "path": "/terms" },
+    { "label": "Payment Method", "path": "/payment" },
+    { "label": "Privacy Policies", "path": "/privacy" },
+    { "label": "Site Map", "path": "/sitemap" }
+  ],
+  "footerDescription": "Hotel Shuktara (Pvt.) Ltd is a modern residential secure hotel in Dhaka offering spacious rooms, dining facilities, a gym, and a gift shop. Located in the Farmgate area, it aims to cater to both local and foreign delegates, providing top-quality services at affordable prices.",
+  "paymentMethods": ["visa", "mastercard", "amex"]
+}

@@ -1,0 +1,30 @@
+:root {
+  /* Colors */
+  --color-primary: #1B3C35;       /* Dark teal green */
+  --color-primary-light: #245C50;
+  --color-accent: #C8956C;        /* Warm gold/copper */
+  --color-accent-hover: #b07e56;
+  --color-text-dark: #1C1C1C;
+  --color-text-muted: #555555;
+  --color-bg-white: #FFFFFF;
+  --color-bg-light: #FAF7F2;      /* Cream background */
+  --color-bg-dark: #0F1A17;       /* Very dark green/black */
+  --color-footer-bg: #111111;
+  --color-border: #E5DFD5;
+  --color-border-light: #F0EAE0;
+
+  /* Typography */
+  --font-primary: 'Noto Serif Variable', 'Noto Serif', Georgia, serif;
+  
+  /* Layout */
+  --max-width: 1200px;
+  --navbar-height: 85px;
+  --topbar-height: 40px;
+  --transition-fast: all 0.2s ease;
+  --transition-normal: all 0.3s ease;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+}

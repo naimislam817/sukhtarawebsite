@@ -1,0 +1,147 @@
+{
+  "pageTitle": "ROOMS",
+  "pageSubtitle": "EXQUISITE HOSPITALITY",
+  "pageDescription": "At Hotel Shuktara Dhaka, we offer a wide range of luxurious accommodations to ensure a delightful stay. Our 50+ meticulously designed guestrooms are equipped with modern amenities to provide the utmost comfort and convenience. Guests can enjoy complimentary breakfast and airport pick-up services, making every aspect of your stay seamless and relaxing.",
+  "rooms": [
+    {
+      "id": 1,
+      "name": "PREMIUM TRIPLE",
+      "slug": "premium-triple",
+      "image": "/images/rooms/premium-triple.png",
+      "description": "Our Premium Triple Rooms are spacious and ideal for families or groups seeking extra comfort. Each room features three comfortable beds, private bathroom, high-speed Wi-Fi, air conditioning, flat-screen TV, and room service.",
+      "fullDescription": "Our Premium Triple Rooms are spacious and ideal for families seeking a relaxing stay. Each room features three comfortable beds, a private bathroom, a refrigerator, and a range of modern amenities. Enjoy complimentary Wi-Fi, a minibar, 24/7 room service, and ample storage with a wardrobe. Additionally, the room is air-conditioned and includes a large flat-screen TV with a variety of international channels, ensuring comfort and convenience for all guests.",
+      "amenities": [
+        "Three Comfortable Beds",
+        "Private Bathroom",
+        "Air Conditioning",
+        "Flat-Screen TV (International Channels)",
+        "Complimentary Wi-Fi",
+        "Refrigerator",
+        "Minibar",
+        "24/7 Room Service",
+        "Wardrobe & Ample Storage"
+      ],
+      "category": "triple"
+    },
+    {
+      "id": 2,
+      "name": "DELUXE TWIN",
+      "slug": "deluxe-twin",
+      "image": "/images/rooms/deluxe-twin.png",
+      "description": "Our Deluxe Twin rooms offer a stylish and relaxing environment, beautifully decorated in soothing warm tones. These rooms come with two comfortable single beds, dynamic workspace, and fully equipped modern amenities.",
+      "fullDescription": "Our Deluxe Twin Rooms offer a cozy and relaxing environment, beautifully decorated in soothing white hues. These rooms come with air conditioning, a private bathroom, a refrigerator, and a flat-screen TV with a variety of international channels. Enjoy the convenience of complimentary Wi-Fi, a minibar, 24/7 room service, and ample storage with a wardrobe. The rooms are also equipped with comfortable twin beds, making them an ideal choice for a relaxing stay.",
+      "amenities": [
+        "Two Comfortable Twin Beds",
+        "Private Bathroom",
+        "Air Conditioning",
+        "Flat-Screen TV (International Channels)",
+        "Complimentary Wi-Fi",
+        "Refrigerator",
+        "Minibar",
+        "24/7 Room Service",
+        "Wardrobe & Ample Storage"
+      ],
+      "category": "twin"
+    },
+    {
+      "id": 3,
+      "name": "SUPERIOR TWIN",
+      "slug": "superior-twin",
+      "image": "/images/rooms/superior-twin.png",
+      "description": "The newly and finest twin rooms are designed to accommodate guests seeking comfortable twin beds featuring a serene and inviting atmosphere. Luxuriously appointed with high-quality linens, private safe, and city views.",
+      "fullDescription": "Our cozy Superior Twin Rooms are elegantly decorated in soothing white tones, fostering a serene and inviting atmosphere. Each air-conditioned room features a private bathroom, refrigerator, and a flat-screen TV with a variety of international channels. Guests can enjoy complimentary Wi-Fi, a minibar, 24/7 room service, and ample storage space with a spacious wardrobe. The comfortable twin beds and well-organized layout ensure a restful and convenient stay.",
+      "amenities": [
+        "Two Superior Twin Beds",
+        "Private Bathroom",
+        "Air Conditioning",
+        "Flat-Screen TV (International Channels)",
+        "Complimentary Wi-Fi",
+        "Refrigerator",
+        "Minibar",
+        "24/7 Room Service",
+        "Spacious Wardrobe"
+      ],
+      "category": "twin"
+    },
+    {
+      "id": 4,
+      "name": "PREMIUM DELUXE KING",
+      "slug": "premium-deluxe-king",
+      "image": "/images/rooms/premium-deluxe-king.png",
+      "description": "Our Premium Deluxe King Room is our largest and most luxurious option, offering generous space for families or business travelers. Features a plush king-sized bed, seating area, writing desk, and upscale bathroom amenities.",
+      "fullDescription": "Our Premium Deluxe King Room is the largest and most luxurious option, ideal for families or friends seeking an exceptional stay. This exquisite room features a king-size bed, a private bathroom, and a refrigerator. Elegantly decorated, it includes air conditioning, a flat-screen TV with international channels, and all the conveniences of complimentary Wi-Fi, a minibar, 24/7 room service, and a spacious wardrobe. Designed for an unparalleled experience, it promises the utmost in comfort and luxury.",
+      "amenities": [
+        "King-Size Bed",
+        "Private Bathroom",
+        "Air Conditioning",
+        "Flat-Screen TV (International Channels)",
+        "Complimentary Wi-Fi",
+        "Refrigerator",
+        "Minibar",
+        "24/7 Room Service",
+        "Spacious Wardrobe"
+      ],
+      "category": "king"
+    },
+    {
+      "id": 5,
+      "name": "DELUXE KING",
+      "slug": "deluxe-king",
+      "image": "/images/rooms/deluxe-king.png",
+      "description": "Our Deluxe King Rooms offer a luxurious experience, each featuring a comfortable king-sized bed and elegant decor. Each beautifully furnished room offers modern security, high-speed internet, and customized services.",
+      "fullDescription": "Our Deluxe King Rooms offer a luxurious experience, with stylish decor and ample space to relax. Each room includes a comfortable king-size bed, a private bathroom, and a refrigerator. Stay comfortable with air conditioning and enjoy entertainment with a flat-screen TV featuring international channels. Additional amenities include complimentary Wi-Fi, a minibar, 24/7 room service, and a spacious wardrobe for your belongings.",
+      "amenities": [
+        "King-Size Bed",
+        "Private Bathroom",
+        "Air Conditioning",
+        "Flat-Screen TV (International Channels)",
+        "Complimentary Wi-Fi",
+        "Refrigerator",
+        "Minibar",
+        "24/7 Room Service",
+        "Spacious Wardrobe"
+      ],
+      "category": "king"
+    },
+    {
+      "id": 6,
+      "name": "SUPERIOR KING",
+      "slug": "superior-king",
+      "image": "/images/rooms/superior-king.png",
+      "description": "Our Superior King Room offers a luxurious and chic king-sized sleeping experience that exceeds every comfort. Our finest room in every aspect, with premium layout, mini-fridge, tea/coffee maker, and city views.",
+      "fullDescription": "Our Superior King Rooms offer a cozy and inviting atmosphere to create a relaxing environment. Each room includes a private bathroom, a refrigerator, and a comfortable king-size bed. Additionally, the room is air-conditioned and equipped with a large flat-screen TV offering a selection of international channels. A spacious wardrobe provides ample storage space, ensuring all your belongings are neatly organized.",
+      "amenities": [
+        "King-Size Bed",
+        "Private Bathroom",
+        "Air Conditioning",
+        "Flat-Screen TV (International Channels)",
+        "Complimentary Wi-Fi",
+        "Refrigerator",
+        "Spacious Wardrobe"
+      ],
+      "category": "king"
+    },
+    {
+      "id": 7,
+      "name": "STANDARD SINGLE",
+      "slug": "standard-single",
+      "image": "/images/rooms/standard-single.png",
+      "description": "Our Standard Rooms are budget-friendly yet designed to provide a cozy, comfortable and secure stay. Each room offers essential amenities, high-speed Wi-Fi, writing desk, and room service for single travelers.",
+      "fullDescription": "Our Standard Rooms are thoughtfully designed to provide comfort and convenience, featuring a private bathroom and a refrigerator for your everyday needs. Guests can enjoy complimentary Wi-Fi, a minibar, 24/7 room service, and ample storage space with an in-room wardrobe. Each room is air-conditioned and equipped with a large flat-screen TV offering a variety of international channels. Additionally, with on-site parking and an in-house restaurant, we ensure that everything you need for a comfortable and enjoyable stay is readily available.",
+      "amenities": [
+        "Single Bed",
+        "Private Bathroom",
+        "Air Conditioning",
+        "Flat-Screen TV (International Channels)",
+        "Complimentary Wi-Fi",
+        "Refrigerator",
+        "Minibar",
+        "24/7 Room Service",
+        "In-Room Wardrobe",
+        "On-Site Parking",
+        "In-House Restaurant Access"
+      ],
+      "category": "single"
+    }
+  ]
+}

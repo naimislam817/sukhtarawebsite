@@ -1,0 +1,48 @@
+{
+  "facilities": [
+    {
+      "id": 1,
+      "slug": "restaurant",
+      "name": "RASUN RESTAURANT",
+      "pageTitle": "RASUN RESTAURANT",
+      "tagline": "EXQUISITE WORLD CLASS RESTAURANT EXPERIENCE",
+      "image": "/images/facilities/restraurant.jpg",
+      "description": "Rasun is a restaurant dedicated to celebrating the rich and vibrant flavours of traditional Bangla cuisine. At Rasun, we offer an authentic culinary experience, featuring time-honoured recipes prepared with fresh, locally sourced ingredients. Guests can enjoy a warm and inviting dine-in experience or opt for the convenience of takeaway, ensuring a delightful experience with every meal. Beyond dining, Rasun serves as an excellent venue for hosting parties and celebrations, providing the perfect setting for creating unforgettable memories.",
+      "buttons": [
+        { "label": "CONTACT US", "path": "#contact" },
+        { "label": "FOOD MENU", "path": "#food-menu" }
+      ],
+      "contactBar": {
+        "phone": "+8801840440090",
+        "phoneAvailability": "Available At 9am – 10pm",
+        "email": "info@hotelshuktara.com"
+      }
+    },
+    {
+      "id": 2,
+      "slug": "gym",
+      "name": "GYM",
+      "pageTitle": "GYM",
+      "tagline": "",
+      "image": "/images/facilities/gym.jpg",
+      "description": "Our fitness centre is equipped with a range of modern exercise machines and free weights, providing an inviting space for all our guests. Whether you want to energize your morning or unwind after a busy day, our gym offers a comfortable and motivating environment. At Hotel Shuktara Dhaka, we ensure your stay is well-balanced, seamlessly blending relaxation, fitness, and luxury.",
+      "buttons": [
+        { "label": "CONTACT US", "path": "#contact" }
+      ],
+      "contactBar": null
+    },
+    {
+      "id": 3,
+      "slug": "conference-room",
+      "name": "CONFERENCE ROOM",
+      "pageTitle": "CONFERENCE ROOM",
+      "tagline": "",
+      "image": "/images/facilities/conference-room.jpg",
+      "description": "Hotel Shuktara Dhaka provides a professional and fully-equipped conference room ideal for hosting corporate meetings and events. Designed with modern business needs in mind, our conference room offers a comfortable and sophisticated setting, complete with high-speed internet, audio-visual equipment, and flexible seating arrangements. Whether you're planning a board meeting, training session, or corporate seminar, our dedicated staff is on hand to ensure everything runs smoothly.",
+      "buttons": [
+        { "label": "CONTACT US", "path": "#contact" }
+      ],
+      "contactBar": null
+    }
+  ]
+}

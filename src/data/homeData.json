@@ -1,0 +1,77 @@
+{
+  "hero": {
+    "backgroundImage": "/images/hero/hero-bg.jpg",
+    "subtitle": "",
+    "titleLine1": "A Tradition of",
+    "titleHighlight": "Gracious",
+    "titleLine2": "Hospitality",
+    "description": "Embrace warm hospitality, exquisite cuisine, & thoughtful amenities in the heart of Dhaka.",
+    "ctaButtons": [
+      { "label": "EXPLORE ROOMS", "path": "/rooms", "variant": "outline" },
+      { "label": "BOOK NOW", "path": "#book-now", "variant": "solid" }
+    ]
+  },
+  "location": {
+    "image": "/images/hero/location.jpg",
+    "badge": "15+",
+    "badgeText": "YEARS OF EXCELLENCE",
+    "tagline": "",
+    "title": "In the Heart of Dhaka City",
+    "description": "Hotel Shuktara Dhaka occupies a prime location in the vibrant Farmgate area, one of Dhaka's most well-connected and bustling commercial hubs. Situated on Indira Road, the hotel offers guests easy access to key landmarks, government offices, educational institutions, and major business districts. With close proximity to the Farmgate bus stand and nearby metro stations, getting around the city is effortless. Whether you're visiting for business or leisure, our central location ensures convenience, connectivity, and comfort throughout your stay."
+  },
+  "stats": [
+    { "value": "50+", "label": "Luxurious Rooms" },
+    { "value": "15+", "label": "Years of Excellence" },
+    { "value": "10k+", "label": "Happy Guests" },
+    { "value": "4.5", "label": "Star Rating", "icon": "star" }
+  ],
+  "facilities": {
+    "title": "World-Class Facilities",
+    "items": [
+      { "icon": "concierge", "title": "24/7 Concierge", "description": "Round-the-clock assistance for all your needs" },
+      { "icon": "dining", "title": "Fine Dining", "description": "Exquisite culinary experiences at Rasun Restaurant" },
+      { "icon": "fitness", "title": "Fitness Centre", "description": "State-of-the-art gym equipment and facilities" },
+      { "icon": "conference", "title": "Conference Hall", "description": "Professional meeting spaces for business events" },
+      { "icon": "airport", "title": "Airport Transfers", "description": "Convenient pick-up and drop-off services" },
+      { "icon": "wifi", "title": "Free Wi-Fi", "description": "High-speed internet access throughout the hotel" }
+    ]
+  },
+  "experiences": {
+    "title": "Unforgettable Experiences",
+    "images": [
+      { "src": "/images/gallery/experience-1.png", "alt": "Hotel Dining" },
+      { "src": "/images/gallery/experience-2.png", "alt": "Room Interior" },
+      { "src": "/images/gallery/experience-3.png", "alt": "Hotel Lobby" },
+      { "src": "/images/gallery/experience-4.png", "alt": "Restaurant" }
+    ]
+  },
+  "accommodations": {
+    "title": "Luxury Accommodations",
+    "rooms": [
+      {
+        "name": "Premium Deluxe King",
+        "image": "/images/rooms/premium-deluxe-king.png",
+        "description": "Spacious king room with premium amenities and city views.",
+        "slug": "premium-deluxe-king"
+      },
+      {
+        "name": "Deluxe Twin",
+        "image": "/images/rooms/deluxe-twin.png",
+        "description": "Comfortable twin room perfect for friends or colleagues.",
+        "slug": "deluxe-twin"
+      },
+      {
+        "name": "Superior King",
+        "image": "/images/rooms/superior-king.png",
+        "description": "Our finest room with luxurious furnishings and exclusive amenities.",
+        "slug": "superior-king"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Your Room at Shuktara is Waiting",
+    "buttonLabel": "BOOK NOW",
+    "buttonPath": "#book-now",
+    "backgroundImage": "/images/hero/cta-bg.svg"
+  }
+}

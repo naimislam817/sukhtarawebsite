@@ -1,0 +1,206 @@
+@import './variables.css';
+
+/* Font Registration */
+@font-face {
+  font-family: 'Noto Serif Variable';
+  src: url('/fonts/NotoSerif-Italic-VariableFont_wdth_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-stretch: 25% 151%; /* adjust per actual variable axis range */
+  font-style: italic;
+  font-display: swap;
+}
+
+/* CSS Reset & General Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-style: italic;
+  font-variation-settings: 'wght' 300, 'wdth' 100;
+  color: var(--color-text-dark);
+  background-color: var(--color-bg-white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Typography Hierarchy using Font Variations */
+h1, h2, h3, h4, h5, h6, p, span, a, button, div, li, select, input, textarea {
+  font-family: var(--font-primary);
+  font-style: italic;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-variation-settings: 'wght' 700, 'wdth' 110;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-variation-settings: 'wght' 600, 'wdth' 105;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-variation-settings: 'wght' 500, 'wdth' 100;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-variation-settings: 'wght' 500, 'wdth' 100;
+}
+
+p {
+  font-size: 0.95rem;
+  font-variation-settings: 'wght' 300, 'wdth' 100;
+  color: var(--color-text-muted);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Layout Container */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+/* Buttons and Common Components styles */
+.section-title {
+  text-align: center;
+  margin-bottom: 50px;
+  padding: 0 10px;
+}
+
+.section-title--left {
+  text-align: left;
+}
+
+.section-title__subtitle {
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-variation-settings: 'wght' 600;
+  margin-bottom: 8px;
+}
+
+.section-title__heading {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  color: var(--color-primary);
+  font-variation-settings: 'wght' 700, 'wdth' 105;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 12px;
+}
+
+.section-title--light .section-title__heading {
+  color: var(--color-bg-white);
+}
+
+.section-title__heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background-color: var(--color-accent);
+}
+
+.section-title--left .section-title__heading::after {
+  left: 0;
+  transform: none;
+}
+
+.section-title__description {
+  margin-top: 15px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1rem;
+}
+
+.section-title--left .section-title__description {
+  margin-left: 0;
+}
+
+/* Scroll top button / utility */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent);
+  color: var(--color-bg-white);
+  padding: 12px 28px;
+  font-variation-settings: 'wght' 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 0;
+  transition: var(--transition-normal);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+}
