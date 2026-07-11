@@ -20,10 +20,16 @@
     "description": "Hotel Shuktara Dhaka occupies a prime location in the vibrant Farmgate area, one of Dhaka's most well-connected and bustling commercial hubs. Situated on Indira Road, the hotel offers guests easy access to key landmarks, government offices, educational institutions, and major business districts. With close proximity to the Farmgate bus stand and nearby metro stations, getting around the city is effortless. Whether you're visiting for business or leisure, our central location ensures convenience, connectivity, and comfort throughout your stay."
   },
   "stats": [
-    { "value": "50+", "label": "Luxurious Rooms" },
-    { "value": "15+", "label": "Years of Excellence" },
-    { "value": "10k+", "label": "Happy Guests" },
-    { "value": "4.5", "label": "Star Rating", "icon": "star" }
+    { "value": "99", "label": "Guest Rooms" },
+    { "value": "2", "label": "Signature Restaurants" },
+    { "value": "150", "label": "Guest Banquet Hall" },
+    {
+      "value": "3.8",
+      "label": "TripAdvisor Rating",
+      "icon": "star",
+      "link": "https://www.tripadvisor.com/Hotel_Review-g293936-d12339292-Reviews-Hotel_Shuktara-Dhaka_City_Dhaka_Division.html",
+      "reviews": "(33 reviews)"
+    }
   ],
   "facilities": {
     "title": "World-Class Facilities",

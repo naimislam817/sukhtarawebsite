@@ -243,6 +243,27 @@
   color: var(--color-accent);
 }
 
+.stats__reviews {
+  font-size: 0.78rem;
+  font-variation-settings: 'wght' 300;
+  color: rgba(255, 255, 255, 0.65);
+  display: block;
+  margin-top: -4px;
+  margin-bottom: 6px;
+}
+
+.stats__link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.stats__link:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+}
+
 .stats__label {
   font-size: 0.95rem;
   font-variation-settings: 'wght' 400;
