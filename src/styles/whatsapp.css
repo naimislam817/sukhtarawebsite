@@ -1,0 +1,153 @@
+/* ============================================================
+   WHATSAPP FLOATING BUTTON
+   ============================================================ */
+
+.whatsapp-btn {
+  /* Positioning — fixed bottom-right, above footer */
+  position: fixed;
+  bottom: 32px;
+  right: 28px;
+  z-index: 9999;
+
+  /* Size & shape */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+
+  /* Heritage aesthetic: deep green bg, cream icon */
+  background-color: #1B3A2F;
+  color: #E8DCC8;
+
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Elevation */
+  box-shadow:
+    0 4px 16px rgba(27, 58, 47, 0.45),
+    0 1px 4px rgba(0, 0, 0, 0.2);
+
+  /* Visibility — hidden until user scrolls */
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+
+  /* Pulse animation */
+  animation: wa-pulse 2.8s ease-in-out infinite;
+}
+
+/* Visible state (after scroll) */
+.whatsapp-btn--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Hover — scale up + glow */
+.whatsapp-btn:hover {
+  background-color: #245C50;
+  transform: translateY(-3px) scale(1.08);
+  box-shadow:
+    0 8px 28px rgba(27, 58, 47, 0.55),
+    0 0 0 6px rgba(27, 58, 47, 0.15);
+  animation: none; /* pause pulse on hover so glow is clean */
+}
+
+/* Icon */
+.whatsapp-btn__icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+/* Tooltip label — slides in from the right */
+.whatsapp-btn__tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+
+  background-color: #1B3A2F;
+  color: #E8DCC8;
+  font-family: var(--font-primary);
+  font-style: italic;
+  font-size: 0.78rem;
+  font-variation-settings: 'wght' 500;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+
+  padding: 6px 12px;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.whatsapp-btn:hover .whatsapp-btn__tooltip {
+  opacity: 1;
+}
+
+/* ============================================================
+   PULSE / BREATHING ANIMATION
+   ============================================================ */
+@keyframes wa-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 4px 16px rgba(27, 58, 47, 0.45),
+      0 0 0 0 rgba(27, 58, 47, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 4px 16px rgba(27, 58, 47, 0.45),
+      0 0 0 10px rgba(27, 58, 47, 0);
+  }
+}
+
+/* ============================================================
+   RESPECT prefers-reduced-motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-btn {
+    animation: none;
+  }
+  .whatsapp-btn,
+  .whatsapp-btn--visible,
+  .whatsapp-btn:hover {
+    transition: opacity 0.2s ease;
+  }
+  .whatsapp-btn--visible {
+    transform: none;
+  }
+  .whatsapp-btn:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  .whatsapp-btn {
+    bottom: 20px;
+    right: 16px;
+    width: 50px;
+    height: 50px;
+  }
+  .whatsapp-btn__icon {
+    width: 26px;
+    height: 26px;
+  }
+  /* Hide tooltip on small screens — not enough space */
+  .whatsapp-btn__tooltip {
+    display: none;
+  }
+}
