@@ -14,7 +14,7 @@
   --color-border-light: #F0EAE0;
 
   /* Typography */
-  --font-primary: 'Noto Serif Variable', 'Noto Serif', Georgia, serif;
+  --font-primary: 'Noto Serif', Georgia, 'Times New Roman', serif;
   
   /* Layout */
   --max-width: 1200px;
