@@ -27,6 +27,52 @@
     },
     {
       "id": 2,
+      "slug": "banquet-hall",
+      "name": "SHUKTARA BANQUET HALL",
+      "pageTitle": "BANQUET HALL",
+      "tagline": "EXQUISITE VENUE FOR MEMORABLE EVENTS & CELEBRATIONS",
+      "image": "/images/facilities/banquet-hall.jpg",
+      "description": "Shuktara Banquet Hall offers an elegant, versatile, and fully equipped event venue designed to host both grand celebrations and corporate gatherings in the heart of Dhaka. Designed with sophisticated interior aesthetics and state-of-the-art amenities, our hall provides the perfect ambiance for your most cherished occasions.\n\nWhether you are planning a corporate conference, seminar, workshop, grand wedding reception, birthday party, or intimate family gathering, our dedicated banquet staff is on hand to deliver flawless service and exceptional hospitality.",
+      "buttons": [
+        { "label": "CONTACT US", "path": "#contact" },
+        { "label": "BOOK EVENT", "path": "/book" }
+      ],
+      "contactBar": {
+        "phone": "+8801840440090",
+        "phoneAvailability": "Available At 9am – 10pm",
+        "email": "info@hotelshuktara.com"
+      },
+      "informationDetails": [
+        { "label": "Hall Type", "value": "Banquet / Event Hall" },
+        { "label": "Seating Capacity", "value": "120 guests" },
+        { "label": "Maximum Event Capacity", "value": "150 guests" },
+        { "label": "Theatre Style", "value": "Available" },
+        { "label": "Air Conditioning", "value": "Yes" },
+        { "label": "Audio-Visual Facilities", "value": "Available" },
+        { "label": "Sound System", "value": "Yes" },
+        { "label": "Projector / Screen", "value": "Yes" },
+        { "label": "Wi-Fi", "value": "Yes" },
+        { "label": "Catering Service", "value": "Available" },
+        { "label": "Private Events", "value": "Available" },
+        { "label": "Corporate Meetings", "value": "Available" },
+        { "label": "Weddings / Parties", "value": "Available" },
+        { "label": "Flexible Seating Arrangement", "value": "Yes" }
+      ],
+      "layoutNote": "The banquet hall can be arranged according to the type of event and guest requirements. Final capacity depends on the selected seating layout and event setup.",
+      "suitableFor": [
+        "Corporate Meetings",
+        "Conferences",
+        "Seminars",
+        "Workshops",
+        "Wedding Events",
+        "Birthday Parties",
+        "Private Functions",
+        "Social Events",
+        "Family Gatherings"
+      ]
+    },
+    {
+      "id": 3,
       "slug": "skylight",
       "name": "SKYLIGHT RESTAURANT",
       "pageTitle": "SKYLIGHT RESTAURANT",
@@ -51,7 +97,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": 4,
       "slug": "gym",
       "name": "GYM",
       "pageTitle": "GYM",
@@ -64,7 +110,7 @@
       "contactBar": null
     },
     {
-      "id": 4,
+      "id": 5,
       "slug": "conference-room",
       "name": "CONFERENCE ROOM",
       "pageTitle": "CONFERENCE ROOM",

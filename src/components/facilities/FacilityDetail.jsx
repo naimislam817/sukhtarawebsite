@@ -35,6 +35,43 @@ const FacilityDetail = ({ facility }) => {
         </div>
       </section>
 
+      {facility.informationDetails && (
+        <section className="facility-specs">
+          <div className="facility-specs__container">
+            <h3 className="facility-specs__title">Information & Hall Features</h3>
+            <div className="facility-specs__grid">
+              {facility.informationDetails.map((item, idx) => (
+                <div key={idx} className="facility-specs__card">
+                  <span className="facility-specs__label">{item.label}</span>
+                  <span className="facility-specs__value">{item.value}</span>
+                </div>
+              ))}
+            </div>
+
+            {(facility.layoutNote || facility.suitableFor) && (
+              <div className="facility-meta-grid">
+                {facility.layoutNote && (
+                  <div className="facility-meta-card">
+                    <h4 className="facility-meta-card__title">Hall Capacity & Layout</h4>
+                    <p className="facility-meta-card__text">{facility.layoutNote}</p>
+                  </div>
+                )}
+                {facility.suitableFor && (
+                  <div className="facility-meta-card">
+                    <h4 className="facility-meta-card__title">Suitable For</h4>
+                    <div className="facility-chips">
+                      {facility.suitableFor.map((tag, idx) => (
+                        <span key={idx} className="facility-chip">✓ {tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
       {facility.gallery && (
         <section className="facility-gallery">
           <div className="facility-gallery__container">

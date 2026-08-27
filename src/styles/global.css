@@ -22,6 +22,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: inherit;
 }
 
 html {
@@ -50,7 +51,7 @@ body {
 }
 
 /* Typography Hierarchy using Font Variations */
-h1, h2, h3, h4, h5, h6, p, span, a, button, div, li, select, input, textarea {
+h1, h2, h3, h4, h5, h6, p, span, a, button, div, li, select, input, textarea, label, small, strong, b, em, i, blockquote, th, td {
   font-family: var(--font-primary);
 }
 
