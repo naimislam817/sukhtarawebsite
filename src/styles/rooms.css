@@ -204,15 +204,50 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
+  .rooms-grid-section {
+    padding: 0 0 60px;
+  }
   .rooms-grid {
     grid-template-columns: 1fr;
-    max-width: 400px;
+    max-width: 100%;
+    padding: 0 16px;
+    gap: 20px;
   }
   .rooms-intro {
-    padding: 60px 0 35px;
+    padding: 45px 0 25px;
   }
   .rooms-intro__title {
-    font-size: 2rem;
+    font-size: clamp(1.8rem, 6vw, 2.3rem);
+    margin-bottom: 16px;
+  }
+  .rooms-intro__description {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .room-card {
+    border-radius: 10px;
+  }
+  .room-card__image-wrapper {
+    height: 210px;
+  }
+  .room-card__content {
+    padding: 22px 18px;
+    gap: 12px;
+  }
+  .room-card__description {
+    min-height: unset;
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+  .room-card__btn {
+    width: 100%;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 20px;
+    margin-top: 10px;
   }
 }

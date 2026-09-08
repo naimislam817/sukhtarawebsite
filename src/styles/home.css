@@ -1203,15 +1203,15 @@
 
 
 /* ==========================================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (SUPER MOBILE FRIENDLY)
    ========================================================================== */
 @media (max-width: 992px) {
   .location__container {
     grid-template-columns: 1fr;
-    gap: 50px;
+    gap: 45px;
   }
   .location__image {
-    height: 380px;
+    height: 360px;
   }
   .location__badge {
     bottom: -15px;
@@ -1219,65 +1219,228 @@
   }
   .stats__container {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .stats__item:nth-child(2) {
-    border-right: none;
+    gap: 18px;
   }
   .accommodations__grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+  .facilities-section__list {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
 
 @media (max-width: 768px) {
   .hero {
     height: calc(100vh - var(--navbar-height));
+    height: calc(100dvh - var(--navbar-height));
+    min-height: 520px;
+  }
+  .hero__content {
+    padding: 0 10px;
+  }
+  .hero__title {
+    font-size: clamp(2rem, 7vw, 3rem);
+    margin-bottom: 18px;
+  }
+  .hero__description {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin-bottom: 28px;
   }
   .hero__buttons {
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+    width: 100%;
   }
   .hero__btn {
     width: 100%;
-    max-width: 250px;
+    max-width: 290px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 24px;
+    font-size: 0.84rem;
   }
-  .facilities-section__list {
-    grid-template-columns: 1fr;
+  .hero__scroll-indicator {
+    bottom: 14px;
+    opacity: 0.75;
   }
-  .experiences__grid {
-    grid-template-columns: repeat(2, 1fr);
+  .hero__scroll-text {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+  }
+  .location {
+    padding: 70px 0;
+  }
+  .facilities-section {
+    padding: 70px 0;
+  }
+  .accommodations {
+    padding: 70px 0;
   }
   .accommodations__grid {
     grid-template-columns: 1fr;
-    max-width: 450px;
+    max-width: 440px;
     margin-left: auto;
     margin-right: auto;
   }
+  .experiences {
+    padding: 70px 0;
+  }
+  .experiences__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 35px;
+  }
+  .experiences__item {
+    height: 200px;
+  }
+  .cta {
+    padding: 75px 0;
+  }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 540px) {
+  .hero {
+    min-height: 480px;
+  }
+  .hero__eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    margin-bottom: 16px;
+  }
+  .hero__title {
+    font-size: clamp(1.85rem, 8vw, 2.5rem);
+    line-height: 1.2;
+  }
+  .hero__description {
+    font-size: 0.92rem;
+    margin-bottom: 24px;
+  }
+  .hero__orb {
+    filter: blur(40px);
+    opacity: 0.28;
+  }
+  .hero__scroll-indicator {
+    display: none;
+  }
   .location__badge {
     position: static;
-    margin: 20px auto 0;
+    margin: 16px auto 0;
     transform: none;
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    max-width: 100%;
+    padding: 8px 16px;
+    font-size: 0.78rem;
   }
   .location__image-wrapper {
     padding: 8px;
   }
+  .location__image {
+    height: 240px;
+  }
+  .location__features {
+    gap: 8px;
+  }
+  .location__chip {
+    font-size: 0.76rem;
+    padding: 6px 12px;
+  }
+  /* Stats 2x2 Clean Mobile Grid */
+  .stats {
+    padding: 50px 0;
+  }
   .stats__container {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 14px;
   }
   .stats__item {
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 20px;
+    padding: 20px 10px;
+    border-radius: 8px;
   }
-  .stats__item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+  .stats__value {
+    font-size: clamp(1.8rem, 6.5vw, 2.3rem);
+    margin-bottom: 4px;
   }
+  .stats__label {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+  }
+  .stats__reviews {
+    font-size: 0.7rem;
+  }
+  /* Facilities on small screens */
+  .facilities-section__item {
+    padding: 20px 16px;
+    gap: 16px;
+    align-items: center;
+    border-radius: 10px;
+  }
+  .facilities-section__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+  .facilities-section__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .facilities-section__item-title {
+    font-size: 1.1rem;
+  }
+  .facilities-section__item-desc {
+    font-size: 0.86rem;
+  }
+  /* Accommodations on small screens */
+  .accommodations__card {
+    border-radius: 10px;
+  }
+  .accommodations__image-wrapper {
+    height: 210px;
+  }
+  .accommodations__info {
+    padding: 20px 16px;
+    gap: 12px;
+  }
+  .accommodations__name {
+    font-size: 1.18rem;
+  }
+  .accommodations__desc {
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+  /* Experiences Gallery 2-col compact collage */
   .experiences__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .experiences__item {
+    height: 160px;
+    border-radius: 6px;
+  }
+  .experiences__caption {
+    font-size: 0.78rem;
+    letter-spacing: 0.8px;
+  }
+  /* CTA */
+  .cta__title {
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+  }
+  .cta__btn {
+    width: 100%;
+    max-width: 280px;
+    min-height: 48px;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
