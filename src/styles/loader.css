@@ -6,14 +6,19 @@
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
   width: 100vw;
+  height: 100%;
   height: 100vh;
   height: 100dvh;
   z-index: 99999;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at center, rgba(27, 60, 53, 0.96) 0%, rgba(15, 26, 23, 0.98) 100%);
+  /* iOS safe area so the content never hides behind notch/home indicator */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: radial-gradient(circle at center, rgba(27, 60, 53, 0.97) 0%, rgba(15, 26, 23, 0.99) 100%);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   opacity: 0;
@@ -25,6 +30,7 @@
   transform: translateZ(0);
   will-change: opacity, visibility;
   transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s ease;
+  overflow: hidden;
 }
 
 .page-loader--active {
@@ -40,6 +46,7 @@
   justify-content: center;
   text-align: center;
   position: relative;
+  padding: 24px 20px;
   transform: translateZ(0);
   will-change: transform;
 }
@@ -205,36 +212,68 @@
 /* ==========================================================================
    MOBILE SCREEN TUNING
    ========================================================================== */
-@media (max-width: 600px) {
+
+/* Portrait phones */
+@media (max-width: 480px) {
   .page-loader__ring-wrapper {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 16px;
+    width: 96px;
+    height: 96px;
+    margin-bottom: 18px;
   }
 
   .page-loader__circle {
-    width: 92px;
-    height: 92px;
+    width: 88px;
+    height: 88px;
   }
 
   .page-loader__emblem-wrapper {
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
   }
 
   .page-loader__brand {
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     letter-spacing: 3px;
   }
 
   .page-loader__subline {
-    font-size: 0.64rem;
+    font-size: 0.62rem;
     letter-spacing: 2.5px;
   }
 
   .page-loader__bar {
-    width: 65px;
+    width: 60px;
     margin-top: 12px;
+  }
+}
+
+/* Landscape phones — very short viewport */
+@media (max-height: 500px) {
+  .page-loader__ring-wrapper {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 12px;
+  }
+
+  .page-loader__circle {
+    width: 74px;
+    height: 74px;
+  }
+
+  .page-loader__emblem-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .page-loader__brand {
+    font-size: 0.8rem;
+    letter-spacing: 2.5px;
+  }
+
+  /* Hide decorative extras so the emblem stays visible */
+  .page-loader__subline,
+  .page-loader__bar {
+    display: none;
   }
 }
 
@@ -246,4 +285,3 @@
     animation: none;
   }
 }
-

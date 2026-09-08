@@ -1,23 +1,34 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppButton from './WhatsAppButton';
 import PageLoader from '../common/PageLoader';
 
+// Module-level flag: only show loader on the very first page load / hard refresh.
+// Once it has fired once, subsequent SPA navigations skip it entirely.
+let hasLoadedOnce = false;
+
 const Layout = () => {
   const { pathname } = useLocation();
-  const [isLoading, setIsLoading] = useState(true);
+  // Start with loader active only if this is the very first mount
+  const [isLoading, setIsLoading] = useState(!hasLoadedOnce);
+  const isFirstMount = useRef(!hasLoadedOnce);
 
   useEffect(() => {
-    setIsLoading(true);
-    window.scrollTo(0, 0);
+    // Always scroll to top on route change
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 850);
-
-    return () => clearTimeout(timer);
+    if (isFirstMount.current) {
+      // First page load — show the cinematic loader for 850ms then clear
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+        hasLoadedOnce = true;
+        isFirstMount.current = false;
+      }, 850);
+      return () => clearTimeout(timer);
+    }
+    // Subsequent nav clicks — no loader, nothing to do
   }, [pathname]);
 
   useEffect(() => {
