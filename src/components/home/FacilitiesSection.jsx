@@ -46,7 +46,10 @@ const FacilitiesSection = () => {
         <SectionTitle title={facilities.title} />
         <div className="facilities-section__list">
           {facilities.items.map((item, index) => (
-            <div className="facilities-section__item" key={index}>
+            <div 
+              className={`facilities-section__item reveal-fade-up delay-${(index % 2) + 1}`} 
+              key={index}
+            >
               <div className="facilities-section__icon">
                 {facilityIcons[item.icon]}
               </div>

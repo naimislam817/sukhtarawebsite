@@ -3,7 +3,7 @@ import '../../styles/rooms.css';
 
 const RoomCard = ({ room }) => {
   return (
-    <div className="room-card">
+    <div className="room-card reveal-fade-up">
       <div className="room-card__image-wrapper">
         <img src={room.image} alt={room.name} className="room-card__image" />
       </div>

@@ -7,14 +7,14 @@ const LocationSection = () => {
   return (
     <section className="location">
       <div className="location__container">
-        <div className="location__image-wrapper">
+        <div className="location__image-wrapper reveal-fade-up">
           <img src={location.image} alt="Hotel Shuktara Location" className="location__image" />
           <div className="location__badge">
             <span className="location__badge-number">{location.badge}</span>
             <span className="location__badge-text">{location.badgeText}</span>
           </div>
         </div>
-        <div className="location__content">
+        <div className="location__content reveal-fade-up delay-2">
           <h2 className="location__title">{location.title}</h2>
           <p className="location__description">{location.description}</p>
         </div>

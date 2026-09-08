@@ -11,7 +11,10 @@ const ExperiencesGallery = () => {
         <SectionTitle title={experiences.title} />
         <div className="experiences__grid">
           {experiences.images.map((img, index) => (
-            <div className="experiences__item" key={index}>
+            <div 
+              className={`experiences__item reveal-fade-up delay-${(index % 4) + 1}`} 
+              key={index}
+            >
               <img src={img.src} alt={img.alt} className="experiences__image" />
             </div>
           ))}

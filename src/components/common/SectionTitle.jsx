@@ -2,7 +2,7 @@ import '../../styles/global.css';
 
 const SectionTitle = ({ subtitle, title, description, light = false, align = 'center' }) => {
   return (
-    <div className={`section-title section-title--${align} ${light ? 'section-title--light' : ''}`}>
+    <div className={`section-title section-title--${align} ${light ? 'section-title--light' : ''} reveal-fade-up`}>
       {subtitle && <p className="section-title__subtitle">{subtitle}</p>}
       <h2 className="section-title__heading">
         {title}

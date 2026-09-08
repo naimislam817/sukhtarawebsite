@@ -6,7 +6,12 @@ const HeroSection = () => {
   const { hero } = homeData;
 
   return (
-    <section className="hero" style={{ backgroundImage: `url(${hero.backgroundImage})` }}>
+    <section className="hero">
+      <div 
+        className="hero__bg" 
+        style={{ backgroundImage: `url(${hero.backgroundImage})` }}
+        aria-hidden="true"
+      />
       <div className="hero__overlay">
         <div className="hero__content">
           <h1 className="hero__title">

@@ -8,7 +8,7 @@ const CTASection = () => {
   return (
     <section className="cta" style={{ backgroundImage: `url(${cta.backgroundImage})` }}>
       <div className="cta__overlay"></div>
-      <div className="cta__content">
+      <div className="cta__content reveal-fade-up">
         <h2 className="cta__title">{cta.title}</h2>
         <Link to="/book" className="cta__btn">
           {cta.buttonLabel}

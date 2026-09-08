@@ -12,7 +12,10 @@ const AccommodationsSection = () => {
         <SectionTitle title={accommodations.title} light />
         <div className="accommodations__grid">
           {accommodations.rooms.map((room, index) => (
-            <div className="accommodations__card" key={index}>
+            <div 
+              className={`accommodations__card reveal-fade-up delay-${(index % 3) + 1}`} 
+              key={index}
+            >
               <div className="accommodations__image-wrapper">
                 <img src={room.image} alt={room.name} className="accommodations__image" />
               </div>

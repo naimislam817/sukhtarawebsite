@@ -1,17 +1,22 @@
 :root {
   /* Colors */
-  --color-primary: #1B3C35;       /* Dark teal green */
+  --color-primary: #1B3C35;       /* Dark teal heritage green */
   --color-primary-light: #245C50;
-  --color-accent: #C8956C;        /* Warm gold/copper */
-  --color-accent-hover: #b07e56;
+  --color-primary-dark: #122823;
+  --color-accent: #C8956C;        /* Warm vintage gold / copper */
+  --color-accent-hover: #B07E56;
+  --color-accent-gold: #D4AF37;   /* Metallic gold touch */
+  --color-accent-light: #F4E8DC;  /* Soft champagne tint */
+  --color-gold-glow: rgba(200, 149, 108, 0.28);
   --color-text-dark: #1C1C1C;
   --color-text-muted: #555555;
   --color-bg-white: #FFFFFF;
   --color-bg-light: #FAF7F2;      /* Cream background */
-  --color-bg-dark: #0F1A17;       /* Very dark green/black */
+  --color-bg-dark: #0F1A17;       /* Deep heritage emerald-black */
   --color-footer-bg: #111111;
   --color-border: #E5DFD5;
   --color-border-light: #F0EAE0;
+  --color-border-gold: rgba(200, 149, 108, 0.4);
 
   /* Typography */
   --font-primary: 'Noto Serif', Georgia, 'Times New Roman', serif;
@@ -20,11 +25,15 @@
   --max-width: 1200px;
   --navbar-height: 85px;
   --topbar-height: 40px;
-  --transition-fast: all 0.2s ease;
-  --transition-normal: all 0.3s ease;
+  --transition-fast: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   
-  /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  /* Luxury & Vintage Shadows */
+  --shadow-sm: 0 2px 6px rgba(15, 26, 23, 0.04);
+  --shadow-md: 0 6px 16px rgba(15, 26, 23, 0.08);
+  --shadow-lg: 0 12px 30px rgba(15, 26, 23, 0.12);
+  --shadow-vintage: 0 10px 30px -10px rgba(15, 26, 23, 0.18), 0 0 0 1px rgba(200, 149, 108, 0.2);
+  --shadow-vintage-hover: 0 18px 45px -12px rgba(15, 26, 23, 0.28), 0 0 0 1px rgba(200, 149, 108, 0.55);
 }
+
