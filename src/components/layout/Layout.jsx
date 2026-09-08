@@ -12,16 +12,19 @@ const Layout = () => {
   useEffect(() => {
     // Show loading screen on every page change
     setIsLoading(true);
+    document.body.classList.remove('menu-open');
     document.body.style.overflow = '';
     window.scrollTo({ top: 0, behavior: 'instant' });
 
     const timer = setTimeout(() => {
       setIsLoading(false);
+      document.body.classList.remove('menu-open');
       document.body.style.overflow = '';
     }, 500);
 
     return () => {
       clearTimeout(timer);
+      document.body.classList.remove('menu-open');
       document.body.style.overflow = '';
     };
   }, [pathname]);

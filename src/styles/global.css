@@ -51,6 +51,10 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+body.menu-open {
+  overflow: hidden;
+}
+
 a, button, input, select, textarea {
   touch-action: manipulation;
 }

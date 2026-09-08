@@ -19,18 +19,18 @@ const Navbar = () => {
   // Always close mobile menu and ensure scroll is unlocked on any route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    document.body.style.overflow = '';
+    document.body.classList.remove('menu-open');
   }, [location.pathname]);
 
-  // Lock body scroll only when mobile menu is open (without touchAction which freezes mobile)
+  // Handle body scroll locking safely via CSS class
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('menu-open');
     } else {
-      document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
     };
   }, [isMobileMenuOpen]);
 
@@ -40,7 +40,7 @@ const Navbar = () => {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
-    document.body.style.overflow = '';
+    document.body.classList.remove('menu-open');
   };
 
   return (
