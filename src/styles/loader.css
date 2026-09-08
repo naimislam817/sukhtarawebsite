@@ -1,0 +1,194 @@
+/* ==========================================================================
+   CINEMATIC PAGE TRANSITION LOADER
+   ========================================================================== */
+
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, rgba(27, 60, 53, 0.95) 0%, rgba(15, 26, 23, 0.98) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s ease;
+}
+
+.page-loader--active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+.page-loader__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+/* Outer Glowing Aura / Ring */
+.page-loader__ring-wrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.page-loader__aura {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 149, 108, 0.25) 0%, rgba(27, 60, 53, 0) 70%);
+  animation: aura-pulse 1.8s ease-in-out infinite alternate;
+}
+
+.page-loader__circle {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px dashed rgba(200, 149, 108, 0.35);
+  animation: ring-rotate-reverse 6s linear infinite;
+}
+
+/* 360 Rotating Emblem */
+.page-loader__emblem-wrapper {
+  width: 84px;
+  height: 84px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 16px rgba(200, 149, 108, 0.45));
+}
+
+.page-loader__emblem {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: emblem-spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Hotel Title & Subtext */
+.page-loader__brand {
+  font-family: var(--font-primary);
+  font-size: 1.05rem;
+  letter-spacing: 4.5px;
+  color: #F5EFEB;
+  text-transform: uppercase;
+  margin-top: 6px;
+  font-variation-settings: 'wght' 600;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  animation: text-shimmer 1.5s ease-in-out infinite alternate;
+}
+
+.page-loader__subline {
+  font-family: var(--font-primary);
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+
+/* Progress Indicator Bar */
+.page-loader__bar {
+  width: 90px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  margin-top: 18px;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.page-loader__bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 45%;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  animation: bar-slide 1s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   ANIMATION KEYFRAMES
+   ========================================================================== */
+
+@keyframes emblem-spin {
+  0% {
+    transform: rotate(0deg) scale(0.95);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(0.95);
+  }
+}
+
+@keyframes ring-rotate-reverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes aura-pulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0.9;
+  }
+}
+
+@keyframes text-shimmer {
+  0% {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes bar-slide {
+  0% {
+    left: -45%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__emblem,
+  .page-loader__circle,
+  .page-loader__aura,
+  .page-loader__bar::after {
+    animation: none;
+  }
+}
