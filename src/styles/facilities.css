@@ -118,18 +118,21 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background-color: var(--color-primary);
-  color: var(--color-bg-white);
+  background: linear-gradient(135deg, #244c44 0%, #152d27 100%);
+  color: #ffffff;
   padding: 13px 30px;
   font-size: 0.84rem;
   font-variation-settings: 'wght' 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  transition: var(--transition-normal);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
-  border-radius: 2px;
-  border: 1px solid rgba(200, 149, 108, 0.35);
-  box-shadow: var(--shadow-sm);
+  border-radius: 999px;
+  border: 1px solid rgba(200, 149, 108, 0.45);
+  box-shadow:
+    0 6px 18px rgba(21, 45, 39, 0.28),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .facility-detail__btn::before {
@@ -142,7 +145,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.45) 50%,
     transparent 100%
   );
   transform: skewX(-25deg);
@@ -150,21 +153,32 @@
 }
 
 .facility-detail__btn:hover {
-  background-color: var(--color-accent);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(200, 149, 108, 0.4);
+  background: linear-gradient(135deg, #c8956c 0%, #a87247 100%);
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.025);
+  box-shadow:
+    0 10px 24px rgba(200, 149, 108, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .facility-detail__btn:hover::before {
   left: 140%;
 }
 
+.facility-detail__btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow:
+    0 3px 8px rgba(200, 149, 108, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .facility-detail__btn svg {
-  transition: var(--transition-fast);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .facility-detail__btn:hover svg {
-  transform: translateX(5px);
+  transform: translateX(6px);
 }
 
 /* Contact bar section below restaurant detail */
@@ -192,15 +206,24 @@
 }
 
 .contact-bar__icon-wrapper {
-  width: 55px;
-  height: 55px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
-  background-color: var(--color-accent);
+  background: linear-gradient(135deg, #dfa87d 0%, #b88358 100%);
   color: var(--color-bg-white);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow:
+    0 6px 16px rgba(200, 149, 108, 0.35),
+    inset 0 2px 4px rgba(255, 255, 255, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.contact-bar__item:hover .contact-bar__icon-wrapper {
+  transform: scale(1.1) rotate(6deg);
 }
 
 .contact-bar__icon-wrapper svg {
@@ -510,20 +533,30 @@
 .facility-chip {
   display: inline-flex;
   align-items: center;
-  padding: 8px 16px;
-  background-color: var(--color-bg-light);
-  border: 1px solid var(--color-border);
+  padding: 8px 18px;
+  background: #ffffff;
+  border: 1px solid rgba(200, 149, 108, 0.3);
   color: var(--color-primary);
   font-size: 0.88rem;
-  font-variation-settings: 'wght' 500;
-  border-radius: 2px;
-  transition: var(--transition-fast);
+  font-variation-settings: 'wght' 600;
+  border-radius: 999px;
+  box-shadow:
+    0 2px 6px rgba(15, 26, 23, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default;
 }
 
 .facility-chip:hover {
-  background-color: var(--color-primary);
-  color: var(--color-bg-white);
-  border-color: var(--color-primary);
+  background: linear-gradient(135deg, #1b3c35 0%, #122823 100%);
+  color: #ffffff;
+  border-color: rgba(200, 149, 108, 0.6);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow:
+    0 6px 14px rgba(21, 45, 39, 0.25),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.25);
 }
 
 @media (max-width: 860px) {
