@@ -20,13 +20,23 @@
 }
 
 .footer__logo {
+  display: inline-flex;
+  align-items: center;
   margin-bottom: 20px;
+  width: fit-content;
 }
 
 .footer__logo img {
-  height: 60px;
+  height: 62px;
   width: auto;
-  filter: brightness(0) invert(1);
+  object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(223, 160, 78, 0.4));
+  opacity: 0.95;
+  transition: transform var(--transition-normal);
+}
+
+.footer__logo:hover img {
+  transform: scale(1.08) rotate(4deg);
 }
 
 .footer__hotel-name {

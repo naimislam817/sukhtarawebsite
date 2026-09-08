@@ -9,9 +9,9 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__column footer__column--brand">
-          <div className="footer__logo">
-            <img src={siteData.logo} alt={siteData.hotelName} />
-          </div>
+          <Link to="/" className="footer__logo" aria-label="Hotel Shuktara Home">
+            <img src="/images/shuktara-emblem.png" alt={siteData.hotelName} />
+          </Link>
           <h3 className="footer__hotel-name">{siteData.hotelName}</h3>
           <p className="footer__description">{footerDescription}</p>
           <div className="footer__payment">
