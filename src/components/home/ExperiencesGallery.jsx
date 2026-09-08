@@ -16,6 +16,10 @@ const ExperiencesGallery = () => {
               key={index}
             >
               <img src={img.src} alt={img.alt} className="experiences__image" />
+              <div className="experiences__overlay">
+                <span className="experiences__caption">{img.alt}</span>
+                <span className="experiences__icon">✦</span>
+              </div>
             </div>
           ))}
         </div>

@@ -18,12 +18,16 @@ const AccommodationsSection = () => {
             >
               <div className="accommodations__image-wrapper">
                 <img src={room.image} alt={room.name} className="accommodations__image" />
+                <span className="accommodations__badge">
+                  ★ {index === 0 ? 'SIGNATURE' : index === 1 ? 'PREMIUM' : 'POPULAR'}
+                </span>
               </div>
               <div className="accommodations__info">
                 <h3 className="accommodations__name">{room.name}</h3>
                 <p className="accommodations__desc">{room.description}</p>
                 <Link to="/rooms" className="accommodations__link">
-                  View Details →
+                  <span>View Details</span>
+                  <span className="accommodations__arrow">→</span>
                 </Link>
               </div>
             </div>

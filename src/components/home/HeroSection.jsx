@@ -13,7 +13,15 @@ const HeroSection = () => {
         aria-hidden="true"
       />
       <div className="hero__overlay">
+        {/* Floating cinematic ambient light orbs */}
+        <div className="hero__orb hero__orb--1" aria-hidden="true" />
+        <div className="hero__orb hero__orb--2" aria-hidden="true" />
+
         <div className="hero__content">
+          <div className="hero__eyebrow">
+            <span className="hero__eyebrow-beacon" />
+            <span>EXQUISITE HOSPITALITY IN DHAKA</span>
+          </div>
           <h1 className="hero__title">
             {hero.titleLine1}<br />
             <span className="hero__title-highlight">{hero.titleHighlight}</span>{' '}

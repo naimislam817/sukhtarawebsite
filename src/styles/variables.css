@@ -1,22 +1,31 @@
 :root {
-  /* Colors */
-  --color-primary: #1B3C35;       /* Dark teal heritage green */
-  --color-primary-light: #245C50;
-  --color-primary-dark: #122823;
-  --color-accent: #C8956C;        /* Warm vintage gold / copper */
-  --color-accent-hover: #B07E56;
-  --color-accent-gold: #D4AF37;   /* Metallic gold touch */
-  --color-accent-light: #F4E8DC;  /* Soft champagne tint */
-  --color-gold-glow: rgba(200, 149, 108, 0.28);
-  --color-text-dark: #1C1C1C;
-  --color-text-muted: #555555;
+  /* Colors — Luminous & Vibrant Heritage Palette */
+  --color-primary: #12352E;       /* Deep lustrous emerald */
+  --color-primary-light: #1D5449; /* Vivid emerald */
+  --color-primary-dark: #0A1F1B;
+  --color-accent: #DFA04E;        /* Radiant warm luxury gold */
+  --color-accent-hover: #C98835;
+  --color-accent-gold: #F4C46C;   /* Bright luminous gold */
+  --color-accent-light: #FFF6EC;  /* Warm radiant champagne */
+  --color-gold-glow: rgba(223, 160, 78, 0.38);
+  --color-gold-glow-strong: rgba(244, 196, 108, 0.65);
+
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #FFE8B6 0%, #DFA04E 50%, #B77322 100%);
+  --gradient-gold-shine: linear-gradient(90deg, #DFA04E 0%, #FFF2D1 25%, #F4C46C 50%, #FFF2D1 75%, #DFA04E 100%);
+  --gradient-emerald: linear-gradient(135deg, #18473E 0%, #0D2823 100%);
+  --gradient-card-dark: linear-gradient(160deg, rgba(29, 84, 73, 0.35) 0%, rgba(10, 23, 20, 0.96) 100%);
+
+  --color-text-dark: #1A1A1A;
+  --color-text-muted: #585858;
   --color-bg-white: #FFFFFF;
-  --color-bg-light: #FAF7F2;      /* Cream background */
-  --color-bg-dark: #0F1A17;       /* Deep heritage emerald-black */
-  --color-footer-bg: #111111;
-  --color-border: #E5DFD5;
-  --color-border-light: #F0EAE0;
-  --color-border-gold: rgba(200, 149, 108, 0.4);
+  --color-bg-light: #FAF6EF;      /* Luminous warm cream */
+  --color-bg-dark: #091613;       /* Deep obsidian emerald */
+  --color-footer-bg: #0C1311;
+  --color-border: #E6DDD0;
+  --color-border-light: #F2EAE0;
+  --color-border-gold: rgba(223, 160, 78, 0.45);
+  --color-border-gold-bright: rgba(244, 196, 108, 0.8);
 
   /* Typography */
   --font-primary: 'Noto Serif', Georgia, 'Times New Roman', serif;
@@ -29,11 +38,12 @@
   --transition-normal: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   
-  /* Luxury & Vintage Shadows */
-  --shadow-sm: 0 2px 6px rgba(15, 26, 23, 0.04);
-  --shadow-md: 0 6px 16px rgba(15, 26, 23, 0.08);
-  --shadow-lg: 0 12px 30px rgba(15, 26, 23, 0.12);
-  --shadow-vintage: 0 10px 30px -10px rgba(15, 26, 23, 0.18), 0 0 0 1px rgba(200, 149, 108, 0.2);
-  --shadow-vintage-hover: 0 18px 45px -12px rgba(15, 26, 23, 0.28), 0 0 0 1px rgba(200, 149, 108, 0.55);
+  /* Luxury & Vibrant Shadows */
+  --shadow-sm: 0 2px 8px rgba(15, 26, 23, 0.05);
+  --shadow-md: 0 8px 20px rgba(15, 26, 23, 0.09);
+  --shadow-lg: 0 16px 36px rgba(15, 26, 23, 0.14);
+  --shadow-vintage: 0 12px 32px -8px rgba(15, 26, 23, 0.18), 0 0 0 1px rgba(223, 160, 78, 0.22);
+  --shadow-vintage-hover: 0 22px 50px -10px rgba(15, 26, 23, 0.3), 0 0 20px rgba(223, 160, 78, 0.35), 0 0 0 1px rgba(244, 196, 108, 0.7);
+  --shadow-gold-glow: 0 0 30px rgba(223, 160, 78, 0.35);
 }
 
