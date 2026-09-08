@@ -1,6 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import TopBar from './TopBar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppButton from './WhatsAppButton';
@@ -14,7 +13,6 @@ const Layout = () => {
 
   return (
     <div className="site-wrapper">
-      <TopBar />
       <Navbar />
       <main className="main-content">
         <Outlet />
