@@ -1,7 +1,17 @@
 {
   "pageTitle": "ROOMS",
   "pageSubtitle": "EXQUISITE HOSPITALITY",
-  "pageDescription": "At Hotel Shuktara Dhaka, we offer a wide range of luxurious accommodations to ensure a delightful stay. Our 99 meticulously designed guestrooms are equipped with modern amenities to provide the utmost comfort and convenience. Guests can enjoy complimentary breakfast and airport pick-up services, making every aspect of your stay seamless and relaxing.",
+  "pageDescription": "At Hotel Shuktara Dhaka, we offer a wide range of comfortable accommodations to ensure a delightful stay. Our 99 meticulously designed guest rooms span 7 categories — from Standard Single rooms to Premium Deluxe Kings — each equipped with modern amenities for the utmost comfort and convenience. Guests can enjoy complimentary breakfast at our Skylight Rooftop Restaurant, served daily from 7:00 AM to 10:30 AM, along with airport transfer services, making every aspect of your stay seamless and relaxing.",
+  "roomCategories": [
+    { "name": "Premium Triple", "count": 20 },
+    { "name": "Deluxe Twin", "count": 20 },
+    { "name": "Superior Twin", "count": 8 },
+    { "name": "Premium Deluxe King", "count": 5 },
+    { "name": "Deluxe King", "count": 15 },
+    { "name": "Superior King", "count": 10 },
+    { "name": "Standard Single", "count": 14 }
+  ],
+  "totalRooms": 99,
   "rooms": [
     {
       "id": 1,

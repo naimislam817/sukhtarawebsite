@@ -13,16 +13,16 @@
   },
   "location": {
     "image": "/images/hero/location.jpg",
-    "badge": "15+",
-    "badgeText": "YEARS OF EXCELLENCE",
+    "badge": "99",
+    "badgeText": "GUEST ROOMS",
     "tagline": "",
     "title": "In the Heart of Dhaka City",
-    "description": "Hotel Shuktara Dhaka occupies a prime location in the vibrant Farmgate area, one of Dhaka's most well-connected and bustling commercial hubs. Situated on Indira Road, the hotel offers guests easy access to key landmarks, government offices, educational institutions, and major business districts. With close proximity to the Farmgate bus stand and nearby metro stations, getting around the city is effortless. Whether you're visiting for business or leisure, our central location ensures convenience, connectivity, and comfort throughout your stay."
+    "description": "Hotel Shuktara Dhaka occupies a prime location in the vibrant Farmgate area, one of Dhaka's most well-connected and bustling commercial hubs. Situated at H# 20/A, Indira Road, Sher-E-Bangla Nagar, the hotel offers guests easy access to key landmarks, government offices, educational institutions, and major business districts. With close proximity to the Farmgate bus stand and nearby metro stations, getting around the city is effortless. Whether you're visiting for business or leisure, our central location ensures convenience, connectivity, and comfort throughout your stay."
   },
   "stats": [
     { "value": "99", "label": "Guest Rooms" },
     { "value": "2", "label": "Signature Restaurants" },
-    { "value": "150", "label": "Guest Banquet Hall" },
+    { "value": "150", "label": "Banquet Hall Capacity" },
     {
       "value": "3.8",
       "label": "TripAdvisor Rating",
@@ -35,9 +35,9 @@
     "title": "World-Class Facilities",
     "items": [
       { "icon": "concierge", "title": "24/7 Concierge", "description": "Round-the-clock assistance for all your needs" },
-      { "icon": "dining", "title": "Fine Dining", "description": "Exquisite culinary experiences at Rasun Restaurant" },
+      { "icon": "dining", "title": "2 Signature Restaurants", "description": "Rasun (120 seats) & Skylight Rooftop (90 seats) — combined 210-seat dining capacity" },
       { "icon": "fitness", "title": "Fitness Centre", "description": "State-of-the-art gym equipment and facilities" },
-      { "icon": "conference", "title": "Conference Hall", "description": "Professional meeting spaces for business events" },
+      { "icon": "conference", "title": "Banquet & Event Hall", "description": "Flexible event venue for up to 150 guests — meetings, weddings & private functions" },
       { "icon": "airport", "title": "Airport Transfers", "description": "Convenient pick-up and drop-off services" },
       { "icon": "wifi", "title": "Free Wi-Fi", "description": "High-speed internet access throughout the hotel" }
     ]
@@ -81,3 +81,4 @@
     "backgroundImage": "/images/hero/cta-bg.svg"
   }
 }
+

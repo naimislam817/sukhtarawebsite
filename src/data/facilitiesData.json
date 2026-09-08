@@ -14,9 +14,29 @@
       ],
       "contactBar": {
         "phone": "+8801840440090",
-        "phoneAvailability": "Available At 9am – 10pm",
+        "phoneAvailability": "Available At 7am – 11pm",
         "email": "info@hotelshuktara.com"
       },
+      "informationDetails": [
+        { "label": "Location", "value": "2nd Floor — Hotel Shuktara Dhaka" },
+        { "label": "Regular Seating Capacity", "value": "120 guests" },
+        { "label": "Private / Flexible Events", "value": "Available" },
+        { "label": "Maximum Event Capacity", "value": "Up to 120 guests" },
+        { "label": "Operating Hours", "value": "7:00 AM – 11:00 PM" },
+        { "label": "Cuisine", "value": "Traditional Bangla Cuisine" },
+        { "label": "Flexible Seating Arrangement", "value": "Yes" },
+        { "label": "Wi-Fi", "value": "Yes" },
+        { "label": "Air Conditioning", "value": "Yes" }
+      ],
+      "layoutNote": "Seating arrangements may be adjusted according to the nature of the event and guest requirements.",
+      "suitableFor": [
+        "Regular Dining",
+        "Corporate Events",
+        "Private Functions",
+        "Birthday Parties",
+        "Family Gatherings",
+        "Takeaway"
+      ],
       "gallery": [
         "/images/facilities/restaurant/gallery-1.jpg",
         "/images/facilities/restaurant/gallery-2.jpg",
@@ -78,7 +98,7 @@
       "pageTitle": "SKYLIGHT RESTAURANT",
       "tagline": "EXQUISITE THAI CUISINE WITH BREATHTAKING PANORAMIC VIEWS",
       "image": "/images/facilities/skylight.png",
-      "description": "Indulge in exquisite Thai cuisine at Skylight, the rooftop gem of Hotel Shuktara Dhaka. With breathtaking panoramic views of the city, Skylight offers the perfect setting to savour a delectable meal in a luxurious ambiance. Our menu showcases an array of authentic Thai dishes, expertly prepared and bursting bursts of vibrant flavours.\n\nBeyond dining, Skylight serves as an exceptional venue for hosting parties and celebrations. Whether you're enjoying a memorable meal or planning an unforgettable event, Skylight promises an experience like no other.",
+      "description": "Indulge in exquisite Thai cuisine at Skylight, the rooftop gem of Hotel Shuktara Dhaka. With breathtaking panoramic views of the city, Skylight offers the perfect setting to savour a delectable meal in a luxurious ambiance. Our menu showcases an array of authentic Thai dishes, expertly prepared and bursting with vibrant flavours.\n\nBeyond dining, Skylight serves as an exceptional venue for hosting parties and celebrations. Whether you're enjoying a memorable meal or planning an unforgettable event, Skylight promises an experience like no other.",
       "buttons": [
         { "label": "CONTACT US", "path": "#contact" },
         { "label": "FOOD MENU", "path": "/menus/skylight-menu.pdf" }
@@ -88,6 +108,28 @@
         "phoneAvailability": "Available At 9am – 10pm",
         "email": "info@hotelshuktara.com"
       },
+      "informationDetails": [
+        { "label": "Location", "value": "Rooftop — Hotel Shuktara Dhaka" },
+        { "label": "Total Seating Capacity", "value": "90 guests" },
+        { "label": "Indoor Seating", "value": "60 guests" },
+        { "label": "Outdoor / Terrace", "value": "30 guests" },
+        { "label": "Complimentary Breakfast", "value": "Buffet — 7:00 AM to 10:30 AM" },
+        { "label": "Breakfast Eligibility", "value": "Complimentary for Hotel Guests" },
+        { "label": "Operating Hours", "value": "11:00 AM – 11:00 PM" },
+        { "label": "Private Event Capacity", "value": "Up to 120 guests" },
+        { "label": "Flexible Seating", "value": "Yes — subject to event setup" },
+        { "label": "Wi-Fi", "value": "Yes" },
+        { "label": "Air Conditioning (Indoor)", "value": "Yes" }
+      ],
+      "layoutNote": "The seating arrangement can be reconfigured according to the type of event, table arrangement, and guest requirements. Maximum capacity for private events is up to 120 guests.",
+      "suitableFor": [
+        "Complimentary Breakfast",
+        "Corporate Dinners",
+        "Private Events",
+        "Wedding Receptions",
+        "Birthday Celebrations",
+        "Rooftop Gatherings"
+      ],
       "gallery": [
         "/images/facilities/skylight/gallery-1.jpg",
         "/images/facilities/skylight/gallery-2.jpg",
