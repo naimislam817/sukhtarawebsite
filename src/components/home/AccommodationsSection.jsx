@@ -1,17 +1,33 @@
 import { Link } from 'react-router-dom';
 import homeData from '../../data/homeData.json';
+import { useHotel } from '../../context/HotelContext';
 import SectionTitle from '../common/SectionTitle';
 import '../../styles/home.css';
 
 const AccommodationsSection = () => {
   const { accommodations } = homeData;
+  const { rooms } = useHotel();
+
+  // Use admin-managed published rooms if available, else fall back to homeData
+  const displayRooms = rooms && rooms.length > 0
+    ? rooms
+        .filter(r => r.status === 'published')
+        .slice(0, 3)
+        .map(r => ({
+          name: r.name,
+          description: r.description,
+          image: r.image || '/images/rooms/standard-single.png',
+          slug: r.slug || r.id,
+        }))
+    : accommodations.rooms;
+
 
   return (
     <section className="accommodations">
       <div className="accommodations__container">
         <SectionTitle title={accommodations.title} light />
         <div className="accommodations__grid">
-          {accommodations.rooms.map((room, index) => (
+          {displayRooms.map((room, index) => (
             <div 
               className={`accommodations__card reveal-fade-up delay-${(index % 3) + 1}`} 
               key={index}

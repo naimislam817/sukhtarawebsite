@@ -108,6 +108,31 @@
   transform: scale(1.08);
 }
 
+.room-card__price-tag {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(18, 70, 61, 0.9);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-variation-settings: 'wght' 700;
+  border: 1px solid rgba(200, 149, 108, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  letter-spacing: 0.5px;
+}
+
+.room-card__price-tag small {
+  font-size: 0.72rem;
+  font-variation-settings: 'wght' 400;
+  color: #e2e8f0;
+  opacity: 0.85;
+}
+
+
 .room-card__content {
   padding: 28px 24px;
   display: flex;

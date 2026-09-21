@@ -1,13 +1,20 @@
 import roomsData from '../data/roomsData.json';
+import { useHotel } from '../context/HotelContext';
 import PageBanner from '../components/common/PageBanner';
 import RoomCard from '../components/rooms/RoomCard';
 import '../styles/rooms.css';
 
 const RoomsPage = () => {
+  const { rooms, loading } = useHotel();
+
   const breadcrumb = [
     { label: 'Home', path: '/' },
     { label: 'Rooms', path: '/rooms' }
   ];
+
+  const publishedRooms = rooms && rooms.length > 0
+    ? rooms.filter(r => r.status === 'published')
+    : roomsData.rooms;
 
   return (
     <>
@@ -21,8 +28,8 @@ const RoomsPage = () => {
       </section>
       <section className="rooms-grid-section">
         <div className="rooms-grid">
-          {roomsData.rooms.map((room) => (
-            <RoomCard key={room.id} room={room} />
+          {publishedRooms.map((room) => (
+            <RoomCard key={room.id || room.slug} room={room} />
           ))}
         </div>
       </section>
@@ -32,3 +39,4 @@ const RoomsPage = () => {
 
 export default RoomsPage;
 export { RoomsPage };
+

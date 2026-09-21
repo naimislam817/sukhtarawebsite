@@ -145,6 +145,10 @@
       "pageTitle": "GYM",
       "tagline": "",
       "image": "/images/facilities/gym.jpg",
+      "images": [
+        "/images/facilities/gym.jpg",
+        "/images/facilities/gym-2.jpeg"
+      ],
       "description": "Our fitness centre is equipped with a range of modern exercise machines and free weights, providing an inviting space for all our guests. Whether you want to energize your morning or unwind after a busy day, our gym offers a comfortable and motivating environment. At Hotel Shuktara Dhaka, we ensure your stay is well-balanced, seamlessly blending relaxation, fitness, and luxury.",
       "buttons": [
         { "label": "CONTACT US", "path": "#contact" }

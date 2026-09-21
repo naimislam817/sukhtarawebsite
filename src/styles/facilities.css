@@ -48,6 +48,108 @@
   transform: scale(1.02);
 }
 
+/* Image Slider Enhancements */
+.facility-detail__slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.facility-slider__track {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  overflow: hidden;
+}
+
+.facility-slider__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.8s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.facility-slider__image.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.facility-slider__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: rgba(18, 53, 46, 0.82);
+  color: var(--color-accent-gold);
+  border: 1px solid rgba(223, 160, 78, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  opacity: 0.85;
+}
+
+.facility-slider__btn:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-accent);
+  transform: translateY(-50%) scale(1.1);
+  opacity: 1;
+}
+
+.facility-slider__btn--prev {
+  left: 24px;
+}
+
+.facility-slider__btn--next {
+  right: 24px;
+}
+
+.facility-slider__dots {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+  background: rgba(18, 53, 46, 0.55);
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(223, 160, 78, 0.2);
+}
+
+.facility-slider__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.facility-slider__dot.active {
+  background: var(--color-accent-gold);
+  width: 22px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(223, 160, 78, 0.6);
+}
+
 .facility-detail__content {
   display: flex;
   flex-direction: column;

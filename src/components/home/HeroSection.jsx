@@ -1,15 +1,19 @@
 import { Link } from 'react-router-dom';
 import homeData from '../../data/homeData.json';
+import { useHotel } from '../../context/HotelContext';
 import '../../styles/home.css';
 
 const HeroSection = () => {
   const { hero } = homeData;
+  const { homepage } = useHotel();
+  const heroBg = homepage?.hero?.backgroundImage || hero.backgroundImage;
+
 
   return (
     <section className="hero">
       <div 
         className="hero__bg" 
-        style={{ backgroundImage: `url(${hero.backgroundImage})` }}
+        style={{ backgroundImage: `url(${heroBg})` }}
         aria-hidden="true"
       />
       <div className="hero__overlay">

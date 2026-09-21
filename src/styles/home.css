@@ -730,6 +730,107 @@
   line-height: 1.65;
 }
 
+/* Facilities Badge */
+.facilities-section__badge {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 0.68rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-variation-settings: 'wght' 700;
+  color: var(--color-accent-gold);
+  background: rgba(223, 160, 78, 0.1);
+  border: 1px solid rgba(223, 160, 78, 0.35);
+  padding: 4px 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(223, 160, 78, 0.1);
+}
+
+/* Highlighted Item (e.g. In-Room Tea & Coffee Setup) */
+.facilities-section__item--highlight {
+  background: linear-gradient(135deg, #ffffff 0%, #fffbf5 100%);
+  border-color: rgba(223, 160, 78, 0.3);
+}
+
+.facilities-section__item--highlight::after {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(223, 160, 78, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Feature tags inside facilities cards */
+.facilities-section__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.facilities-section__feature-tag {
+  font-size: 0.74rem;
+  font-variation-settings: 'wght' 500;
+  color: var(--color-primary);
+  background-color: var(--color-bg-light);
+  border: 1px solid rgba(18, 53, 46, 0.1);
+  padding: 3px 9px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+}
+
+.facilities-section__item:hover .facilities-section__feature-tag {
+  border-color: rgba(223, 160, 78, 0.3);
+  background-color: #fff9f0;
+  color: var(--color-accent-hover);
+}
+
+/* Animated Steam for Coffee / Tea Setup */
+.coffee-steam {
+  stroke: var(--color-accent);
+  transition: stroke 0.3s ease;
+  animation: steamRise 2s ease-in-out infinite;
+}
+
+.coffee-steam--1 {
+  animation-delay: 0s;
+}
+
+.coffee-steam--2 {
+  animation-delay: 0.6s;
+}
+
+.coffee-steam--3 {
+  animation-delay: 1.2s;
+}
+
+.facilities-section__item:hover .coffee-steam {
+  stroke: var(--color-accent-gold);
+}
+
+@keyframes steamRise {
+  0% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-1.5px);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateY(-3px);
+  }
+}
+
 /* ==========================================================================
    EXPERIENCES GALLERY (VINTAGE PHOTOGRAPHY & OVERLAY CAPTION)
    ========================================================================== */
@@ -1379,15 +1480,22 @@
   }
   /* Facilities on small screens */
   .facilities-section__item {
-    padding: 20px 16px;
+    padding: 26px 16px 20px;
     gap: 16px;
-    align-items: center;
+    align-items: flex-start;
     border-radius: 10px;
+  }
+  .facilities-section__badge {
+    top: 10px;
+    right: 12px;
+    font-size: 0.62rem;
+    padding: 2px 8px;
   }
   .facilities-section__icon {
     width: 48px;
     height: 48px;
     border-radius: 12px;
+    margin-top: 2px;
   }
   .facilities-section__icon svg {
     width: 22px;

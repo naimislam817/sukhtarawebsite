@@ -1,0 +1,136 @@
+[
+  {
+    "id": 1,
+    "name": "Standard Single Room",
+    "slug": "standard-single",
+    "image": "/images/rooms/standard-single.png",
+    "price": 3500,
+    "status": "published",
+    "description": "Cozy setup ideal for solo business travelers. Includes essential amenities, high-speed Wi-Fi, writing desk, and room service.",
+    "amenities": [
+      "Single Bed",
+      "Private Bathroom",
+      "Air Conditioning",
+      "Flat-Screen TV",
+      "Complimentary Wi-Fi",
+      "Refrigerator",
+      "Minibar",
+      "24/7 Room Service"
+    ],
+    "category": "single"
+  },
+  {
+    "id": 2,
+    "name": "Deluxe Double Room",
+    "slug": "deluxe-twin",
+    "image": "/images/rooms/deluxe-twin.png",
+    "price": 4500,
+    "status": "draft",
+    "description": "Spacious room with a king-size bed and city views. Perfect for couples or duo travelers seeking comfort.",
+    "amenities": [
+      "Two Comfortable Beds",
+      "Private Bathroom",
+      "Air Conditioning",
+      "Flat-Screen TV",
+      "Complimentary Wi-Fi",
+      "Refrigerator",
+      "Minibar",
+      "24/7 Room Service"
+    ],
+    "category": "twin"
+  },
+  {
+    "id": 3,
+    "name": "Premium Suite",
+    "slug": "premium-deluxe-king",
+    "image": "/images/rooms/premium-deluxe-king.png",
+    "price": 6500,
+    "status": "published",
+    "description": "Luxury suite featuring a separate living area, premium bath, executive lounge access, and city skyline view.",
+    "amenities": [
+      "King-Size Bed",
+      "Private Bathroom",
+      "Air Conditioning",
+      "Flat-Screen TV",
+      "Complimentary Wi-Fi",
+      "Refrigerator",
+      "Minibar",
+      "24/7 Room Service",
+      "Spacious Wardrobe"
+    ],
+    "category": "king"
+  },
+  {
+    "id": 4,
+    "name": "Presidential Penthouse",
+    "slug": "premium-triple",
+    "image": "/images/rooms/premium-triple.png",
+    "price": 8500,
+    "status": "published",
+    "description": "The ultimate luxury experience. Panoramic views, private butler service, bespoke furniture, and exquisite design.",
+    "amenities": [
+      "Three Beds / Master King",
+      "Luxury Jacuzzi Bath",
+      "Air Conditioning",
+      "Smart TV with Streaming",
+      "Complimentary Wi-Fi",
+      "Butler Service",
+      "Minibar"
+    ],
+    "category": "triple"
+  },
+  {
+    "id": 5,
+    "name": "Superior King Room",
+    "slug": "superior-king",
+    "image": "/images/rooms/superior-king.png",
+    "price": 5500,
+    "status": "published",
+    "description": "Inviting king bedroom with chic modern decor, tea & coffee setup, dynamic workspace, and deluxe private bath.",
+    "amenities": [
+      "King Bed",
+      "Private Bathroom",
+      "Air Conditioning",
+      "Flat-Screen TV",
+      "Complimentary Wi-Fi",
+      "Mini-Fridge",
+      "In-Room Coffee Setup"
+    ],
+    "category": "king"
+  },
+  {
+    "id": 6,
+    "name": "Deluxe King Room",
+    "slug": "deluxe-king",
+    "image": "/images/rooms/deluxe-king.png",
+    "price": 5000,
+    "status": "published",
+    "description": "Elegantly furnished king room offering top-tier comfort, ambient lighting, and dedicated 24/7 room service.",
+    "amenities": [
+      "King Bed",
+      "Private Bathroom",
+      "Air Conditioning",
+      "Flat-Screen TV",
+      "Complimentary Wi-Fi",
+      "Wardrobe"
+    ],
+    "category": "king"
+  },
+  {
+    "id": 7,
+    "name": "Superior Twin Room",
+    "slug": "superior-twin",
+    "image": "/images/rooms/superior-twin.png",
+    "price": 4200,
+    "status": "published",
+    "description": "Serene twin bedroom with high-thread linens, writing desk, and soothing interior ambiance.",
+    "amenities": [
+      "Two Twin Beds",
+      "Private Bathroom",
+      "Air Conditioning",
+      "Flat-Screen TV",
+      "Complimentary Wi-Fi"
+    ],
+    "category": "twin"
+  }
+]

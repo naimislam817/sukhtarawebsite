@@ -10,7 +10,9 @@ const facilityIcons = {
   ),
   dining: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"></path>
+      <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+      <path d="M7 2v20"></path>
+      <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
     </svg>
   ),
   fitness: (
@@ -34,6 +36,21 @@ const facilityIcons = {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"></path>
     </svg>
+  ),
+  parking: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+      <path d="M9 17V7h4.5a3.5 3.5 0 0 1 0 6H9"></path>
+    </svg>
+  ),
+  coffee: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="facilities-icon-coffee">
+      <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+      <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+      <path className="coffee-steam coffee-steam--1" d="M6 1.5c.6 1-.6 2 0 3"></path>
+      <path className="coffee-steam coffee-steam--2" d="M10 1c.6 1.5-.6 2.5 0 4"></path>
+      <path className="coffee-steam coffee-steam--3" d="M14 1.5c.6 1-.6 2 0 3"></path>
+    </svg>
   )
 };
 
@@ -47,15 +64,29 @@ const FacilitiesSection = () => {
         <div className="facilities-section__list">
           {facilities.items.map((item, index) => (
             <div 
-              className={`facilities-section__item reveal-fade-up delay-${(index % 2) + 1}`} 
+              className={`facilities-section__item ${item.highlight ? 'facilities-section__item--highlight' : ''} reveal-fade-up delay-${(index % 2) + 1}`} 
               key={index}
             >
+              {item.badge && (
+                <span className="facilities-section__badge">
+                  {item.badge}
+                </span>
+              )}
               <div className="facilities-section__icon">
                 {facilityIcons[item.icon]}
               </div>
               <div className="facilities-section__info">
                 <h3 className="facilities-section__item-title">{item.title}</h3>
                 <p className="facilities-section__item-desc">{item.description}</p>
+                {item.features && (
+                  <div className="facilities-section__features">
+                    {item.features.map((feat, fIndex) => (
+                      <span className="facilities-section__feature-tag" key={fIndex}>
+                        {feat}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}

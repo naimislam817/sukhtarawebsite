@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "backgroundImage": "/images/hero/hero-bg.jpg",
+    "subtitle": "",
+    "titleLine1": "A Tradition of",
+    "titleHighlight": "Gracious",
+    "titleLine2": "Hospitality",
+    "description": "Embrace warm hospitality, exquisite cuisine, & thoughtful amenities in the heart of Dhaka."
+  },
+  "experiences": {
+    "title": "Unforgettable Experiences",
+    "images": [
+      { "id": 1, "src": "/images/gallery/experience-1.png", "alt": "Hotel Dining", "caption": "Signature Dining" },
+      { "id": 2, "src": "/images/gallery/experience-2.png", "alt": "Room Interior", "caption": "Luxury Interiors" },
+      { "id": 3, "src": "/images/gallery/experience-3.png", "alt": "Hotel Lobby", "caption": "Grand Lobby" },
+      { "id": 4, "src": "/images/gallery/experience-4.png", "alt": "Restaurant", "caption": "Rooftop Views" }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "BK-1001",
+    "fullName": "Rahim Chowdhury",
+    "email": "rahim@example.com",
+    "phone": "+880 1711 223344",
+    "roomPreference": "Premium Suite",
+    "numRooms": 1,
+    "numGuests": 2,
+    "checkIn": "2026-09-25",
+    "checkOut": "2026-09-28",
+    "specialRequest": "Late check-in requested (10:00 PM)",
+    "status": "Confirmed",
+    "createdAt": "2026-09-20T10:15:00.000Z"
+  },
+  {
+    "id": "BK-1002",
+    "fullName": "Sarah Jenkins",
+    "email": "sarah.j@example.com",
+    "phone": "+44 7911 123456",
+    "roomPreference": "Presidential Penthouse",
+    "numRooms": 1,
+    "numGuests": 2,
+    "checkIn": "2026-10-02",
+    "checkOut": "2026-10-06",
+    "specialRequest": "Airport transfer pickup requested",
+    "status": "Pending",
+    "createdAt": "2026-09-21T08:30:00.000Z"
+  }
+]

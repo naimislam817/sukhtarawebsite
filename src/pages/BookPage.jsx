@@ -1,20 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useHotel } from '../context/HotelContext';
 import roomsData from '../data/roomsData.json';
 import siteData from '../data/siteData.json';
 import '../styles/book.css';
 
 const BookPage = () => {
+  const [searchParams] = useSearchParams();
+  const preselectedRoom = searchParams.get('room');
+  const { rooms, addBooking } = useHotel();
+
+  const availableRooms = rooms && rooms.length > 0
+    ? rooms.filter(r => r.status === 'published')
+    : roomsData.rooms;
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
+    phone: '',
     checkIn: '',
     checkOut: '',
-    roomPreference: roomsData.rooms[0]?.name || '',
+    roomPreference: preselectedRoom || availableRooms[0]?.name || '',
     numRooms: '1',
+    numGuests: '1',
     specialRequest: ''
   });
 
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (preselectedRoom) {
+      setFormData(prev => ({ ...prev, roomPreference: preselectedRoom }));
+    } else if (availableRooms.length > 0 && !formData.roomPreference) {
+      setFormData(prev => ({ ...prev, roomPreference: availableRooms[0].name }));
+    }
+  }, [preselectedRoom, availableRooms]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,12 +46,36 @@ const BookPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate API request or log the form submission details
-    console.log('Reservation Submitted:', formData);
-    setSubmitted(true);
+    setErrorMessage('');
+    setSubmitting(true);
+
+    try {
+      const result = await addBooking({
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        roomPreference: formData.roomPreference,
+        checkIn: formData.checkIn,
+        checkOut: formData.checkOut,
+        numRooms: parseInt(formData.numRooms, 10) || 1,
+        numGuests: parseInt(formData.numGuests, 10) || 1,
+        message: formData.specialRequest,
+      });
+
+      if (result) {
+        setSubmitted(true);
+      } else {
+        setErrorMessage('Failed to submit booking. Please try again or contact front desk.');
+      }
+    } catch (err) {
+      setErrorMessage(err.message || 'Error occurred while saving reservation.');
+    } finally {
+      setSubmitting(false);
+    }
   };
+
 
   return (
     <>
@@ -135,14 +181,15 @@ const BookPage = () => {
                       onChange={handleChange}
                       required
                     >
-                      {roomsData.rooms.map((room) => (
-                        <option key={room.id} value={room.name}>
-                          {room.name}
+                      {availableRooms.map((room) => (
+                        <option key={room.id || room.slug} value={room.name}>
+                          {room.name} {room.price ? `(৳ ${Number(room.price).toLocaleString('en-BD')}/night)` : ''}
                         </option>
                       ))}
                     </select>
                   </div>
                 </div>
+
 
                 <div className="book-form__row">
                   <div className="book-form__group">
@@ -225,11 +272,26 @@ const BookPage = () => {
                   ></textarea>
                 </div>
 
+                {errorMessage && (
+                  <div style={{
+                    padding: '12px 18px',
+                    background: '#fef2f2',
+                    border: '1px solid #fecaca',
+                    borderRadius: 8,
+                    color: '#dc2626',
+                    fontSize: '0.9rem',
+                    marginBottom: 16
+                  }}>
+                    {errorMessage}
+                  </div>
+                )}
+
                 <div className="book-form__actions">
-                  <button type="submit" className="book-form__submit-btn">
-                    CONFIRM RESERVATION
+                  <button type="submit" className="book-form__submit-btn" disabled={submitting}>
+                    {submitting ? 'SUBMITTING RESERVATION...' : 'CONFIRM RESERVATION'}
                   </button>
                   <div className="book-form__perks">
+
                     <span className="book-form__perk">
                       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                       Complimentary Buffet Breakfast
