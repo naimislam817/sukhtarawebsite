@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useHotel } from '../../context/HotelContext';
 import RoomModal from '../../components/admin/RoomModal';
+import { getValidRoomImage } from '../../utils/roomImages';
 import '../../styles/admin.css';
+
 
 const ITEMS_PER_PAGE = 7;
 
@@ -101,12 +103,16 @@ const AdminRoomsPage = () => {
               <tr key={room.id}>
                 <td>
                   <img
-                    src={room.image || '/images/rooms/standard-single.png'}
+                    src={getValidRoomImage(room.image, room.name)}
                     alt={room.name}
                     className="admin-room-thumb"
-                    onError={(e) => { e.target.src = '/images/rooms/standard-single.png'; }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/images/rooms/deluxe-king.png';
+                    }}
                   />
                 </td>
+
                 <td>
                   <div className="admin-room-info">
                     <span className="admin-room-title">{room.name}</span>

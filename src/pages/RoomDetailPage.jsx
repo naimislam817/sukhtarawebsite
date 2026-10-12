@@ -1,8 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
 import roomsData from '../data/roomsData.json';
 import { useHotel } from '../context/HotelContext';
+import { getValidRoomImage } from '../utils/roomImages';
 import PageBanner from '../components/common/PageBanner';
 import '../styles/roomDetail.css';
+
 
 const RoomDetailPage = () => {
   const { slug } = useParams();
@@ -42,13 +44,15 @@ const RoomDetailPage = () => {
           {/* Room Image */}
           <div className="room-detail__image-wrapper" style={{ position: 'relative' }}>
             <img
-              src={room.image || '/images/rooms/standard-single.png'}
+              src={getValidRoomImage(room.image, room.name)}
               alt={room.name}
               className="room-detail__image"
               onError={(e) => {
-                e.target.src = '/images/rooms/standard-single.png';
+                e.target.onerror = null;
+                e.target.src = '/images/rooms/premium-deluxe-king.png';
               }}
             />
+
             {priceDisplay && (
               <div style={{
                 position: 'absolute',

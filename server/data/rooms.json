@@ -1,52 +1,75 @@
 [
   {
     "id": 1,
-    "name": "Standard Single Room",
-    "slug": "standard-single",
-    "image": "/images/rooms/standard-single.png",
-    "price": 3500,
+    "name": "Premium Triple",
+    "slug": "premium-triple",
+    "image": "/images/rooms/premium-triple.png",
+    "price": 6500,
     "status": "published",
-    "description": "Cozy setup ideal for solo business travelers. Includes essential amenities, high-speed Wi-Fi, writing desk, and room service.",
+    "description": "Spacious and ideal for families or groups seeking extra comfort with three beds, private bathroom, and room service.",
     "amenities": [
-      "Single Bed",
+      "Three Comfortable Beds",
       "Private Bathroom",
       "Air Conditioning",
       "Flat-Screen TV",
       "Complimentary Wi-Fi",
       "Refrigerator",
       "Minibar",
-      "24/7 Room Service"
+      "24/7 Room Service",
+      "Wardrobe & Storage"
     ],
-    "category": "single"
+    "category": "triple"
   },
   {
     "id": 2,
-    "name": "Deluxe Double Room",
+    "name": "Deluxe Twin",
     "slug": "deluxe-twin",
     "image": "/images/rooms/deluxe-twin.png",
     "price": 4500,
-    "status": "draft",
-    "description": "Spacious room with a king-size bed and city views. Perfect for couples or duo travelers seeking comfort.",
+    "status": "published",
+    "description": "Stylish and relaxing environment decorated in soothing warm tones, featuring two comfortable twin single beds.",
     "amenities": [
-      "Two Comfortable Beds",
+      "Two Comfortable Twin Beds",
       "Private Bathroom",
       "Air Conditioning",
       "Flat-Screen TV",
       "Complimentary Wi-Fi",
       "Refrigerator",
       "Minibar",
-      "24/7 Room Service"
+      "24/7 Room Service",
+      "Wardrobe"
     ],
     "category": "twin"
   },
   {
     "id": 3,
-    "name": "Premium Suite",
+    "name": "Superior Twin",
+    "slug": "superior-twin",
+    "image": "/images/rooms/superior-twin.png",
+    "price": 5500,
+    "status": "published",
+    "description": "Finest twin rooms designed to accommodate guests with comfortable twin beds in a serene, inviting atmosphere.",
+    "amenities": [
+      "Two Superior Twin Beds",
+      "Private Bathroom",
+      "Air Conditioning",
+      "Flat-Screen TV",
+      "Complimentary Wi-Fi",
+      "Refrigerator",
+      "Minibar",
+      "24/7 Room Service",
+      "Spacious Wardrobe"
+    ],
+    "category": "twin"
+  },
+  {
+    "id": 4,
+    "name": "Premium Deluxe King",
     "slug": "premium-deluxe-king",
     "image": "/images/rooms/premium-deluxe-king.png",
-    "price": 6500,
+    "price": 8500,
     "status": "published",
-    "description": "Luxury suite featuring a separate living area, premium bath, executive lounge access, and city skyline view.",
+    "description": "Our largest and most luxurious option with plush king-sized bed, seating area, writing desk, and upscale amenities.",
     "amenities": [
       "King-Size Bed",
       "Private Bathroom",
@@ -61,76 +84,65 @@
     "category": "king"
   },
   {
-    "id": 4,
-    "name": "Presidential Penthouse",
-    "slug": "premium-triple",
-    "image": "/images/rooms/premium-triple.png",
-    "price": 8500,
-    "status": "published",
-    "description": "The ultimate luxury experience. Panoramic views, private butler service, bespoke furniture, and exquisite design.",
-    "amenities": [
-      "Three Beds / Master King",
-      "Luxury Jacuzzi Bath",
-      "Air Conditioning",
-      "Smart TV with Streaming",
-      "Complimentary Wi-Fi",
-      "Butler Service",
-      "Minibar"
-    ],
-    "category": "triple"
-  },
-  {
     "id": 5,
-    "name": "Superior King Room",
-    "slug": "superior-king",
-    "image": "/images/rooms/superior-king.png",
-    "price": 5500,
+    "name": "Deluxe King",
+    "slug": "deluxe-king",
+    "image": "/images/rooms/deluxe-king.png",
+    "price": 5000,
     "status": "published",
-    "description": "Inviting king bedroom with chic modern decor, tea & coffee setup, dynamic workspace, and deluxe private bath.",
+    "description": "Luxurious experience with stylish decor, king-sized bed, modern security, high-speed internet, and customized services.",
     "amenities": [
-      "King Bed",
+      "King-Size Bed",
       "Private Bathroom",
       "Air Conditioning",
       "Flat-Screen TV",
       "Complimentary Wi-Fi",
-      "Mini-Fridge",
-      "In-Room Coffee Setup"
+      "Refrigerator",
+      "Minibar",
+      "24/7 Room Service",
+      "Spacious Wardrobe"
     ],
     "category": "king"
   },
   {
     "id": 6,
-    "name": "Deluxe King Room",
-    "slug": "deluxe-king",
-    "image": "/images/rooms/deluxe-king.png",
-    "price": 5000,
+    "name": "Superior King",
+    "slug": "superior-king",
+    "image": "/images/rooms/superior-king.png",
+    "price": 4200,
     "status": "published",
-    "description": "Elegantly furnished king room offering top-tier comfort, ambient lighting, and dedicated 24/7 room service.",
+    "description": "Cozy and inviting atmosphere with king-size bed, private bathroom, refrigerator, flat-screen TV, and city views.",
     "amenities": [
-      "King Bed",
+      "King-Size Bed",
       "Private Bathroom",
       "Air Conditioning",
       "Flat-Screen TV",
       "Complimentary Wi-Fi",
-      "Wardrobe"
+      "Refrigerator",
+      "Spacious Wardrobe"
     ],
     "category": "king"
   },
   {
     "id": 7,
-    "name": "Superior Twin Room",
-    "slug": "superior-twin",
-    "image": "/images/rooms/superior-twin.png",
-    "price": 4200,
+    "name": "Standard Single",
+    "slug": "standard-single",
+    "image": "/images/rooms/standard-single.png",
+    "price": 3500,
     "status": "published",
-    "description": "Serene twin bedroom with high-thread linens, writing desk, and soothing interior ambiance.",
+    "description": "Budget-friendly yet cozy, comfortable, and secure stay with essential amenities, Wi-Fi, and desk for solo travelers.",
     "amenities": [
-      "Two Twin Beds",
+      "Single Bed",
       "Private Bathroom",
       "Air Conditioning",
       "Flat-Screen TV",
-      "Complimentary Wi-Fi"
+      "Complimentary Wi-Fi",
+      "Refrigerator",
+      "Minibar",
+      "24/7 Room Service",
+      "In-Room Wardrobe",
+      "On-Site Parking"
     ],
-    "category": "twin"
+    "category": "single"
   }
 ]

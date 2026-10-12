@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getValidRoomImage } from '../../utils/roomImages';
 import '../../styles/rooms.css';
 
 const RoomCard = ({ room }) => {
@@ -6,17 +7,21 @@ const RoomCard = ({ room }) => {
     ? `৳ ${Number(room.price).toLocaleString('en-BD')}`
     : null;
 
+  const validImage = getValidRoomImage(room.image, room.name);
+
   return (
     <div className="room-card reveal-fade-up">
       <div className="room-card__image-wrapper">
         <img
-          src={room.image || '/images/rooms/standard-single.png'}
+          src={validImage}
           alt={room.name}
           className="room-card__image"
           onError={(e) => {
-            e.target.src = '/images/rooms/standard-single.png';
+            e.target.onerror = null;
+            e.target.src = '/images/rooms/deluxe-king.png';
           }}
         />
+
         {priceDisplay && (
           <span className="room-card__price-tag">
             {priceDisplay} <small>/ night</small>

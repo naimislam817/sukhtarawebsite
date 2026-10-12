@@ -1,8 +1,10 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import initialHomeData from '../data/homeData.json';
+import { getValidRoomImage } from '../utils/roomImages';
 
 const HotelContext = createContext(null);
+
 
 // Seed rooms used only on first load if table is empty
 const SEED_ROOMS = [
@@ -102,16 +104,31 @@ export const HotelProvider = ({ children }) => {
       if (error) throw error;
 
       if (data && data.length > 0) {
-        setRooms(data);
+        const sanitized = data.map(r => ({
+          ...r,
+          image: getValidRoomImage(r.image, r.name),
+        }));
+        setRooms(sanitized);
       } else {
         // First run — seed rooms into Supabase
         const { data: seeded } = await supabase.from('rooms').insert(SEED_ROOMS).select();
-        if (seeded) setRooms(seeded);
+        if (seeded) {
+          const sanitized = seeded.map(r => ({
+            ...r,
+            image: getValidRoomImage(r.image, r.name),
+          }));
+          setRooms(sanitized);
+        }
       }
     } catch (err) {
       console.warn('Rooms load failed:', err.message);
-      setRooms(SEED_ROOMS.map((r, i) => ({ ...r, id: String(i + 1) })));
+      setRooms(SEED_ROOMS.map((r, i) => ({
+        ...r,
+        id: String(i + 1),
+        image: getValidRoomImage(r.image, r.name),
+      })));
     }
+
 
     // 2. Homepage settings
     try {

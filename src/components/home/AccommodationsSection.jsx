@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import homeData from '../../data/homeData.json';
 import { useHotel } from '../../context/HotelContext';
 import SectionTitle from '../common/SectionTitle';
+import { getValidRoomImage } from '../../utils/roomImages';
 import '../../styles/home.css';
 
 const AccommodationsSection = () => {
@@ -16,11 +17,13 @@ const AccommodationsSection = () => {
         .map(r => ({
           name: r.name,
           description: r.description,
-          image: r.image || '/images/rooms/standard-single.png',
+          image: getValidRoomImage(r.image, r.name),
           slug: r.slug || r.id,
         }))
-    : accommodations.rooms;
-
+    : accommodations.rooms.map(r => ({
+        ...r,
+        image: getValidRoomImage(r.image, r.name),
+      }));
 
   return (
     <section className="accommodations">
@@ -33,7 +36,15 @@ const AccommodationsSection = () => {
               key={index}
             >
               <div className="accommodations__image-wrapper">
-                <img src={room.image} alt={room.name} className="accommodations__image" />
+                <img
+                  src={room.image}
+                  alt={room.name}
+                  className="accommodations__image"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/rooms/premium-deluxe-king.png';
+                  }}
+                />
                 <span className="accommodations__badge">
                   ★ {index === 0 ? 'SIGNATURE' : index === 1 ? 'PREMIUM' : 'POPULAR'}
                 </span>
@@ -41,7 +52,7 @@ const AccommodationsSection = () => {
               <div className="accommodations__info">
                 <h3 className="accommodations__name">{room.name}</h3>
                 <p className="accommodations__desc">{room.description}</p>
-                <Link to="/rooms" className="accommodations__link">
+                <Link to={`/rooms/${room.slug}`} className="accommodations__link">
                   <span>View Details</span>
                   <span className="accommodations__arrow">→</span>
                 </Link>
@@ -55,3 +66,4 @@ const AccommodationsSection = () => {
 };
 
 export default AccommodationsSection;
+
