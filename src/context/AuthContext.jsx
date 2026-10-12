@@ -51,10 +51,32 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    // Try Supabase auth first
+    const normalizedEmail = (email || '').trim().toLowerCase();
+    const cleanPassword = (password || '').trim();
+
+    // 1. Demo Credentials Check (instant access, 0 console network errors)
+    if (
+      normalizedEmail === 'admin@hotelshuktara.com' &&
+      (cleanPassword === 'admin123' || cleanPassword === 'admin')
+    ) {
+      const demoUser = {
+        id: 'admin-hotel-shuktara',
+        email: 'admin@hotelshuktara.com',
+        name: 'Hotel Shuktara Admin',
+      };
+      localStorage.setItem('shuktara_admin_demo_user', JSON.stringify(demoUser));
+      setUser(demoUser);
+      setIsAuthenticated(true);
+      return { success: true, user: demoUser };
+    }
+
+    // 2. If custom credentials entered, authenticate via Supabase
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (!error && data?.user) {
+      const { data, error } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password: cleanPassword });
+      if (error) {
+        return { success: false, error: error.message };
+      }
+      if (data?.user) {
         setUser({
           id: data.user.id,
           email: data.user.email,
@@ -63,33 +85,13 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         return { success: true, user: data.user };
       }
-    } catch {
-      // Continue to demo credentials fallback
-    }
-
-    // Demo admin credentials fallback (always succeeds with admin@hotelshuktara.com & admin123)
-    const normalizedEmail = (email || '').trim().toLowerCase();
-    if (
-      normalizedEmail === 'admin@hotelshuktara.com' ||
-      normalizedEmail === 'admin@hotelshuktara.bd' ||
-      normalizedEmail.includes('admin')
-    ) {
-      if (password === 'admin123' || password === 'admin' || password.length >= 4) {
-        const demoUser = {
-          id: 'admin-hotel-shuktara',
-          email: 'admin@hotelshuktara.com',
-          name: 'Shuktara Admin',
-        };
-        localStorage.setItem('shuktara_admin_demo_user', JSON.stringify(demoUser));
-        setUser(demoUser);
-        setIsAuthenticated(true);
-        return { success: true, user: demoUser };
-      }
+    } catch (err) {
+      return { success: false, error: err.message || 'Login failed' };
     }
 
     return {
       success: false,
-      error: 'Invalid password. Use "admin123" for demo admin access.',
+      error: 'Invalid email or password. Use demo credentials: admin@hotelshuktara.com / admin123',
     };
   };
 
