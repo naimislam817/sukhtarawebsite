@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { getValidRoomImage } from '../../utils/roomImages';
 import '../../styles/admin.css';
 
 const RoomModal = ({ room = null, onSave, onClose }) => {
@@ -15,7 +16,10 @@ const RoomModal = ({ room = null, onSave, onClose }) => {
   });
 
   const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(room?.image || null);
+  const [imagePreview, setImagePreview] = useState(
+    room?.image ? getValidRoomImage(room.image, room.name) : null
+  );
+
   const [saving, setSaving] = useState(false);
   const [dragOver, setDragOver] = useState(false);
 
