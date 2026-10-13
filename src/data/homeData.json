@@ -62,6 +62,14 @@
         "badge": "Complimentary",
         "features": ["Daily 7:00 AM – 10:30 AM", "Skylight Rooftop Restaurant", "Bengali & Continental Options", "Included With Every Stay"],
         "highlight": true
+      },
+      {
+        "icon": "service247",
+        "title": "24/7 Guest Services",
+        "description": "Our dedicated team is available around the clock — day and night — to attend to every request, resolve any concern, and ensure your stay is seamless from check-in to check-out.",
+        "badge": "Always Available",
+        "features": ["24-Hour Front Desk", "Room Service All Night", "Housekeeping on Demand", "Emergency Assistance"],
+        "highlight": true
       }
     ]
 

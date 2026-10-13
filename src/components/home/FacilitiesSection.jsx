@@ -61,6 +61,13 @@ const facilityIcons = {
       <path d="M8 9.5c.5-1 1.5-1 2 0" />
       <path d="M14 9.5c.5-1 1.5-1 2 0" />
     </svg>
+  ),
+  service247: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+      <path d="M4.93 4.93a10 10 0 0 0 0 14.14" strokeDasharray="3 2" />
+    </svg>
   )
 };
 
