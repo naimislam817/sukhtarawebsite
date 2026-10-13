@@ -101,27 +101,25 @@ export const HotelProvider = ({ children }) => {
   const loadData = async () => {
     setLoading(true);
 
-    // 1. Rooms — try sort_order first, fall back to created_at if column missing
+    // 1. Rooms — load from Supabase and order gracefully
     try {
-      let { data, error } = await supabase
+      const { data, error } = await supabase
         .from('rooms')
         .select('*')
-        .order('sort_order', { ascending: true });
-
-      // If sort_order column doesn't exist, fall back to created_at
-      if (error && error.message?.includes('sort_order')) {
-        const fallback = await supabase
-          .from('rooms')
-          .select('*')
-          .order('created_at', { ascending: true });
-        data = fallback.data;
-        error = fallback.error;
-      }
+        .order('created_at', { ascending: true });
 
       if (error) throw error;
 
       if (data && data.length > 0) {
-        const sanitized = data.map((r, i) => ({
+        // Sort client-side: prioritize sort_order if set, else maintain original index
+        const sortedData = [...data].sort((a, b) => {
+          if (a.sort_order !== undefined && a.sort_order !== null && b.sort_order !== undefined && b.sort_order !== null) {
+            return a.sort_order - b.sort_order;
+          }
+          return 0;
+        });
+
+        const sanitized = sortedData.map((r, i) => ({
           ...r,
           sort_order: r.sort_order ?? i,
           image: getValidRoomImage(r.image, r.name),
