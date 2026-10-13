@@ -1542,3 +1542,72 @@
   overflow: hidden;
 }
 
+/* ── Drag-and-Drop Reorder Styles ──────────────────── */
+.admin-drag-handle {
+  cursor: grab;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+  touch-action: none;
+}
+
+.admin-drag-handle:hover {
+  color: var(--admin-primary);
+  background: #f1f5f9;
+}
+
+.admin-drag-handle:active {
+  cursor: grabbing;
+}
+
+.admin-table tr.dragging {
+  opacity: 0.4;
+  background: #f1f5f9;
+}
+
+.admin-table tr.drag-over {
+  box-shadow: 0 -2px 0 0 var(--admin-gold) inset;
+}
+
+.admin-table tr.drag-over td {
+  position: relative;
+}
+
+.admin-table tr.drag-over td::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--admin-gold);
+}
+
+.admin-reorder-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  color: #92400e;
+  margin-bottom: 16px;
+}
+
+.admin-reorder-hint svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 900px) {
+  .admin-drag-handle {
+    padding: 8px;
+  }
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useHotel } from '../../context/HotelContext';
 import RoomModal from '../../components/admin/RoomModal';
 import { getValidRoomImage } from '../../utils/roomImages';
@@ -8,12 +8,20 @@ import '../../styles/admin.css';
 const ITEMS_PER_PAGE = 7;
 
 const AdminRoomsPage = () => {
-  const { rooms, addRoom, updateRoom, toggleRoomStatus, deleteRoom } = useHotel();
+  const { rooms, addRoom, updateRoom, toggleRoomStatus, deleteRoom, reorderRooms } = useHotel();
   const [showModal, setShowModal] = useState(false);
   const [editingRoom, setEditingRoom] = useState(null);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [confirmDelete, setConfirmDelete] = useState(null);
+
+  // ── Drag-and-drop state ────────────────────────────
+  const dragItem = useRef(null);
+  const dragOverItem = useRef(null);
+  const [draggingId, setDraggingId] = useState(null);
+  const [dragOverId, setDragOverId] = useState(null);
+
+  const isSearching = search.trim().length > 0;
 
   const filtered = rooms.filter(r =>
     r.name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -46,6 +54,56 @@ const AdminRoomsPage = () => {
     return `৳ ${Number(price).toLocaleString('en-BD')}`;
   };
 
+  // ── Drag handlers (work on full rooms array, not paginated) ──
+  const handleDragStart = useCallback((e, index) => {
+    // index is the position in the FULL rooms array
+    dragItem.current = index;
+    setDraggingId(rooms[index]?.id);
+    e.dataTransfer.effectAllowed = 'move';
+    // Set a transparent drag image for cleaner look
+    const el = e.target.closest('tr');
+    if (el) {
+      e.dataTransfer.setDragImage(el, 20, 20);
+    }
+  }, [rooms]);
+
+  const handleDragOver = useCallback((e, index) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    dragOverItem.current = index;
+    setDragOverId(rooms[index]?.id);
+  }, [rooms]);
+
+  const handleDragEnd = useCallback(() => {
+    if (
+      dragItem.current !== null &&
+      dragOverItem.current !== null &&
+      dragItem.current !== dragOverItem.current
+    ) {
+      const reordered = [...rooms];
+      const [draggedRoom] = reordered.splice(dragItem.current, 1);
+      reordered.splice(dragOverItem.current, 0, draggedRoom);
+
+      // Assign new sort_order values
+      const withOrder = reordered.map((room, i) => ({
+        ...room,
+        sort_order: i,
+      }));
+
+      reorderRooms(withOrder);
+    }
+    dragItem.current = null;
+    dragOverItem.current = null;
+    setDraggingId(null);
+    setDragOverId(null);
+  }, [rooms, reorderRooms]);
+
+  // Convert paginated index to full array index
+  const toFullIndex = (paginatedIdx) => {
+    if (isSearching) return null; // disable drag during search
+    return (page - 1) * ITEMS_PER_PAGE + paginatedIdx;
+  };
+
   return (
     <>
       <div className="admin-page-header">
@@ -60,6 +118,17 @@ const AdminRoomsPage = () => {
           Add New Room
         </button>
       </div>
+
+      {/* Reorder hint */}
+      {!isSearching && (
+        <div className="admin-reorder-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="7 8 3 12 7 16" /><polyline points="17 8 21 12 17 16" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+          </svg>
+          Drag the <strong>⠿</strong> handle to reorder rooms. The same order is shown on the public website.
+        </div>
+      )}
 
       {/* Search */}
       <div style={{ marginBottom: 20 }}>
@@ -85,6 +154,7 @@ const AdminRoomsPage = () => {
         <table className="admin-table">
           <thead>
             <tr>
+              {!isSearching && <th style={{ width: 44 }}></th>}
               <th>Image</th>
               <th>Room Details</th>
               <th>Price / Night</th>
@@ -95,65 +165,95 @@ const AdminRoomsPage = () => {
           <tbody>
             {paginated.length === 0 ? (
               <tr>
-                <td colSpan={5} style={{ textAlign: 'center', padding: '40px 24px', color: '#94a3b8', fontStyle: 'italic' }}>
+                <td colSpan={isSearching ? 5 : 6} style={{ textAlign: 'center', padding: '40px 24px', color: '#94a3b8', fontStyle: 'italic' }}>
                   {search ? 'No rooms match your search.' : 'No rooms yet. Click "+ Add New Room" to get started.'}
                 </td>
               </tr>
-            ) : paginated.map((room) => (
-              <tr key={room.id}>
-                <td>
-                  <img
-                    src={getValidRoomImage(room.image, room.name)}
-                    alt={room.name}
-                    className="admin-room-thumb"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/images/rooms/deluxe-king.png';
-                    }}
-                  />
-                </td>
+            ) : paginated.map((room, pIdx) => {
+              const fullIdx = toFullIndex(pIdx);
+              const isDragging = room.id === draggingId;
+              const isDragOver = room.id === dragOverId;
 
-                <td>
-                  <div className="admin-room-info">
-                    <span className="admin-room-title">{room.name}</span>
-                    <span className="admin-room-desc">{room.description}</span>
-                  </div>
-                </td>
-                <td>
-                  <span className="admin-price-pill">{formatPrice(room.price)}</span>
-                </td>
-                <td>
-                  <button
-                    className={`admin-status-pill ${room.status === 'published' ? 'published' : 'draft'}`}
-                    onClick={() => toggleRoomStatus(room.id)}
-                    title="Click to toggle status"
-                  >
-                    <span className="admin-status-dot" />
-                    {room.status === 'published' ? 'Published' : 'Draft'}
-                  </button>
-                </td>
-                <td>
-                  <div className="admin-actions">
-                    <button className="admin-action-btn" onClick={() => handleEdit(room)}>
-                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                      </svg>
-                      Edit
+              return (
+                <tr
+                  key={room.id}
+                  className={`${isDragging ? 'dragging' : ''} ${isDragOver ? 'drag-over' : ''}`}
+                  draggable={!isSearching}
+                  onDragStart={(e) => fullIdx !== null && handleDragStart(e, fullIdx)}
+                  onDragOver={(e) => fullIdx !== null && handleDragOver(e, fullIdx)}
+                  onDragEnd={handleDragEnd}
+                  onDragLeave={() => setDragOverId(null)}
+                >
+                  {/* Drag handle */}
+                  {!isSearching && (
+                    <td style={{ width: 44, paddingLeft: 8, paddingRight: 0 }}>
+                      <div className="admin-drag-handle" title="Drag to reorder">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                          <circle cx="9" cy="5" r="1.5"/>
+                          <circle cx="15" cy="5" r="1.5"/>
+                          <circle cx="9" cy="12" r="1.5"/>
+                          <circle cx="15" cy="12" r="1.5"/>
+                          <circle cx="9" cy="19" r="1.5"/>
+                          <circle cx="15" cy="19" r="1.5"/>
+                        </svg>
+                      </div>
+                    </td>
+                  )}
+
+                  <td>
+                    <img
+                      src={getValidRoomImage(room.image, room.name)}
+                      alt={room.name}
+                      className="admin-room-thumb"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/images/rooms/deluxe-king.png';
+                      }}
+                    />
+                  </td>
+
+                  <td>
+                    <div className="admin-room-info">
+                      <span className="admin-room-title">{room.name}</span>
+                      <span className="admin-room-desc">{room.description}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span className="admin-price-pill">{formatPrice(room.price)}</span>
+                  </td>
+                  <td>
+                    <button
+                      className={`admin-status-pill ${room.status === 'published' ? 'published' : 'draft'}`}
+                      onClick={() => toggleRoomStatus(room.id)}
+                      title="Click to toggle status"
+                    >
+                      <span className="admin-status-dot" />
+                      {room.status === 'published' ? 'Published' : 'Draft'}
                     </button>
-                    <button className="admin-action-btn delete" onClick={() => setConfirmDelete(room.id)}>
-                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="3 6 5 6 21 6"/>
-                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                        <path d="M10 11v6"/><path d="M14 11v6"/>
-                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-                      </svg>
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td>
+                    <div className="admin-actions">
+                      <button className="admin-action-btn" onClick={() => handleEdit(room)}>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                        Edit
+                      </button>
+                      <button className="admin-action-btn delete" onClick={() => setConfirmDelete(room.id)}>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2">
+                          <polyline points="3 6 5 6 21 6"/>
+                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                          <path d="M10 11v6"/><path d="M14 11v6"/>
+                          <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                        </svg>
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
 

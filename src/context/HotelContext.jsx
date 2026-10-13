@@ -16,6 +16,7 @@ const SEED_ROOMS = [
     status: 'published',
     category: 'triple',
     image: '/images/rooms/premium-triple.png',
+    sort_order: 0,
     amenities: ['Three Comfortable Beds', 'Private Bathroom', 'Air Conditioning', 'Flat-Screen TV', 'Complimentary Wi-Fi', 'Refrigerator', 'Minibar', '24/7 Room Service', 'Wardrobe & Storage']
   },
   {
@@ -26,6 +27,7 @@ const SEED_ROOMS = [
     status: 'published',
     category: 'twin',
     image: '/images/rooms/deluxe-twin.png',
+    sort_order: 1,
     amenities: ['Two Comfortable Twin Beds', 'Private Bathroom', 'Air Conditioning', 'Flat-Screen TV', 'Complimentary Wi-Fi', 'Refrigerator', 'Minibar', '24/7 Room Service', 'Wardrobe']
   },
   {
@@ -36,6 +38,7 @@ const SEED_ROOMS = [
     status: 'published',
     category: 'twin',
     image: '/images/rooms/superior-twin.png',
+    sort_order: 2,
     amenities: ['Two Superior Twin Beds', 'Private Bathroom', 'Air Conditioning', 'Flat-Screen TV', 'Complimentary Wi-Fi', 'Refrigerator', 'Minibar', '24/7 Room Service', 'Spacious Wardrobe']
   },
   {
@@ -46,6 +49,7 @@ const SEED_ROOMS = [
     status: 'published',
     category: 'king',
     image: '/images/rooms/premium-deluxe-king.png',
+    sort_order: 3,
     amenities: ['King-Size Bed', 'Private Bathroom', 'Air Conditioning', 'Flat-Screen TV', 'Complimentary Wi-Fi', 'Refrigerator', 'Minibar', '24/7 Room Service', 'Spacious Wardrobe']
   },
   {
@@ -56,6 +60,7 @@ const SEED_ROOMS = [
     status: 'published',
     category: 'king',
     image: '/images/rooms/deluxe-king.png',
+    sort_order: 4,
     amenities: ['King-Size Bed', 'Private Bathroom', 'Air Conditioning', 'Flat-Screen TV', 'Complimentary Wi-Fi', 'Refrigerator', 'Minibar', '24/7 Room Service', 'Spacious Wardrobe']
   },
   {
@@ -66,6 +71,7 @@ const SEED_ROOMS = [
     status: 'published',
     category: 'king',
     image: '/images/rooms/superior-king.png',
+    sort_order: 5,
     amenities: ['King-Size Bed', 'Private Bathroom', 'Air Conditioning', 'Flat-Screen TV', 'Complimentary Wi-Fi', 'Refrigerator', 'Spacious Wardrobe']
   },
   {
@@ -76,6 +82,7 @@ const SEED_ROOMS = [
     status: 'published',
     category: 'single',
     image: '/images/rooms/standard-single.png',
+    sort_order: 6,
     amenities: ['Single Bed', 'Private Bathroom', 'Air Conditioning', 'Flat-Screen TV', 'Complimentary Wi-Fi', 'Refrigerator', 'Minibar', '24/7 Room Service', 'In-Room Wardrobe', 'On-Site Parking']
   },
 ];
@@ -99,7 +106,7 @@ export const HotelProvider = ({ children }) => {
       const { data, error } = await supabase
         .from('rooms')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('sort_order', { ascending: true });
 
       if (error) throw error;
 
@@ -125,6 +132,7 @@ export const HotelProvider = ({ children }) => {
       setRooms(SEED_ROOMS.map((r, i) => ({
         ...r,
         id: String(i + 1),
+        sort_order: r.sort_order ?? i,
         image: getValidRoomImage(r.image, r.name),
       })));
     }
@@ -212,11 +220,12 @@ export const HotelProvider = ({ children }) => {
         ? roomData.amenities
         : (roomData.amenities || '').split(',').map(a => a.trim()).filter(Boolean),
       image,
+      sort_order: rooms.length,
     };
 
     const { data, error } = await supabase.from('rooms').insert(payload).select().single();
     if (error) { console.error('Add room error:', error); return null; }
-    setRooms(prev => [data, ...prev]);
+    setRooms(prev => [...prev, data]);
     return data;
   };
 
@@ -249,6 +258,23 @@ export const HotelProvider = ({ children }) => {
     if (error) { console.error('Delete room error:', error); return false; }
     setRooms(prev => prev.filter(r => r.id !== id));
     return true;
+  };
+
+  const reorderRooms = async (reorderedRooms) => {
+    // Optimistic UI update
+    setRooms(reorderedRooms);
+
+    // Persist new sort_order to Supabase
+    try {
+      const updates = reorderedRooms.map((room, index) =>
+        supabase.from('rooms').update({ sort_order: index }).eq('id', room.id)
+      );
+      await Promise.all(updates);
+    } catch (err) {
+      console.warn('Reorder persist failed:', err.message);
+      // Reload to get correct order
+      loadData();
+    }
   };
 
   // ── Homepage CRUD ──────────────────────────────────────
@@ -346,6 +372,7 @@ export const HotelProvider = ({ children }) => {
         updateRoom,
         toggleRoomStatus,
         deleteRoom,
+        reorderRooms,
         updateHero,
         updateExperiences,
         updateSingleExperienceImage,
