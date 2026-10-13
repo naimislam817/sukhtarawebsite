@@ -111,17 +111,26 @@ export const HotelProvider = ({ children }) => {
       if (error) throw error;
 
       if (data && data.length > 0) {
-        // Sort client-side: prioritize sort_order if set, else maintain original index
+        // Get local room order cache if available
+        let savedOrder = {};
+        try {
+          const raw = localStorage.getItem('shuktara_rooms_order');
+          if (raw) savedOrder = JSON.parse(raw);
+        } catch (_) {}
+
+        // Sort: prioritize explicit sort_order from DB, then localStorage order, then original
         const sortedData = [...data].sort((a, b) => {
-          if (a.sort_order !== undefined && a.sort_order !== null && b.sort_order !== undefined && b.sort_order !== null) {
-            return a.sort_order - b.sort_order;
+          const orderA = a.sort_order ?? savedOrder[a.id] ?? savedOrder[a.slug];
+          const orderB = b.sort_order ?? savedOrder[b.id] ?? savedOrder[b.slug];
+          if (orderA !== undefined && orderB !== undefined) {
+            return orderA - orderB;
           }
           return 0;
         });
 
         const sanitized = sortedData.map((r, i) => ({
           ...r,
-          sort_order: r.sort_order ?? i,
+          sort_order: r.sort_order ?? savedOrder[r.id] ?? savedOrder[r.slug] ?? i,
           image: getValidRoomImage(r.image, r.name),
         }));
         setRooms(sanitized);
@@ -275,16 +284,29 @@ export const HotelProvider = ({ children }) => {
     // Optimistic UI update
     setRooms(reorderedRooms);
 
+    // Save order map to localStorage for instant cross-tab / refresh persistence
+    try {
+      const orderMap = {};
+      reorderedRooms.forEach((r, idx) => {
+        if (r.id) orderMap[r.id] = idx;
+        if (r.slug) orderMap[r.slug] = idx;
+      });
+      localStorage.setItem('shuktara_rooms_order', JSON.stringify(orderMap));
+      // Notify other tabs / components
+      window.dispatchEvent(new Event('storage'));
+    } catch (e) {
+      console.warn('LocalStorage order save failed:', e);
+    }
+
     // Persist new sort_order to Supabase (silently skip if column doesn't exist)
     try {
       const updates = reorderedRooms.map((room, index) =>
         supabase.from('rooms').update({ sort_order: index }).eq('id', room.id)
       );
       const results = await Promise.all(updates);
-      // If first update failed because column doesn't exist, just log it
-      const firstError = results.find(r => r.error);
+      const firstError = results.find(r => r?.error);
       if (firstError?.error?.message?.includes('sort_order')) {
-        console.warn('sort_order column not found in Supabase — reorder is in-memory only. Add the column for persistence.');
+        console.warn('sort_order column not found in Supabase — order saved locally.');
       }
     } catch (err) {
       console.warn('Reorder persist failed:', err.message);

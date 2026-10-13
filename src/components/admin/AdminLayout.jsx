@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useHotel } from '../../context/HotelContext';
 import '../../styles/admin.css';
 
 const NavIcon = ({ type }) => {
@@ -64,9 +65,20 @@ const NavIcon = ({ type }) => {
 
 const AdminLayout = () => {
   const { user, logout } = useAuth();
+  const { refreshData } = useHotel();
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleGlobalRefresh = async () => {
+    setIsRefreshing(true);
+    await refreshData();
+    try {
+      window.dispatchEvent(new Event('storage'));
+    } catch (_) {}
+    setTimeout(() => setIsRefreshing(false), 500);
+  };
 
   // Automatically close mobile sidebar on route transition
   useEffect(() => {
@@ -203,6 +215,43 @@ const AdminLayout = () => {
           </div>
 
           <div className="admin-topbar-actions">
+            <button
+              className="admin-action-btn"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '7px 12px',
+                borderRadius: 20,
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                background: '#f8fafc',
+                border: '1px solid #cbd5e1',
+                cursor: isRefreshing ? 'wait' : 'pointer'
+              }}
+              onClick={handleGlobalRefresh}
+              title="Refresh and sync data with live site"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  animation: isRefreshing ? 'adminSpin 1s linear infinite' : 'none'
+                }}
+              >
+                <polyline points="23 4 23 10 17 10" />
+                <polyline points="1 20 1 14 7 14" />
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+              </svg>
+              <span>{isRefreshing ? 'Syncing...' : 'Sync Site'}</span>
+            </button>
+
             <a href="/" target="_blank" rel="noopener noreferrer" className="admin-view-site-link">
               Live Site ↗
             </a>

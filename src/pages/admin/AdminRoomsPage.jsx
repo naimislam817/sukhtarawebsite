@@ -8,12 +8,26 @@ import '../../styles/admin.css';
 const ITEMS_PER_PAGE = 7;
 
 const AdminRoomsPage = () => {
-  const { rooms, addRoom, updateRoom, toggleRoomStatus, deleteRoom, reorderRooms } = useHotel();
+  const { rooms, addRoom, updateRoom, toggleRoomStatus, deleteRoom, reorderRooms, refreshData } = useHotel();
   const [showModal, setShowModal] = useState(false);
   const [editingRoom, setEditingRoom] = useState(null);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [refreshNotice, setRefreshNotice] = useState(false);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await refreshData();
+    // Dispatch local sync signal so any open site tabs pick it up immediately
+    try {
+      window.dispatchEvent(new Event('storage'));
+    } catch (_) {}
+    setIsRefreshing(false);
+    setRefreshNotice(true);
+    setTimeout(() => setRefreshNotice(false), 3000);
+  };
 
   // ── Drag-and-drop state ────────────────────────────
   const dragItem = useRef(null);
@@ -111,13 +125,71 @@ const AdminRoomsPage = () => {
           <h1 className="admin-page-title">Rooms Management</h1>
           <p className="admin-page-subtitle">Manage your property's room inventory, pricing, and availability.</p>
         </div>
-        <button className="admin-gold-btn" onClick={() => { setEditingRoom(null); setShowModal(true); }}>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-          Add New Room
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <button
+            className="admin-action-btn"
+            style={{
+              padding: '12px 18px',
+              fontSize: '0.92rem',
+              fontWeight: 600,
+              borderRadius: 8,
+              cursor: isRefreshing ? 'wait' : 'pointer',
+              background: '#ffffff',
+              border: '1px solid #cbd5e1'
+            }}
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            title="Refresh room data and sync order with the main website"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                animation: isRefreshing ? 'adminSpin 1s linear infinite' : 'none'
+              }}
+            >
+              <polyline points="23 4 23 10 17 10" />
+              <polyline points="1 20 1 14 7 14" />
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+            </svg>
+            {isRefreshing ? 'Refreshing...' : 'Refresh & Sync'}
+          </button>
+
+          <button className="admin-gold-btn" onClick={() => { setEditingRoom(null); setShowModal(true); }}>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add New Room
+          </button>
+        </div>
       </div>
+
+      {refreshNotice && (
+        <div style={{
+          padding: '10px 16px',
+          background: '#ecfdf5',
+          border: '1px solid #a7f3d0',
+          borderRadius: 8,
+          color: '#065f46',
+          fontSize: '0.86rem',
+          fontWeight: 500,
+          marginBottom: 16,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8
+        }}>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          Room order synchronized! The public site will now display rooms in this exact order.
+        </div>
+      )}
 
       {/* Reorder hint */}
       {!isSearching && (
