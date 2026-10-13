@@ -101,27 +101,40 @@ export const HotelProvider = ({ children }) => {
   const loadData = async () => {
     setLoading(true);
 
-    // 1. Rooms
+    // 1. Rooms — try sort_order first, fall back to created_at if column missing
     try {
-      const { data, error } = await supabase
+      let { data, error } = await supabase
         .from('rooms')
         .select('*')
         .order('sort_order', { ascending: true });
 
+      // If sort_order column doesn't exist, fall back to created_at
+      if (error && error.message?.includes('sort_order')) {
+        const fallback = await supabase
+          .from('rooms')
+          .select('*')
+          .order('created_at', { ascending: true });
+        data = fallback.data;
+        error = fallback.error;
+      }
+
       if (error) throw error;
 
       if (data && data.length > 0) {
-        const sanitized = data.map(r => ({
+        const sanitized = data.map((r, i) => ({
           ...r,
+          sort_order: r.sort_order ?? i,
           image: getValidRoomImage(r.image, r.name),
         }));
         setRooms(sanitized);
       } else {
         // First run — seed rooms into Supabase
-        const { data: seeded } = await supabase.from('rooms').insert(SEED_ROOMS).select();
+        const seedPayload = SEED_ROOMS.map(({ sort_order, ...rest }) => rest);
+        const { data: seeded } = await supabase.from('rooms').insert(seedPayload).select();
         if (seeded) {
-          const sanitized = seeded.map(r => ({
+          const sanitized = seeded.map((r, i) => ({
             ...r,
+            sort_order: i,
             image: getValidRoomImage(r.image, r.name),
           }));
           setRooms(sanitized);
@@ -264,16 +277,19 @@ export const HotelProvider = ({ children }) => {
     // Optimistic UI update
     setRooms(reorderedRooms);
 
-    // Persist new sort_order to Supabase
+    // Persist new sort_order to Supabase (silently skip if column doesn't exist)
     try {
       const updates = reorderedRooms.map((room, index) =>
         supabase.from('rooms').update({ sort_order: index }).eq('id', room.id)
       );
-      await Promise.all(updates);
+      const results = await Promise.all(updates);
+      // If first update failed because column doesn't exist, just log it
+      const firstError = results.find(r => r.error);
+      if (firstError?.error?.message?.includes('sort_order')) {
+        console.warn('sort_order column not found in Supabase — reorder is in-memory only. Add the column for persistence.');
+      }
     } catch (err) {
       console.warn('Reorder persist failed:', err.message);
-      // Reload to get correct order
-      loadData();
     }
   };
 

@@ -14,8 +14,12 @@ create table if not exists rooms (
   category    text default 'standard',
   amenities   text[],
   image       text,
+  sort_order  int default 0,
   created_at  timestamptz default now()
 );
+
+-- Ensure sort_order column exists if table was created previously
+alter table rooms add column if not exists sort_order int default 0;
 
 -- 2. Homepage settings (always single row, id=1)
 create table if not exists homepage_settings (
