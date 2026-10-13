@@ -51,8 +51,19 @@ const facilityIcons = {
       <path className="coffee-steam coffee-steam--2" d="M10 1c.6 1.5-.6 2.5 0 4"></path>
       <path className="coffee-steam coffee-steam--3" d="M14 1.5c.6 1-.6 2 0 3"></path>
     </svg>
+  ),
+  breakfast: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+      <path d="M3.5 16h17" />
+      <path d="M4.5 16a7.5 7.5 0 0 1 15 0" />
+      <path d="M2 19.5h20" />
+      <path d="M8 9.5c.5-1 1.5-1 2 0" />
+      <path d="M14 9.5c.5-1 1.5-1 2 0" />
+    </svg>
   )
 };
+
 
 const FacilitiesSection = () => {
   const { facilities } = homeData;

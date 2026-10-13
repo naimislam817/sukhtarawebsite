@@ -54,8 +54,17 @@
         "badge": "In-Room Amenity",
         "features": ["Electric Kettle Station", "Fine Teas & Coffee", "Creamer & Sweeteners", "Replenished Daily"],
         "highlight": true
+      },
+      {
+        "icon": "breakfast",
+        "title": "Complimentary Buffet Breakfast",
+        "description": "Begin every morning with an expansive, freshly prepared breakfast spread at our Skylight Rooftop Restaurant featuring Bengali classics, continental delights, live egg station, and fresh juices.",
+        "badge": "Complimentary",
+        "features": ["Daily 7:00 AM – 10:30 AM", "Skylight Rooftop Restaurant", "Bengali & Continental Options", "Included With Every Stay"],
+        "highlight": true
       }
     ]
+
   },
   "experiences": {
     "title": "Unforgettable Experiences",
