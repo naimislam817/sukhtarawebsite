@@ -28,6 +28,15 @@ const NavIcon = ({ type }) => {
         <line x1="14" y1="1" x2="14" y2="4"/>
       </svg>
     ),
+    banquet: (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M3 21h18"/>
+        <path d="M5 21V7l7-4 7 4v14"/>
+        <path d="M9 10h6"/>
+        <path d="M9 14h6"/>
+        <path d="M9 18h6"/>
+      </svg>
+    ),
     rooms: (
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M3 22V8a1 1 0 0 1 1-1h4V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v18"/>
@@ -161,6 +170,14 @@ const AdminLayout = () => {
           >
             <span className="admin-nav-icon"><NavIcon type="restaurant" /></span>
             <span className="admin-nav-text">Rasun Restaurant</span>
+          </NavLink>
+          <NavLink 
+            to="/admin/banquet" 
+            className={({ isActive }) => `admin-nav-item${isActive ? ' active' : ''}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            <span className="admin-nav-icon"><NavIcon type="banquet" /></span>
+            <span className="admin-nav-text">Banquet Hall</span>
           </NavLink>
           <NavLink 
             to="/admin/rooms" 

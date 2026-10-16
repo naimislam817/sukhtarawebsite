@@ -18,6 +18,20 @@ const DEFAULT_RASUN_DATA = {
   ]
 };
 
+const defaultBanquetFacility = initialFacilitiesData.facilities.find(f => f.slug === 'banquet-hall') || {};
+
+const DEFAULT_BANQUET_DATA = {
+  mainImage: defaultBanquetFacility.image || '/images/facilities/banquet-hall.jpg',
+  menuPdf: defaultBanquetFacility.buttons?.find(b => b.path?.includes('.pdf'))?.path || '',
+  ambianceGallery: defaultBanquetFacility.gallery || [
+    '/images/facilities/banquet-hall.jpg',
+    '/images/facilities/conference-room.jpg',
+    '/images/gallery/experience-1.png',
+    '/images/gallery/experience-3.png',
+    '/images/gallery/experience-4.png'
+  ]
+};
+
 const HotelContext = createContext(null);
 
 
@@ -116,6 +130,13 @@ export const HotelProvider = ({ children }) => {
     } catch (_) {}
     return DEFAULT_RASUN_DATA;
   });
+  const [banquet, setBanquet] = useState(() => {
+    try {
+      const local = localStorage.getItem('shuktara_banquet_settings');
+      if (local) return { ...DEFAULT_BANQUET_DATA, ...JSON.parse(local) };
+    } catch (_) {}
+    return DEFAULT_BANQUET_DATA;
+  });
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -203,9 +224,17 @@ export const HotelProvider = ({ children }) => {
             localStorage.setItem('shuktara_rasun_settings', JSON.stringify(merged));
           } catch (_) {}
         }
+
+        if (data.banquet && typeof data.banquet === 'object') {
+          const merged = { ...DEFAULT_BANQUET_DATA, ...data.banquet };
+          setBanquet(merged);
+          try {
+            localStorage.setItem('shuktara_banquet_settings', JSON.stringify(merged));
+          } catch (_) {}
+        }
       }
     } catch (err) {
-      console.warn('Homepage / Rasun load failed:', err.message);
+      console.warn('Homepage / Facilities load failed:', err.message);
     }
 
     // 3. Bookings
@@ -426,6 +455,50 @@ export const HotelProvider = ({ children }) => {
     return uploadedUrl;
   };
 
+  // ── Banquet Hall CRUD ──────────────────────────────────
+  const saveBanquetSettings = async (updatedBanquet) => {
+    setBanquet(updatedBanquet);
+    try {
+      localStorage.setItem('shuktara_banquet_settings', JSON.stringify(updatedBanquet));
+      window.dispatchEvent(new Event('storage'));
+    } catch (_) {}
+
+    try {
+      await supabase
+        .from('homepage_settings')
+        .update({ banquet: updatedBanquet })
+        .eq('id', 1);
+    } catch (err) {
+      console.warn('Persist banquet settings error (saved locally):', err.message);
+    }
+  };
+
+  const updateBanquetMainImage = async (file) => {
+    const uploadedUrl = await uploadImage(file);
+    if (!uploadedUrl) return null;
+    const updated = { ...banquet, mainImage: uploadedUrl };
+    await saveBanquetSettings(updated);
+    return uploadedUrl;
+  };
+
+  const updateBanquetAmbianceImage = async (index, file) => {
+    const uploadedUrl = await uploadImage(file);
+    if (!uploadedUrl) return null;
+    const currentList = [...(banquet.ambianceGallery || DEFAULT_BANQUET_DATA.ambianceGallery)];
+    currentList[index] = uploadedUrl;
+    const updated = { ...banquet, ambianceGallery: currentList };
+    await saveBanquetSettings(updated);
+    return uploadedUrl;
+  };
+
+  const updateBanquetMenuPdf = async (file) => {
+    const uploadedUrl = await uploadImage(file);
+    if (!uploadedUrl) return null;
+    const updated = { ...banquet, menuPdf: uploadedUrl };
+    await saveBanquetSettings(updated);
+    return uploadedUrl;
+  };
+
   // ── Bookings CRUD ──────────────────────────────────────
   const normalizeBooking = (b) => ({
     id: b.id,
@@ -490,6 +563,10 @@ export const HotelProvider = ({ children }) => {
         updateRasunMainImage,
         updateRasunAmbianceImage,
         updateRasunMenuPdf,
+        banquet,
+        updateBanquetMainImage,
+        updateBanquetAmbianceImage,
+        updateBanquetMenuPdf,
         addBooking,
         updateBookingStatus,
         refreshData: loadData,

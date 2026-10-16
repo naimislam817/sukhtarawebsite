@@ -9,7 +9,7 @@ import '../styles/facilities.css';
 
 const FacilityPage = () => {
   const { slug } = useParams();
-  const { rasun } = useHotel();
+  const { rasun, banquet } = useHotel();
   const rawFacility = facilitiesData.facilities.find(f => f.slug === slug);
 
   const facility = useMemo(() => {
@@ -32,8 +32,28 @@ const FacilityPage = () => {
         })
       };
     }
+    if (slug === 'banquet-hall' && banquet) {
+      // If a menu/brochure PDF has been uploaded for Banquet Hall, ensure there's a button for it
+      let buttons = [...rawFacility.buttons];
+      if (banquet.menuPdf) {
+        const hasMenuBtn = buttons.some(b => b.label?.toUpperCase().includes('MENU') || b.label?.toUpperCase().includes('BROCHURE'));
+        if (hasMenuBtn) {
+          buttons = buttons.map(b => (b.label?.toUpperCase().includes('MENU') || b.label?.toUpperCase().includes('BROCHURE')) ? { ...b, path: banquet.menuPdf } : b);
+        } else {
+          buttons = [...buttons, { label: "EVENT MENU", path: banquet.menuPdf }];
+        }
+      }
+      return {
+        ...rawFacility,
+        image: banquet.mainImage || rawFacility.image,
+        gallery: (banquet.ambianceGallery && banquet.ambianceGallery.length > 0)
+          ? banquet.ambianceGallery
+          : rawFacility.gallery,
+        buttons
+      };
+    }
     return rawFacility;
-  }, [rawFacility, slug, rasun]);
+  }, [rawFacility, slug, rasun, banquet]);
 
   if (!facility) {
     return (
