@@ -14,6 +14,7 @@ import AdminRoomsPage from './pages/admin/AdminRoomsPage';
 import AdminHomepageImagesPage from './pages/admin/AdminHomepageImagesPage';
 import AdminRasunPage from './pages/admin/AdminRasunPage';
 import AdminBanquetPage from './pages/admin/AdminBanquetPage';
+import AdminSkylightPage from './pages/admin/AdminSkylightPage';
 import AdminBookingsPage from './pages/admin/AdminBookingsPage';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="homepage-images" element={<AdminHomepageImagesPage />} />
           <Route path="restaurant" element={<AdminRasunPage />} />
           <Route path="banquet" element={<AdminBanquetPage />} />
+          <Route path="skylight" element={<AdminSkylightPage />} />
           <Route path="bookings" element={<AdminBookingsPage />} />
         </Route>
 

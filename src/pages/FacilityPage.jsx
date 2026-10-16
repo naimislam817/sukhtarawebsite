@@ -9,7 +9,7 @@ import '../styles/facilities.css';
 
 const FacilityPage = () => {
   const { slug } = useParams();
-  const { rasun, banquet } = useHotel();
+  const { rasun, banquet, skylight } = useHotel();
   const rawFacility = facilitiesData.facilities.find(f => f.slug === slug);
 
   const facility = useMemo(() => {
@@ -52,8 +52,22 @@ const FacilityPage = () => {
         buttons
       };
     }
+    if (slug === 'skylight' && skylight) {
+      return {
+        ...rawFacility,
+        image: skylight.mainImage || rawFacility.image,
+        gallery: (skylight.ambianceGallery && skylight.ambianceGallery.length > 0)
+          ? skylight.ambianceGallery
+          : rawFacility.gallery,
+        buttons: rawFacility.buttons.map(btn =>
+          btn.label?.toUpperCase().includes('MENU')
+            ? { ...btn, path: skylight.menuPdf || btn.path }
+            : btn
+        )
+      };
+    }
     return rawFacility;
-  }, [rawFacility, slug, rasun, banquet]);
+  }, [rawFacility, slug, rasun, banquet, skylight]);
 
   if (!facility) {
     return (

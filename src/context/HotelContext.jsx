@@ -32,6 +32,20 @@ const DEFAULT_BANQUET_DATA = {
   ]
 };
 
+const defaultSkylightFacility = initialFacilitiesData.facilities.find(f => f.slug === 'skylight') || {};
+
+const DEFAULT_SKYLIGHT_DATA = {
+  mainImage: defaultSkylightFacility.image || '/images/facilities/skylight.png',
+  menuPdf: defaultSkylightFacility.buttons?.find(b => b.path?.includes('.pdf'))?.path || '/menus/skylight-menu.pdf',
+  ambianceGallery: defaultSkylightFacility.gallery || [
+    '/images/facilities/skylight/gallery-1.jpg',
+    '/images/facilities/skylight/gallery-2.jpg',
+    '/images/facilities/skylight/gallery-3.jpg',
+    '/images/facilities/skylight/gallery-4.jpg',
+    '/images/facilities/skylight/gallery-5.jpg'
+  ]
+};
+
 const HotelContext = createContext(null);
 
 
@@ -137,6 +151,13 @@ export const HotelProvider = ({ children }) => {
     } catch (_) {}
     return DEFAULT_BANQUET_DATA;
   });
+  const [skylight, setSkylight] = useState(() => {
+    try {
+      const local = localStorage.getItem('shuktara_skylight_settings');
+      if (local) return { ...DEFAULT_SKYLIGHT_DATA, ...JSON.parse(local) };
+    } catch (_) {}
+    return DEFAULT_SKYLIGHT_DATA;
+  });
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -230,6 +251,14 @@ export const HotelProvider = ({ children }) => {
           setBanquet(merged);
           try {
             localStorage.setItem('shuktara_banquet_settings', JSON.stringify(merged));
+          } catch (_) {}
+        }
+
+        if (data.skylight && typeof data.skylight === 'object') {
+          const merged = { ...DEFAULT_SKYLIGHT_DATA, ...data.skylight };
+          setSkylight(merged);
+          try {
+            localStorage.setItem('shuktara_skylight_settings', JSON.stringify(merged));
           } catch (_) {}
         }
       }
@@ -499,6 +528,50 @@ export const HotelProvider = ({ children }) => {
     return uploadedUrl;
   };
 
+  // ── Skylight Restaurant CRUD ───────────────────────────
+  const saveSkylightSettings = async (updatedSkylight) => {
+    setSkylight(updatedSkylight);
+    try {
+      localStorage.setItem('shuktara_skylight_settings', JSON.stringify(updatedSkylight));
+      window.dispatchEvent(new Event('storage'));
+    } catch (_) {}
+
+    try {
+      await supabase
+        .from('homepage_settings')
+        .update({ skylight: updatedSkylight })
+        .eq('id', 1);
+    } catch (err) {
+      console.warn('Persist skylight settings error (saved locally):', err.message);
+    }
+  };
+
+  const updateSkylightMainImage = async (file) => {
+    const uploadedUrl = await uploadImage(file);
+    if (!uploadedUrl) return null;
+    const updated = { ...skylight, mainImage: uploadedUrl };
+    await saveSkylightSettings(updated);
+    return uploadedUrl;
+  };
+
+  const updateSkylightAmbianceImage = async (index, file) => {
+    const uploadedUrl = await uploadImage(file);
+    if (!uploadedUrl) return null;
+    const currentList = [...(skylight.ambianceGallery || DEFAULT_SKYLIGHT_DATA.ambianceGallery)];
+    currentList[index] = uploadedUrl;
+    const updated = { ...skylight, ambianceGallery: currentList };
+    await saveSkylightSettings(updated);
+    return uploadedUrl;
+  };
+
+  const updateSkylightMenuPdf = async (file) => {
+    const uploadedUrl = await uploadImage(file);
+    if (!uploadedUrl) return null;
+    const updated = { ...skylight, menuPdf: uploadedUrl };
+    await saveSkylightSettings(updated);
+    return uploadedUrl;
+  };
+
   // ── Bookings CRUD ──────────────────────────────────────
   const normalizeBooking = (b) => ({
     id: b.id,
@@ -567,6 +640,10 @@ export const HotelProvider = ({ children }) => {
         updateBanquetMainImage,
         updateBanquetAmbianceImage,
         updateBanquetMenuPdf,
+        skylight,
+        updateSkylightMainImage,
+        updateSkylightAmbianceImage,
+        updateSkylightMenuPdf,
         addBooking,
         updateBookingStatus,
         refreshData: loadData,
