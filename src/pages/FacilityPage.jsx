@@ -28,13 +28,21 @@ const FacilityPage = () => {
               path: rasun.menuPdf || btn.path
             };
           }
+          if (btn.label?.toUpperCase().includes('CONTACT')) {
+            return {
+              ...btn,
+              path: '/contact'
+            };
+          }
           return btn;
         })
       };
     }
     if (slug === 'banquet-hall' && banquet) {
       // If a menu/brochure PDF has been uploaded for Banquet Hall, ensure there's a button for it
-      let buttons = [...rawFacility.buttons];
+      let buttons = rawFacility.buttons.map(btn => 
+        btn.label?.toUpperCase().includes('CONTACT') ? { ...btn, path: '/contact' } : btn
+      );
       if (banquet.menuPdf) {
         const hasMenuBtn = buttons.some(b => b.label?.toUpperCase().includes('MENU') || b.label?.toUpperCase().includes('BROCHURE'));
         if (hasMenuBtn) {
@@ -59,11 +67,15 @@ const FacilityPage = () => {
         gallery: (skylight.ambianceGallery && skylight.ambianceGallery.length > 0)
           ? skylight.ambianceGallery
           : rawFacility.gallery,
-        buttons: rawFacility.buttons.map(btn =>
-          btn.label?.toUpperCase().includes('MENU')
-            ? { ...btn, path: skylight.menuPdf || btn.path }
-            : btn
-        )
+        buttons: rawFacility.buttons.map(btn => {
+          if (btn.label?.toUpperCase().includes('MENU')) {
+            return { ...btn, path: skylight.menuPdf || btn.path };
+          }
+          if (btn.label?.toUpperCase().includes('CONTACT')) {
+            return { ...btn, path: '/contact' };
+          }
+          return btn;
+        })
       };
     }
     return rawFacility;

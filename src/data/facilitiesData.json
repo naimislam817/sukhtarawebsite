@@ -9,7 +9,7 @@
       "image": "/images/facilities/restraurant.jpg",
       "description": "Rasun is a restaurant dedicated to celebrating the rich and vibrant flavours of traditional Bangla cuisine. At Rasun, we offer an authentic culinary experience, featuring time-honoured recipes prepared with fresh, locally sourced ingredients. Guests can enjoy a warm and inviting dine-in experience or opt for the convenience of takeaway, ensuring a delightful experience with every meal. Beyond dining, Rasun serves as an excellent venue for hosting parties and celebrations, providing the perfect setting for creating unforgettable memories.",
       "buttons": [
-        { "label": "CONTACT US", "path": "#contact" },
+        { "label": "CONTACT US", "path": "/contact" },
         { "label": "FOOD MENU", "path": "/menus/rasun-menu.pdf" }
       ],
       "contactBar": {
@@ -54,7 +54,7 @@
       "image": "/images/facilities/banquet-hall.jpg",
       "description": "Shuktara Banquet Hall offers an elegant, versatile, and fully equipped event venue designed to host both grand celebrations and corporate gatherings in the heart of Dhaka. Designed with sophisticated interior aesthetics and state-of-the-art amenities, our hall provides the perfect ambiance for your most cherished occasions.\n\nWhether you are planning a corporate conference, seminar, workshop, grand wedding reception, birthday party, or intimate family gathering, our dedicated banquet staff is on hand to deliver flawless service and exceptional hospitality.",
       "buttons": [
-        { "label": "CONTACT US", "path": "#contact" },
+        { "label": "CONTACT US", "path": "/contact" },
         { "label": "BOOK EVENT", "path": "/book" }
       ],
       "contactBar": {
@@ -100,7 +100,7 @@
       "image": "/images/facilities/skylight.png",
       "description": "Indulge in exquisite Thai cuisine at Skylight, the rooftop gem of Hotel Shuktara Dhaka. With breathtaking panoramic views of the city, Skylight offers the perfect setting to savour a delectable meal in a luxurious ambiance. Our menu showcases an array of authentic Thai dishes, expertly prepared and bursting with vibrant flavours.\n\nBeyond dining, Skylight serves as an exceptional venue for hosting parties and celebrations. Whether you're enjoying a memorable meal or planning an unforgettable event, Skylight promises an experience like no other.",
       "buttons": [
-        { "label": "CONTACT US", "path": "#contact" },
+        { "label": "CONTACT US", "path": "/contact" },
         { "label": "FOOD MENU", "path": "/menus/skylight-menu.pdf" }
       ],
       "contactBar": {
@@ -151,7 +151,7 @@
       ],
       "description": "Our fitness centre is equipped with a range of modern exercise machines and free weights, providing an inviting space for all our guests. Whether you want to energize your morning or unwind after a busy day, our gym offers a comfortable and motivating environment. At Hotel Shuktara Dhaka, we ensure your stay is well-balanced, seamlessly blending relaxation, fitness, and luxury.",
       "buttons": [
-        { "label": "CONTACT US", "path": "#contact" }
+        { "label": "CONTACT US", "path": "/contact" }
       ],
       "contactBar": null
     },
@@ -164,7 +164,7 @@
       "image": "/images/facilities/conference-room.jpg",
       "description": "Hotel Shuktara Dhaka provides a professional and fully-equipped conference room ideal for hosting corporate meetings and events. Designed with modern business needs in mind, our conference room offers a comfortable and sophisticated setting, complete with high-speed internet, audio-visual equipment, and flexible seating arrangements. Whether you're planning a board meeting, training session, or corporate seminar, our dedicated staff is on hand to ensure everything runs smoothly.",
       "buttons": [
-        { "label": "CONTACT US", "path": "#contact" }
+        { "label": "CONTACT US", "path": "/contact" }
       ],
       "contactBar": null
     }

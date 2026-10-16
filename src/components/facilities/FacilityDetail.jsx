@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/facilities.css';
 
 const FacilityImageSlider = ({ images, title }) => {
@@ -116,19 +117,38 @@ const FacilityDetail = ({ facility }) => {
             <div className="facility-detail__buttons">
               {facility.buttons.map((btn, index) => {
                 const isExternalOrPdf = btn.path?.endsWith('.pdf') || btn.path?.startsWith('http') || btn.path?.startsWith('data:');
-                return (
-                  <a 
-                    key={index} 
-                    href={btn.path} 
-                    className="facility-detail__btn"
-                    {...(isExternalOrPdf ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  >
-                    {btn.label}
+                const buttonContent = (
+                  <>
+                    <span>{btn.label}</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
-                  </a>
+                  </>
+                );
+
+                if (isExternalOrPdf) {
+                  return (
+                    <a 
+                      key={index} 
+                      href={btn.path} 
+                      className="facility-detail__btn"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {buttonContent}
+                    </a>
+                  );
+                }
+
+                return (
+                  <Link 
+                    key={index} 
+                    to={btn.path} 
+                    className="facility-detail__btn"
+                  >
+                    {buttonContent}
+                  </Link>
                 );
               })}
             </div>
