@@ -5,6 +5,7 @@ import RoomsPage from './pages/RoomsPage';
 import RoomDetailPage from './pages/RoomDetailPage';
 import FacilityPage from './pages/FacilityPage';
 import BookPage from './pages/BookPage';
+import ContactPage from './pages/ContactPage';
 
 // Admin
 import AdminLoginPage from './pages/admin/AdminLoginPage';
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/rooms/:slug" element={<RoomDetailPage />} />
           <Route path="/facilities/:slug" element={<FacilityPage />} />
           <Route path="/book" element={<BookPage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Route>
 
         {/* ── Admin Panel ──────────────────────────────────── */}
@@ -46,6 +48,7 @@ const App = () => {
           <Route index element={<Navigate to="/admin/rooms" replace />} />
           <Route path="dashboard" element={<AdminDashboardPage />} />
           <Route path="rooms" element={<AdminRoomsPage />} />
+          <Route path="homepage" element={<Navigate to="/admin/homepage-images" replace />} />
           <Route path="homepage-images" element={<AdminHomepageImagesPage />} />
           <Route path="restaurant" element={<AdminRasunPage />} />
           <Route path="banquet" element={<AdminBanquetPage />} />

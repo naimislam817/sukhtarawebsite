@@ -27,10 +27,12 @@
         { "label": "GYM", "path": "/facilities/gym" },
         { "label": "CONFERENCE ROOM", "path": "/facilities/conference-room" }
       ]
-    }
+    },
+    { "label": "CONTACT", "path": "/contact" }
   ],
   "footerLinks": [
     { "label": "Accommodation", "path": "/rooms" },
+    { "label": "Contact Us", "path": "/contact" },
     { "label": "Gallery", "path": "/gallery" },
     { "label": "Special Offers", "path": "/offers" },
     { "label": "Terms & Conditions", "path": "/terms" },

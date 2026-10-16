@@ -269,6 +269,52 @@ app.put('/api/bookings/:id/status', (req, res) => {
   res.json(booking);
 });
 
+// ----------------------------------------------------
+// 6. Contact Inquiries Route
+// ----------------------------------------------------
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, phone, subject, checkIn, checkOut, message, botcheck } = req.body || {};
+
+    if (botcheck) {
+      console.warn('Bot blocked via honeypot:', { name, email });
+      return res.json({ success: true, message: 'Inquiry received' });
+    }
+
+    if (!name || !name.trim()) return res.status(400).json({ error: 'Name is required' });
+    if (!email || !email.trim()) return res.status(400).json({ error: 'Valid email is required' });
+    if (!phone || !phone.trim()) return res.status(400).json({ error: 'Phone number is required' });
+    if (!message || !message.trim()) return res.status(400).json({ error: 'Message is required' });
+
+    console.log('📬 [Local Server] New Contact Form Submission:', {
+      name, email, phone, subject, checkIn, checkOut, message
+    });
+
+    // Save to server/data/inquiries.json
+    const inquiries = readJSON('inquiries.json', []);
+    inquiries.unshift({
+      id: 'INQ-' + Date.now(),
+      name,
+      email,
+      phone,
+      subject: subject || 'General Inquiry',
+      checkIn: checkIn || null,
+      checkOut: checkOut || null,
+      message,
+      createdAt: new Date().toISOString()
+    });
+    writeJSON('inquiries.json', inquiries);
+
+    res.json({
+      success: true,
+      message: 'Thank you! Your message has been sent successfully. Our team will contact you shortly.'
+    });
+  } catch (err) {
+    console.error('Contact handler error:', err);
+    res.status(500).json({ error: 'Failed to process inquiry' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`🏨 Hotel Shuktara Backend running on http://localhost:${PORT}`);
 });

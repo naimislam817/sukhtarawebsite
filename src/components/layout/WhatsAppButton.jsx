@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import siteData from '../../data/siteData.json';
+import { useHotel } from '../../context/HotelContext';
 import '../../styles/whatsapp.css';
 
 const WhatsAppButton = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const { whatsapp } = siteData.contact;
+  const { contact: liveContact } = useHotel();
+  const whatsappNum = liveContact?.whatsapp?.number || liveContact?.whatsapp || siteData.contact.whatsapp;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,7 +18,7 @@ const WhatsAppButton = () => {
 
   return (
     <a
-      href={`https://wa.me/${whatsapp}`}
+      href={`https://wa.me/${whatsappNum}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"

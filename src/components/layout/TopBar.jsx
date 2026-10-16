@@ -1,8 +1,14 @@
 import siteData from '../../data/siteData.json';
+import { useHotel } from '../../context/HotelContext';
 import '../../styles/topbar.css';
 
 const TopBar = () => {
-  const { contact, socialLinks } = siteData;
+  const { contact: liveContact } = useHotel();
+  const { socialLinks } = siteData;
+  const address = liveContact?.address || siteData.contact.address;
+  const email = liveContact?.emails?.[0]?.email || liveContact?.emails?.[0] || siteData.contact.emails[0];
+  const phone1 = liveContact?.phones?.[0]?.display || liveContact?.phones?.[0]?.raw || liveContact?.phones?.[0] || siteData.contact.phones[0];
+  const phone2 = liveContact?.phones?.[1]?.display || liveContact?.phones?.[1]?.raw || liveContact?.phones?.[1] || siteData.contact.phones[1];
   
   return (
     <div className="topbar">
@@ -13,20 +19,20 @@ const TopBar = () => {
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            {contact.address}
+            {address}
           </span>
           <span className="topbar__item">
             <svg className="topbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
-            {contact.emails[0]}
+            {email}
           </span>
           <span className="topbar__item">
             <svg className="topbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
-            {contact.phones[0]} / {contact.phones[1]}
+            {phone1} / {phone2}
           </span>
         </div>
         <div className="topbar__right">

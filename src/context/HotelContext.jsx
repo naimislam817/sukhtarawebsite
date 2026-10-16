@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import initialHomeData from '../data/homeData.json';
 import initialFacilitiesData from '../data/facilitiesData.json';
+import { contactConfig } from '../data/contactConfig';
 import { getValidRoomImage } from '../utils/roomImages';
 
 const defaultRasunFacility = initialFacilitiesData.facilities.find(f => f.slug === 'restaurant') || {};
@@ -158,6 +159,13 @@ export const HotelProvider = ({ children }) => {
     } catch (_) {}
     return DEFAULT_SKYLIGHT_DATA;
   });
+  const [contact, setContact] = useState(() => {
+    try {
+      const local = localStorage.getItem('shuktara_contact_settings');
+      if (local) return { ...contactConfig, ...JSON.parse(local) };
+    } catch (_) {}
+    return contactConfig;
+  });
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -259,6 +267,14 @@ export const HotelProvider = ({ children }) => {
           setSkylight(merged);
           try {
             localStorage.setItem('shuktara_skylight_settings', JSON.stringify(merged));
+          } catch (_) {}
+        }
+
+        if (data.contact && typeof data.contact === 'object') {
+          const merged = { ...contactConfig, ...data.contact };
+          setContact(merged);
+          try {
+            localStorage.setItem('shuktara_contact_settings', JSON.stringify(merged));
           } catch (_) {}
         }
       }
@@ -572,6 +588,29 @@ export const HotelProvider = ({ children }) => {
     return uploadedUrl;
   };
 
+  // ── Contact Info CRUD ──────────────────────────────────
+  const updateContact = async (updatedContact) => {
+    const merged = { ...contact, ...updatedContact };
+    setContact(merged);
+    try {
+      localStorage.setItem('shuktara_contact_settings', JSON.stringify(merged));
+      window.dispatchEvent(new Event('storage'));
+    } catch (_) {}
+
+    try {
+      const { error } = await supabase
+        .from('homepage_settings')
+        .update({ contact: merged })
+        .eq('id', 1);
+      if (error) {
+        console.warn('Could not persist contact to Supabase (column may need migration):', error.message);
+      }
+    } catch (err) {
+      console.warn('Persist contact error:', err.message);
+    }
+    return merged;
+  };
+
   // ── Bookings CRUD ──────────────────────────────────────
   const normalizeBooking = (b) => ({
     id: b.id,
@@ -644,6 +683,8 @@ export const HotelProvider = ({ children }) => {
         updateSkylightMainImage,
         updateSkylightAmbianceImage,
         updateSkylightMenuPdf,
+        contact,
+        updateContact,
         addBooking,
         updateBookingStatus,
         refreshData: loadData,

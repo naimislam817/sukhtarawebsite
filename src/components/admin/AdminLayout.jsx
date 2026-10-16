@@ -168,7 +168,7 @@ const AdminLayout = () => {
             onClick={() => setSidebarOpen(false)}
           >
             <span className="admin-nav-icon"><NavIcon type="images" /></span>
-            <span className="admin-nav-text">Homepage Images</span>
+            <span className="admin-nav-text">Homepage & Settings</span>
           </NavLink>
           <NavLink 
             to="/admin/restaurant" 
