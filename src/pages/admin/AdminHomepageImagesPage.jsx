@@ -70,6 +70,7 @@ const AdminHomepageImagesPage = () => {
     homepage, 
     updateHero, 
     updateSingleExperienceImage, 
+    updateCta,
     contact, 
     updateContact 
   } = useHotel();
@@ -77,7 +78,23 @@ const AdminHomepageImagesPage = () => {
   const [heroSaving, setHeroSaving] = useState(false);
   const [expSaving, setExpSaving] = useState(null);
   const [contactSaving, setContactSaving] = useState(false);
+  const [ctaSaving, setCtaSaving] = useState(false);
   const [toast, setToast] = useState('');
+
+  // CTA form state
+  const [ctaForm, setCtaForm] = useState({
+    title: homepage?.cta?.title || 'Your Room at Shuktara is Waiting',
+    subtitle: homepage?.cta?.subtitle || 'Book directly with our 24/7 reservation team\nfor preferential corporate rates and\ncomplimentary airport pickup.'
+  });
+
+  useEffect(() => {
+    if (homepage?.cta) {
+      setCtaForm({
+        title: homepage.cta.title || 'Your Room at Shuktara is Waiting',
+        subtitle: homepage.cta.subtitle || 'Book directly with our 24/7 reservation team\nfor preferential corporate rates and\ncomplimentary airport pickup.'
+      });
+    }
+  }, [homepage?.cta]);
 
   // Contact form state initialized from context
   const [contactForm, setContactForm] = useState({
@@ -120,6 +137,17 @@ const AdminHomepageImagesPage = () => {
     await updateSingleExperienceImage(index, file, caption);
     setExpSaving(null);
     showToast(`✓ Experience image ${index + 1} updated!`);
+  };
+
+  const handleCtaSave = async (e) => {
+    e.preventDefault();
+    setCtaSaving(true);
+    await updateCta({
+      title: ctaForm.title,
+      subtitle: ctaForm.subtitle
+    });
+    setCtaSaving(false);
+    showToast('✓ CTA banner settings updated!');
   };
 
   const handleContactSave = async (e) => {
@@ -365,6 +393,63 @@ const AdminHomepageImagesPage = () => {
             onUpload={handleHeroUpload}
             saving={heroSaving}
           />
+        </div>
+      </div>
+
+      {/* Reservation CTA Banner Section */}
+      <div style={{ marginBottom: 36 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+          <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+            🌟 Homepage Reservation Banner (CTA)
+          </h2>
+          <span style={{ fontSize: '0.8rem', color: '#64748b' }}>
+            Updates "Your Room at Shuktara is Waiting" section
+          </span>
+        </div>
+
+        <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e2e8f0', padding: 24, maxWidth: 750 }}>
+          <form onSubmit={handleCtaSave}>
+            <div style={{ marginBottom: 18 }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#334155', marginBottom: 6 }}>
+                Banner Title
+              </label>
+              <input
+                type="text"
+                className="admin-form-input"
+                value={ctaForm.title}
+                onChange={e => setCtaForm({ ...ctaForm, title: e.target.value })}
+                placeholder="Your Room at Shuktara is Waiting"
+                required
+              />
+            </div>
+
+            <div style={{ marginBottom: 20 }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#334155', marginBottom: 6 }}>
+                Banner Subtitle / Description (Line breaks supported)
+              </label>
+              <textarea
+                className="admin-form-input"
+                rows={3}
+                value={ctaForm.subtitle}
+                onChange={e => setCtaForm({ ...ctaForm, subtitle: e.target.value })}
+                placeholder="Book directly with our 24/7 reservation team&#10;for preferential corporate rates and&#10;complimentary airport pickup."
+                required
+                style={{ resize: 'vertical' }}
+              />
+              <p style={{ fontSize: '0.78rem', color: '#64748b', marginTop: 6, lineHeight: 1.5 }}>
+                💡 <strong>Dynamic Call & Email Buttons:</strong> The "Call Direct" phone number and Reservation Email buttons automatically pull their values from the primary phone and email configured in the Contact Information section above.
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              disabled={ctaSaving}
+              className="admin-btn admin-btn--primary"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 22px' }}
+            >
+              {ctaSaving ? 'Saving Banner...' : 'Save Banner Changes'}
+            </button>
+          </form>
         </div>
       </div>
 

@@ -1099,15 +1099,14 @@
 }
 
 /* ==========================================================================
-   CTA SECTION
+   CTA SECTION (ELEGANT DEEP EMERALD VIGNETTE WITH DUAL PILL ACTIONS)
    ========================================================================== */
 .cta {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   position: relative;
-  padding: 110px 0;
+  padding: 100px 24px 110px;
   overflow: hidden;
+  background: radial-gradient(circle at 50% 35%, #0e3b30 0%, #08261f 55%, #051813 100%);
+  color: var(--color-bg-white);
 }
 
 .cta__overlay {
@@ -1116,76 +1115,143 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(ellipse at center, rgba(15, 26, 23, 0.7) 0%, rgba(15, 26, 23, 0.88) 100%);
+  background: radial-gradient(circle at 50% 45%, rgba(223, 160, 78, 0.05) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 .cta__content {
   position: relative;
   z-index: 5;
   text-align: center;
-  max-width: 720px;
+  max-width: 640px;
   margin: 0 auto;
-  color: var(--color-bg-white);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+}
+
+.cta__badge {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #154c3e 0%, #0a271f 100%);
+  border: 1px solid rgba(223, 160, 78, 0.4);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25),
+    0 0 18px rgba(223, 160, 78, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta__badge:hover {
+  transform: scale(1.08);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 3px rgba(255, 255, 255, 0.3),
+    0 0 25px rgba(223, 160, 78, 0.35);
 }
 
 .cta__title {
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  font-variation-settings: 'wght' 700, 'wdth' 105;
-  letter-spacing: 0.5px;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 4.4vw, 2.75rem);
+  font-weight: 600;
+  color: #FFFFFF;
+  letter-spacing: 0.3px;
+  line-height: 1.25;
+  margin-bottom: 18px;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Claymorphic 3D Gold CTA Button */
+.cta__subtitle {
+  font-family: var(--font-secondary);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  color: rgba(245, 245, 240, 0.82);
+  line-height: 1.68;
+  max-width: 480px;
+  margin: 0 auto 36px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.cta__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 100%;
+  max-width: 380px;
+}
+
 .cta__btn {
-  position: relative;
-  overflow: hidden;
-  background: var(--gradient-gold);
-  color: #0A1F1B;
-  padding: 16px 44px;
-  font-variation-settings: 'wght' 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: var(--clay-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-family: var(--font-secondary);
+  font-size: 0.96rem;
+  font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
-  animation: btnPulseGlow 3.5s ease-in-out infinite;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background 0.25s ease;
 }
 
-.cta__btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -130%;
-  width: 80%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
-    transparent 100%
-  );
-  transform: skewX(-25deg);
-  transition: all 0.75s ease;
+/* Button 1: Solid Warm Amber/Gold */
+.cta__btn--call {
+  background: linear-gradient(135deg, #a67524 0%, #8b5e17 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 14px rgba(139, 94, 23, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
-.cta__btn:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: var(--clay-gold-hover);
+.cta__btn--call:hover {
+  background: linear-gradient(135deg, #b8832a 0%, #9a691c 100%);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 22px rgba(139, 94, 23, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
 }
 
-.cta__btn:active {
-  transform: translateY(1px) scale(0.98);
-  box-shadow: var(--clay-gold-active);
+.cta__btn--call:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(139, 94, 23, 0.3);
 }
 
-.cta__btn:hover::before {
-  left: 140%;
+/* Button 2: Dark Emerald Translucent */
+.cta__btn--email {
+  background: rgba(18, 52, 43, 0.85);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+}
+
+.cta__btn--email:hover {
+  background: rgba(24, 68, 56, 0.95);
+  border-color: rgba(223, 160, 78, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 22px rgba(0, 0, 0, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.cta__btn--email:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cta__btn-icon {
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -1539,16 +1605,25 @@
     letter-spacing: 0.8px;
   }
   /* CTA */
+  .cta {
+    padding: 70px 16px 80px;
+  }
   .cta__title {
-    font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+    font-size: clamp(1.65rem, 6.5vw, 2.2rem);
+  }
+  .cta__subtitle {
+    font-size: 0.92rem;
+    margin-bottom: 28px;
+  }
+  .cta__actions {
+    max-width: 100%;
+    width: 100%;
   }
   .cta__btn {
     width: 100%;
-    max-width: 280px;
-    min-height: 48px;
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    max-width: 100%;
+    min-height: 50px;
+    padding: 13px 20px;
+    font-size: 0.92rem;
   }
 }

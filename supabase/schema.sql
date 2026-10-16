@@ -29,14 +29,16 @@ create table if not exists homepage_settings (
   rasun       jsonb default '{}',
   banquet     jsonb default '{}',
   skylight    jsonb default '{}',
-  contact     jsonb default '{}'
+  contact     jsonb default '{}',
+  cta         jsonb default '{}'
 );
 
--- Ensure rasun, banquet, skylight & contact columns exist if homepage_settings was created previously
+-- Ensure rasun, banquet, skylight, contact & cta columns exist if homepage_settings was created previously
 alter table homepage_settings add column if not exists rasun jsonb default '{}';
 alter table homepage_settings add column if not exists banquet jsonb default '{}';
 alter table homepage_settings add column if not exists skylight jsonb default '{}';
 alter table homepage_settings add column if not exists contact jsonb default '{}';
+alter table homepage_settings add column if not exists cta jsonb default '{}';
 
 -- 3. Bookings table
 create table if not exists bookings (

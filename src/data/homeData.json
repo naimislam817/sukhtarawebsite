@@ -108,9 +108,10 @@
   },
   "cta": {
     "title": "Your Room at Shuktara is Waiting",
-    "buttonLabel": "BOOK NOW",
-    "buttonPath": "#book-now",
-    "backgroundImage": "/images/hero/cta-bg.svg"
+    "subtitle": "Book directly with our 24/7 reservation team\nfor preferential corporate rates and\ncomplimentary airport pickup.",
+    "phone": "+880 1400 334422",
+    "phoneRaw": "+8801400334422",
+    "email": "reservation@hotelshuktara.com"
   }
 }
 

@@ -134,9 +134,17 @@ const SEED_ROOMS = [
 
 export const HotelProvider = ({ children }) => {
   const [rooms, setRooms] = useState([]);
-  const [homepage, setHomepage] = useState({
-    hero: initialHomeData.hero,
-    experiences: initialHomeData.experiences,
+  const [homepage, setHomepage] = useState(() => {
+    let cachedCta = null;
+    try {
+      const local = localStorage.getItem('shuktara_cta_settings');
+      if (local) cachedCta = JSON.parse(local);
+    } catch (_) {}
+    return {
+      hero: initialHomeData.hero,
+      experiences: initialHomeData.experiences,
+      cta: cachedCta || initialHomeData.cta,
+    };
   });
   const [rasun, setRasun] = useState(() => {
     try {
@@ -241,9 +249,16 @@ export const HotelProvider = ({ children }) => {
       if (error) throw error;
 
       if (data) {
+        if (data.cta && typeof data.cta === 'object' && Object.keys(data.cta).length > 0) {
+          try {
+            localStorage.setItem('shuktara_cta_settings', JSON.stringify(data.cta));
+          } catch (_) {}
+        }
+
         setHomepage({
           hero: Object.keys(data.hero || {}).length > 0 ? data.hero : initialHomeData.hero,
           experiences: Object.keys(data.experiences || {}).length > 0 ? data.experiences : initialHomeData.experiences,
+          cta: (data.cta && Object.keys(data.cta).length > 0) ? data.cta : initialHomeData.cta,
         });
 
         if (data.rasun && typeof data.rasun === 'object') {
@@ -454,6 +469,26 @@ export const HotelProvider = ({ children }) => {
       caption: caption !== undefined ? caption : currentImages[index].caption,
     };
     await updateExperiences(currentImages);
+  };
+
+  const updateCta = async (ctaData) => {
+    const payload = { ...(homepage.cta || initialHomeData.cta), ...ctaData };
+
+    setHomepage(prev => ({ ...prev, cta: payload }));
+
+    try {
+      localStorage.setItem('shuktara_cta_settings', JSON.stringify(payload));
+      window.dispatchEvent(new Event('storage'));
+    } catch (_) {}
+
+    try {
+      await supabase
+        .from('homepage_settings')
+        .update({ cta: payload })
+        .eq('id', 1);
+    } catch (err) {
+      console.warn('Persist CTA settings error (saved locally):', err.message);
+    }
   };
 
   // ── Rasun Restaurant CRUD ─────────────────────────────
@@ -671,6 +706,7 @@ export const HotelProvider = ({ children }) => {
         updateHero,
         updateExperiences,
         updateSingleExperienceImage,
+        updateCta,
         rasun,
         updateRasunMainImage,
         updateRasunAmbianceImage,
