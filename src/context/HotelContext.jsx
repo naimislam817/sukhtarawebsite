@@ -1,7 +1,22 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import initialHomeData from '../data/homeData.json';
+import initialFacilitiesData from '../data/facilitiesData.json';
 import { getValidRoomImage } from '../utils/roomImages';
+
+const defaultRasunFacility = initialFacilitiesData.facilities.find(f => f.slug === 'restaurant') || {};
+
+const DEFAULT_RASUN_DATA = {
+  mainImage: defaultRasunFacility.image || '/images/facilities/restraurant.jpg',
+  menuPdf: defaultRasunFacility.buttons?.find(b => b.path?.includes('.pdf'))?.path || '/menus/rasun-menu.pdf',
+  ambianceGallery: defaultRasunFacility.gallery || [
+    '/images/facilities/restaurant/gallery-1.jpg',
+    '/images/facilities/restaurant/gallery-2.jpg',
+    '/images/facilities/restaurant/gallery-3.jpg',
+    '/images/facilities/restaurant/gallery-4.jpg',
+    '/images/facilities/restaurant/gallery-5.jpg'
+  ]
+};
 
 const HotelContext = createContext(null);
 
@@ -94,6 +109,13 @@ export const HotelProvider = ({ children }) => {
     hero: initialHomeData.hero,
     experiences: initialHomeData.experiences,
   });
+  const [rasun, setRasun] = useState(() => {
+    try {
+      const local = localStorage.getItem('shuktara_rasun_settings');
+      if (local) return { ...DEFAULT_RASUN_DATA, ...JSON.parse(local) };
+    } catch (_) {}
+    return DEFAULT_RASUN_DATA;
+  });
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -158,7 +180,7 @@ export const HotelProvider = ({ children }) => {
     }
 
 
-    // 2. Homepage settings
+    // 2. Homepage & Restaurant settings
     try {
       const { data, error } = await supabase
         .from('homepage_settings')
@@ -173,9 +195,17 @@ export const HotelProvider = ({ children }) => {
           hero: Object.keys(data.hero || {}).length > 0 ? data.hero : initialHomeData.hero,
           experiences: Object.keys(data.experiences || {}).length > 0 ? data.experiences : initialHomeData.experiences,
         });
+
+        if (data.rasun && typeof data.rasun === 'object') {
+          const merged = { ...DEFAULT_RASUN_DATA, ...data.rasun };
+          setRasun(merged);
+          try {
+            localStorage.setItem('shuktara_rasun_settings', JSON.stringify(merged));
+          } catch (_) {}
+        }
       }
     } catch (err) {
-      console.warn('Homepage load failed:', err.message);
+      console.warn('Homepage / Rasun load failed:', err.message);
     }
 
     // 3. Bookings
@@ -352,6 +382,50 @@ export const HotelProvider = ({ children }) => {
     await updateExperiences(currentImages);
   };
 
+  // ── Rasun Restaurant CRUD ─────────────────────────────
+  const saveRasunSettings = async (updatedRasun) => {
+    setRasun(updatedRasun);
+    try {
+      localStorage.setItem('shuktara_rasun_settings', JSON.stringify(updatedRasun));
+      window.dispatchEvent(new Event('storage'));
+    } catch (_) {}
+
+    try {
+      await supabase
+        .from('homepage_settings')
+        .update({ rasun: updatedRasun })
+        .eq('id', 1);
+    } catch (err) {
+      console.warn('Persist rasun settings error (saved locally):', err.message);
+    }
+  };
+
+  const updateRasunMainImage = async (file) => {
+    const uploadedUrl = await uploadImage(file);
+    if (!uploadedUrl) return null;
+    const updated = { ...rasun, mainImage: uploadedUrl };
+    await saveRasunSettings(updated);
+    return uploadedUrl;
+  };
+
+  const updateRasunAmbianceImage = async (index, file) => {
+    const uploadedUrl = await uploadImage(file);
+    if (!uploadedUrl) return null;
+    const currentList = [...(rasun.ambianceGallery || DEFAULT_RASUN_DATA.ambianceGallery)];
+    currentList[index] = uploadedUrl;
+    const updated = { ...rasun, ambianceGallery: currentList };
+    await saveRasunSettings(updated);
+    return uploadedUrl;
+  };
+
+  const updateRasunMenuPdf = async (file) => {
+    const uploadedUrl = await uploadImage(file);
+    if (!uploadedUrl) return null;
+    const updated = { ...rasun, menuPdf: uploadedUrl };
+    await saveRasunSettings(updated);
+    return uploadedUrl;
+  };
+
   // ── Bookings CRUD ──────────────────────────────────────
   const normalizeBooking = (b) => ({
     id: b.id,
@@ -412,6 +486,10 @@ export const HotelProvider = ({ children }) => {
         updateHero,
         updateExperiences,
         updateSingleExperienceImage,
+        rasun,
+        updateRasunMainImage,
+        updateRasunAmbianceImage,
+        updateRasunMenuPdf,
         addBooking,
         updateBookingStatus,
         refreshData: loadData,

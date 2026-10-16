@@ -114,15 +114,23 @@ const FacilityDetail = ({ facility }) => {
               ))}
             </div>
             <div className="facility-detail__buttons">
-              {facility.buttons.map((btn, index) => (
-                <a key={index} href={btn.path} className="facility-detail__btn">
-                  {btn.label}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </a>
-              ))}
+              {facility.buttons.map((btn, index) => {
+                const isExternalOrPdf = btn.path?.endsWith('.pdf') || btn.path?.startsWith('http') || btn.path?.startsWith('data:');
+                return (
+                  <a 
+                    key={index} 
+                    href={btn.path} 
+                    className="facility-detail__btn"
+                    {...(isExternalOrPdf ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  >
+                    {btn.label}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>

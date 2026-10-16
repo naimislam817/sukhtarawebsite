@@ -12,6 +12,7 @@ import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import AdminRoomsPage from './pages/admin/AdminRoomsPage';
 import AdminHomepageImagesPage from './pages/admin/AdminHomepageImagesPage';
+import AdminRasunPage from './pages/admin/AdminRasunPage';
 import AdminBookingsPage from './pages/admin/AdminBookingsPage';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="dashboard" element={<AdminDashboardPage />} />
           <Route path="rooms" element={<AdminRoomsPage />} />
           <Route path="homepage-images" element={<AdminHomepageImagesPage />} />
+          <Route path="restaurant" element={<AdminRasunPage />} />
           <Route path="bookings" element={<AdminBookingsPage />} />
         </Route>
 

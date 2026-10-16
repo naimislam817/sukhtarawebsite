@@ -25,8 +25,12 @@ alter table rooms add column if not exists sort_order int default 0;
 create table if not exists homepage_settings (
   id          int primary key default 1,
   hero        jsonb default '{}',
-  experiences jsonb default '{}'
+  experiences jsonb default '{}',
+  rasun       jsonb default '{}'
 );
+
+-- Ensure rasun column exists if homepage_settings was created previously
+alter table homepage_settings add column if not exists rasun jsonb default '{}';
 
 -- 3. Bookings table
 create table if not exists bookings (

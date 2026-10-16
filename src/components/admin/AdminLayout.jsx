@@ -19,6 +19,15 @@ const NavIcon = ({ type }) => {
         <polyline points="21 15 16 10 5 21"/>
       </svg>
     ),
+    restaurant: (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+        <line x1="6" y1="1" x2="6" y2="4"/>
+        <line x1="10" y1="1" x2="10" y2="4"/>
+        <line x1="14" y1="1" x2="14" y2="4"/>
+      </svg>
+    ),
     rooms: (
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M3 22V8a1 1 0 0 1 1-1h4V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v18"/>
@@ -144,6 +153,14 @@ const AdminLayout = () => {
           >
             <span className="admin-nav-icon"><NavIcon type="images" /></span>
             <span className="admin-nav-text">Homepage Images</span>
+          </NavLink>
+          <NavLink 
+            to="/admin/restaurant" 
+            className={({ isActive }) => `admin-nav-item${isActive ? ' active' : ''}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            <span className="admin-nav-icon"><NavIcon type="restaurant" /></span>
+            <span className="admin-nav-text">Rasun Restaurant</span>
           </NavLink>
           <NavLink 
             to="/admin/rooms" 
