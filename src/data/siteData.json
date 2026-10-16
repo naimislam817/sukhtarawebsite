@@ -17,6 +17,7 @@
   },
   "navLinks": [
     { "label": "ROOMS", "path": "/rooms" },
+    { "label": "CONTACT US", "path": "/contact" },
     {
       "label": "FACILITIES & SERVICES",
       "path": "#",
@@ -27,8 +28,7 @@
         { "label": "GYM", "path": "/facilities/gym" },
         { "label": "CONFERENCE ROOM", "path": "/facilities/conference-room" }
       ]
-    },
-    { "label": "CONTACT", "path": "/contact" }
+    }
   ],
   "footerLinks": [
     { "label": "Accommodation", "path": "/rooms" },
