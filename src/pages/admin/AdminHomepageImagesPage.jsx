@@ -184,6 +184,26 @@ const AdminHomepageImagesPage = () => {
             Update hotel contact phone numbers, emails, hero banner, and experiences gallery.
           </p>
         </div>
+        <div>
+          <a
+            href="/admin/contact"
+            className="admin-action-btn"
+            style={{
+              padding: '10px 16px',
+              fontSize: '0.86rem',
+              fontWeight: 600,
+              borderRadius: 8,
+              background: '#ffffff',
+              border: '1px solid #cbd5e1',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              textDecoration: 'none'
+            }}
+          >
+            <span>📞 Edit Footer & Contact Numbers ➔</span>
+          </a>
+        </div>
       </div>
 
       {/* SECTION 1: Hotel Contact Numbers & Details (Updates Whole Site) */}

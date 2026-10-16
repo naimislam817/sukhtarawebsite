@@ -17,6 +17,7 @@ import AdminRasunPage from './pages/admin/AdminRasunPage';
 import AdminBanquetPage from './pages/admin/AdminBanquetPage';
 import AdminSkylightPage from './pages/admin/AdminSkylightPage';
 import AdminBookingsPage from './pages/admin/AdminBookingsPage';
+import AdminContactPage from './pages/admin/AdminContactPage';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
 import './styles/global.css';
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="banquet" element={<AdminBanquetPage />} />
           <Route path="skylight" element={<AdminSkylightPage />} />
           <Route path="bookings" element={<AdminBookingsPage />} />
+          <Route path="contact" element={<AdminContactPage />} />
         </Route>
 
         {/* Fallback */}

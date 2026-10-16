@@ -10,8 +10,8 @@ const Footer = () => {
   const address = liveContact?.address || siteData.contact.address;
   const email1 = liveContact?.emails?.[0]?.email || liveContact?.emails?.[0] || siteData.contact.emails[0];
   const email2 = liveContact?.emails?.[1]?.email || liveContact?.emails?.[1] || siteData.contact.emails[1];
-  const phone1 = liveContact?.phones?.[0]?.display || liveContact?.phones?.[0]?.raw || liveContact?.phones?.[0] || siteData.contact.phones[0];
-  const phone2 = liveContact?.phones?.[1]?.display || liveContact?.phones?.[1]?.raw || liveContact?.phones?.[1] || siteData.contact.phones[1];
+  const phone1 = liveContact?.footerPhones?.[0] || liveContact?.phones?.[0]?.display || liveContact?.phones?.[0]?.raw || liveContact?.phones?.[0] || siteData.contact.phones[0];
+  const phone2 = liveContact?.footerPhones?.[1] || liveContact?.phones?.[1]?.display || liveContact?.phones?.[1]?.raw || liveContact?.phones?.[1] || siteData.contact.phones[1];
 
   return (
     <footer className="footer">
