@@ -475,6 +475,119 @@
   color: var(--color-accent-hover);
 }
 
+/* Location View Mode Switcher */
+.location__view-toggle {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 6;
+  display: flex;
+  background: rgba(10, 31, 27, 0.88);
+  backdrop-filter: blur(8px);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid rgba(223, 160, 78, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  gap: 4px;
+}
+
+.location__toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.location__toggle-btn:hover {
+  color: #ffffff;
+}
+
+.location__toggle-btn.active {
+  background: var(--gradient-gold);
+  color: #0A1F1B;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.location__map-embed {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 480px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: #e2e8f0;
+}
+
+.location__map-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.location__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.location__directions-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  background: linear-gradient(135deg, #12463d 0%, #0c2d27 100%);
+  color: #ffffff;
+  border: 1.5px solid rgba(223, 160, 78, 0.45);
+  border-radius: 25px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(18, 70, 61, 0.25);
+}
+
+.location__directions-btn:hover {
+  background: var(--gradient-gold);
+  color: #0A1F1B;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(223, 160, 78, 0.35);
+}
+
+.location__toggle-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-border);
+  border-radius: 25px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.location__toggle-map-link:hover {
+  border-color: var(--color-accent-gold);
+  color: var(--color-accent-hover);
+  background: var(--color-bg-white);
+  transform: translateY(-2px);
+}
+
 /* ==========================================================================
    STATS COUNTER (GLASSMORPHIC CARDS WITH SPECULAR GLARE SWEEP)
    ========================================================================== */
@@ -1377,7 +1490,8 @@
     grid-template-columns: 1fr;
     gap: 45px;
   }
-  .location__image {
+  .location__image,
+  .location__map-embed {
     height: 360px;
   }
   .location__badge {
@@ -1510,8 +1624,9 @@
   .location__image-wrapper {
     padding: 8px;
   }
-  .location__image {
-    height: 240px;
+  .location__image,
+  .location__map-embed {
+    height: 260px;
   }
   .location__features {
     gap: 8px;

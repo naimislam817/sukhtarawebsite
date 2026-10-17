@@ -2,6 +2,29 @@ import { useState, useRef } from 'react';
 import { getValidRoomImage } from '../../utils/roomImages';
 import '../../styles/admin.css';
 
+const ROOM_CATEGORIES_LIST = [
+  { id: 'standard-single', label: 'Standard Single' },
+  { id: 'superior-king', label: 'Superior King' },
+  { id: 'deluxe-king', label: 'Deluxe King' },
+  { id: 'premium-deluxe-king', label: 'Premium Deluxe King' },
+  { id: 'superior-twin', label: 'Superior Twin' },
+  { id: 'deluxe-twin', label: 'Deluxe Twin' },
+  { id: 'premium-triple', label: 'Premium Triple' },
+];
+
+const normalizeCat = (cat) => {
+  if (!cat) return 'standard-single';
+  const c = String(cat).toLowerCase().trim();
+  if (c === 'single' || c === 'standard' || c === 'standard-single' || c === 'standard single') return 'standard-single';
+  if (c === 'superior-king' || c === 'superior king') return 'superior-king';
+  if (c === 'deluxe-king' || c === 'deluxe king' || c === 'king') return 'deluxe-king';
+  if (c === 'premium-deluxe-king' || c === 'premium deluxe king') return 'premium-deluxe-king';
+  if (c === 'superior-twin' || c === 'superior twin') return 'superior-twin';
+  if (c === 'deluxe-twin' || c === 'deluxe twin' || c === 'twin') return 'deluxe-twin';
+  if (c === 'premium-triple' || c === 'premium triple' || c === 'triple') return 'premium-triple';
+  return cat;
+};
+
 const RoomModal = ({ room = null, onSave, onClose }) => {
   const isEdit = !!room;
   const fileInputRef = useRef(null);
@@ -12,7 +35,7 @@ const RoomModal = ({ room = null, onSave, onClose }) => {
     description: room?.description || '',
     status: room?.status || 'published',
     amenities: room?.amenities?.join(', ') || '',
-    category: room?.category || 'standard',
+    category: normalizeCat(room?.category),
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -133,13 +156,13 @@ const RoomModal = ({ room = null, onSave, onClose }) => {
                 </select>
               </div>
               <div className="admin-form-group">
-                <label className="admin-form-label">Category</label>
+                <label className="admin-form-label">Category (7 Hotel Categories)</label>
                 <select name="category" className="admin-form-select" value={form.category} onChange={handleChange}>
-                  <option value="single">Single</option>
-                  <option value="twin">Twin</option>
-                  <option value="king">King</option>
-                  <option value="triple">Triple</option>
-                  <option value="standard">Standard</option>
+                  {ROOM_CATEGORIES_LIST.map(cat => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.label}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

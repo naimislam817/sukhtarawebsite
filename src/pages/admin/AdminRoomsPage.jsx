@@ -45,13 +45,33 @@ const AdminRoomsPage = () => {
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginated = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
+  const formatCategory = (cat) => {
+    if (!cat) return 'Standard Single';
+    const c = String(cat).toLowerCase().trim();
+    if (c === 'standard-single' || c === 'single' || c === 'standard') return 'Standard Single';
+    if (c === 'superior-king') return 'Superior King';
+    if (c === 'deluxe-king' || c === 'king') return 'Deluxe King';
+    if (c === 'premium-deluxe-king') return 'Premium Deluxe King';
+    if (c === 'superior-twin') return 'Superior Twin';
+    if (c === 'deluxe-twin' || c === 'twin') return 'Deluxe Twin';
+    if (c === 'premium-triple' || c === 'triple') return 'Premium Triple';
+    return cat;
+  };
+
   const handleSave = async (roomData, imageFile) => {
-    if (editingRoom) {
-      await updateRoom(editingRoom.id, roomData, imageFile);
-    } else {
-      await addRoom(roomData, imageFile);
+    try {
+      if (editingRoom) {
+        await updateRoom(editingRoom.id, roomData, imageFile);
+      } else {
+        await addRoom(roomData, imageFile);
+      }
+      setShowModal(false);
+      setEditingRoom(null);
+      setRefreshNotice(true);
+      setTimeout(() => setRefreshNotice(false), 3500);
+    } catch (err) {
+      console.error('Save room error:', err);
     }
-    setEditingRoom(null);
   };
 
   const handleEdit = (room) => {
@@ -286,7 +306,23 @@ const AdminRoomsPage = () => {
 
                   <td>
                     <div className="admin-room-info">
-                      <span className="admin-room-title">{room.name}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                        <span className="admin-room-title">{room.name}</span>
+                        <span style={{
+                          display: 'inline-block',
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px',
+                          padding: '2px 8px',
+                          borderRadius: 12,
+                          background: '#f1f5f9',
+                          color: '#0f766e',
+                          border: '1px solid #cbd5e1'
+                        }}>
+                          {formatCategory(room.category)}
+                        </span>
+                      </div>
                       <span className="admin-room-desc">{room.description}</span>
                     </div>
                   </td>

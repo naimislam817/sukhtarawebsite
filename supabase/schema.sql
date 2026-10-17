@@ -68,20 +68,23 @@ on conflict (id) do nothing;
 alter table rooms enable row level security;
 drop policy if exists "Public read rooms" on rooms;
 drop policy if exists "Auth write rooms" on rooms;
+drop policy if exists "Public write rooms" on rooms;
 create policy "Public read rooms"  on rooms for select using (true);
-create policy "Auth write rooms"   on rooms for all    using (auth.role() = 'authenticated');
+create policy "Public write rooms" on rooms for all    using (true);
 
 alter table homepage_settings enable row level security;
 drop policy if exists "Public read homepage" on homepage_settings;
 drop policy if exists "Auth write homepage"  on homepage_settings;
+drop policy if exists "Public write homepage" on homepage_settings;
 create policy "Public read homepage" on homepage_settings for select using (true);
-create policy "Auth write homepage"  on homepage_settings for all    using (auth.role() = 'authenticated');
+create policy "Public write homepage"  on homepage_settings for all    using (true);
 
 alter table bookings enable row level security;
 drop policy if exists "Public insert bookings" on bookings;
 drop policy if exists "Auth manage bookings"   on bookings;
+drop policy if exists "Public manage bookings" on bookings;
 create policy "Public insert bookings" on bookings for insert with check (true);
-create policy "Auth manage bookings"   on bookings for all    using (auth.role() = 'authenticated');
+create policy "Public manage bookings" on bookings for all    using (true);
 
 drop policy if exists "Public read images"  on storage.objects;
 drop policy if exists "Auth upload images"  on storage.objects;

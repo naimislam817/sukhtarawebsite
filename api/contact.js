@@ -43,7 +43,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Please enter your message.' });
     }
 
-    const recipientEmail = process.env.RESERVATION_EMAIL || 'reservation@hotelshuktara.com';
+    const primaryEmail = 'info@hotelshuktara.com';
+    const fallbackEmail = process.env.RESERVATION_EMAIL || 'reservation@hotelshuktara.com';
+    const recipientEmails = [primaryEmail, fallbackEmail].filter((v, i, a) => a.indexOf(v) === i);
+    const recipientEmail = recipientEmails.join(', ');
     const emailSubject = `[Website Contact] ${subject} - ${name}`;
 
     const emailHtml = `

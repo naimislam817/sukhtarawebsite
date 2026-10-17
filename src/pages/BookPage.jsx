@@ -107,10 +107,12 @@ const BookPage = () => {
                 </div>
                 <h3 className="book-success__title">Reservation Request Received!</h3>
                 <p className="book-success__text">
-                  Thank you, <strong>{formData.fullName}</strong>. We have received your booking request for <strong>{formData.numRooms} × {formData.roomPreference}</strong> from <strong>{formData.checkIn}</strong> to <strong>{formData.checkOut}</strong>.
+                  Thank you, <strong>{formData.fullName}</strong>. We have received your booking request for{' '}
+                  <strong>{formData.numRooms} Room(s) &times; {formData.roomPreference}</strong> for{' '}
+                  <strong>{formData.numGuests} Person(s) / Guest(s)</strong> from <strong>{formData.checkIn}</strong> to <strong>{formData.checkOut}</strong>.
                 </p>
                 <p className="book-success__subtext">
-                  Our reservations desk will email confirmation details to <strong>{formData.email}</strong> shortly.
+                  A reservation confirmation has been sent to <strong>{formData.email}</strong>, and our 24/7 reservations team at <strong>info@hotelshuktara.com</strong> has received your request and will contact you promptly.
                 </p>
                 <button onClick={() => setSubmitted(false)} className="book-form__submit-btn">
                   Book Another Room
@@ -228,33 +230,53 @@ const BookPage = () => {
                     <label htmlFor="numRooms" className="book-form__label">
                       Number of Rooms <span className="book-form__required">*</span>
                     </label>
-                    <input
-                      type="number"
+                    <select
                       id="numRooms"
                       name="numRooms"
-                      min="1"
-                      max="10"
-                      className="book-form__input"
+                      className="book-form__select"
                       value={formData.numRooms}
                       onChange={handleChange}
                       required
-                    />
+                    >
+                      <option value="1">1 Room</option>
+                      <option value="2">2 Rooms</option>
+                      <option value="3">3 Rooms</option>
+                      <option value="4">4 Rooms</option>
+                      <option value="5">5 Rooms</option>
+                      <option value="6">6 Rooms</option>
+                      <option value="7">7 Rooms</option>
+                      <option value="8">8 Rooms</option>
+                      <option value="9">9 Rooms</option>
+                      <option value="10">10 Rooms</option>
+                    </select>
                   </div>
 
                   <div className="book-form__group">
                     <label htmlFor="numGuests" className="book-form__label">
-                      Number of Guests
+                      Number of Persons / Guests <span className="book-form__required">*</span>
                     </label>
-                    <input
-                      type="number"
+                    <select
                       id="numGuests"
                       name="numGuests"
-                      min="1"
-                      max="30"
-                      className="book-form__input"
+                      className="book-form__select"
                       value={formData.numGuests || '1'}
                       onChange={handleChange}
-                    />
+                      required
+                    >
+                      <option value="1">1 Person (Solo Traveler)</option>
+                      <option value="2">2 Persons (Couple / Double)</option>
+                      <option value="3">3 Persons (Triple)</option>
+                      <option value="4">4 Persons (Family)</option>
+                      <option value="5">5 Persons</option>
+                      <option value="6">6 Persons</option>
+                      <option value="7">7 Persons</option>
+                      <option value="8">8 Persons</option>
+                      <option value="9">9 Persons</option>
+                      <option value="10">10+ Persons (Group Stay)</option>
+                    </select>
+                    <small style={{ display: 'block', marginTop: 4, fontSize: '0.76rem', color: '#64748b' }}>
+                      Total adults & children staying
+                    </small>
                   </div>
                 </div>
 
