@@ -43,6 +43,14 @@ const RoomModal = ({ room = null, onSave, onClose }) => {
     room?.image ? getValidRoomImage(room.image, room.name) : null
   );
 
+  // Additional gallery images
+  const [existingGallery, setExistingGallery] = useState(
+    Array.isArray(room?.images) ? room.images : []
+  );
+  const [newGalleryFiles, setNewGalleryFiles] = useState([]);
+  const [newGalleryPreviews, setNewGalleryPreviews] = useState([]);
+  const galleryInputRef = useRef(null);
+
   const [saving, setSaving] = useState(false);
   const [dragOver, setDragOver] = useState(false);
 
@@ -57,6 +65,29 @@ const RoomModal = ({ room = null, onSave, onClose }) => {
     const reader = new FileReader();
     reader.onload = () => setImagePreview(reader.result);
     reader.readAsDataURL(file);
+  };
+
+  const handleGallerySelect = (e) => {
+    const files = Array.from(e.target.files || []).filter(f => f.type.startsWith('image/'));
+    if (!files.length) return;
+
+    setNewGalleryFiles(prev => [...prev, ...files]);
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setNewGalleryPreviews(prev => [...prev, reader.result]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeExistingGalleryImage = (indexToRemove) => {
+    setExistingGallery(prev => prev.filter((_, idx) => idx !== indexToRemove));
+  };
+
+  const removeNewGalleryImage = (indexToRemove) => {
+    setNewGalleryFiles(prev => prev.filter((_, idx) => idx !== indexToRemove));
+    setNewGalleryPreviews(prev => prev.filter((_, idx) => idx !== indexToRemove));
   };
 
   const handleFileDrop = (e) => {
@@ -80,9 +111,10 @@ const RoomModal = ({ room = null, onSave, onClose }) => {
       amenities: form.amenities
         ? form.amenities.split(',').map(a => a.trim()).filter(Boolean)
         : [],
+      images: existingGallery,
     };
 
-    await onSave(roomData, imageFile);
+    await onSave(roomData, imageFile, newGalleryFiles);
     setSaving(false);
     onClose();
   };
@@ -216,6 +248,126 @@ const RoomModal = ({ room = null, onSave, onClose }) => {
                     className="admin-preview-remove"
                     onClick={() => { setImagePreview(null); setImageFile(null); }}
                   >✕</button>
+                </div>
+              )}
+            </div>
+
+            {/* Room Carousel / Additional Gallery Images */}
+            <div className="admin-form-group" style={{ marginTop: 24, paddingTop: 18, borderTop: '1px solid #e2e8f0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <div>
+                  <label className="admin-form-label" style={{ marginBottom: 2 }}>
+                    📸 Room Gallery & Carousel Images (Multiple)
+                  </label>
+                  <p style={{ fontSize: '0.78rem', color: '#64748b', margin: 0 }}>
+                    Add extra photos (bathroom, view, balcony, bedding) to display in the interactive carousel.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="admin-action-btn"
+                  onClick={() => galleryInputRef.current?.click()}
+                  style={{
+                    padding: '6px 14px',
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    borderRadius: 6,
+                    background: '#12463d',
+                    color: '#fff',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 6
+                  }}
+                >
+                  <span>+ Add Photos</span>
+                </button>
+              </div>
+
+              <input
+                type="file"
+                ref={galleryInputRef}
+                accept="image/*"
+                multiple
+                style={{ display: 'none' }}
+                onChange={handleGallerySelect}
+              />
+
+              {/* Grid of gallery thumbnails */}
+              {(existingGallery.length > 0 || newGalleryPreviews.length > 0) ? (
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(90px, 1fr))',
+                  gap: 10,
+                  marginTop: 12
+                }}>
+                  {existingGallery.map((imgUrl, idx) => (
+                    <div key={`existing-${idx}`} style={{
+                      position: 'relative',
+                      borderRadius: 6,
+                      overflow: 'hidden',
+                      height: 75,
+                      border: '1px solid #cbd5e1',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.06)'
+                    }}>
+                      <img src={imgUrl} alt={`Gallery ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <button
+                        type="button"
+                        onClick={() => removeExistingGalleryImage(idx)}
+                        style={{
+                          position: 'absolute', top: 4, right: 4, background: 'rgba(0,0,0,0.65)',
+                          color: '#fff', border: 'none', borderRadius: '50%', width: 20, height: 20,
+                          cursor: 'pointer', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}
+                        title="Remove image"
+                      >✕</button>
+                    </div>
+                  ))}
+
+                  {newGalleryPreviews.map((preview, idx) => (
+                    <div key={`new-${idx}`} style={{
+                      position: 'relative',
+                      borderRadius: 6,
+                      overflow: 'hidden',
+                      height: 75,
+                      border: '2px solid #22c55e',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.06)'
+                    }}>
+                      <img src={preview} alt="New upload" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <button
+                        type="button"
+                        onClick={() => removeNewGalleryImage(idx)}
+                        style={{
+                          position: 'absolute', top: 4, right: 4, background: 'rgba(239,68,68,0.85)',
+                          color: '#fff', border: 'none', borderRadius: '50%', width: 20, height: 20,
+                          cursor: 'pointer', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}
+                        title="Remove"
+                      >✕</button>
+                      <span style={{
+                        position: 'absolute', bottom: 2, left: 2, background: 'rgba(34,197,94,0.9)',
+                        color: '#fff', fontSize: '9px', fontWeight: 700, padding: '1px 4px', borderRadius: 3
+                      }}>NEW</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div
+                  onClick={() => galleryInputRef.current?.click()}
+                  style={{
+                    border: '1.5px dashed #cbd5e1',
+                    borderRadius: 8,
+                    padding: '16px',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    background: '#f8fafc',
+                    marginTop: 8
+                  }}
+                >
+                  <p style={{ margin: 0, fontSize: '0.82rem', color: '#64748b' }}>
+                    No extra gallery photos yet. Click <strong>+ Add Photos</strong> to select multiple pictures.
+                  </p>
                 </div>
               )}
             </div>

@@ -3,6 +3,7 @@ import roomsData from '../data/roomsData.json';
 import { useHotel } from '../context/HotelContext';
 import { getValidRoomImage } from '../utils/roomImages';
 import PageBanner from '../components/common/PageBanner';
+import RoomCarousel from '../components/rooms/RoomCarousel';
 import '../styles/roomDetail.css';
 
 
@@ -33,6 +34,11 @@ const RoomDetailPage = () => {
     ? `৳ ${Number(room.price).toLocaleString('en-BD')}`
     : null;
 
+  // Build the complete list of images for this room (main image + gallery images)
+  const mainImage = getValidRoomImage(room.image, room.name);
+  const galleryImages = Array.isArray(room.images) ? room.images.filter(Boolean) : [];
+  // Merge main image with additional gallery images without duplicating
+  const allImages = [mainImage, ...galleryImages.filter(img => img !== mainImage)];
 
   return (
     <>
@@ -41,34 +47,41 @@ const RoomDetailPage = () => {
       <section className="room-detail">
         <div className="room-detail__container">
 
-          {/* Room Image */}
-          <div className="room-detail__image-wrapper" style={{ position: 'relative' }}>
-            <img
-              src={getValidRoomImage(room.image, room.name)}
-              alt={room.name}
-              className="room-detail__image"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = '/images/rooms/premium-deluxe-king.png';
-              }}
-            />
-
+          {/* Interactive Card Carousel (or Single Hero Image if only 1 photo) */}
+          <div style={{ position: 'relative' }}>
             {priceDisplay && (
               <div style={{
                 position: 'absolute',
-                top: 18,
-                right: 18,
-                background: 'rgba(18, 70, 61, 0.92)',
+                top: 14,
+                right: 14,
+                zIndex: 30,
+                background: 'rgba(18, 70, 61, 0.94)',
                 backdropFilter: 'blur(8px)',
                 color: '#ffffff',
-                padding: '8px 18px',
+                padding: '8px 20px',
                 borderRadius: 24,
                 fontSize: '1rem',
                 fontWeight: 700,
-                border: '1px solid rgba(200, 149, 108, 0.5)',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.25)'
+                border: '1px solid rgba(200, 149, 108, 0.55)',
+                boxShadow: '0 6px 20px rgba(0,0,0,0.3)'
               }}>
                 {priceDisplay} <span style={{ fontSize: '0.78rem', fontWeight: 400, opacity: 0.85 }}>/ night</span>
+              </div>
+            )}
+
+            {allImages.length > 1 ? (
+              <RoomCarousel images={allImages} roomName={room.name} />
+            ) : (
+              <div className="room-detail__image-wrapper" style={{ margin: '0 auto 40px' }}>
+                <img
+                  src={mainImage}
+                  alt={room.name}
+                  className="room-detail__image"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/rooms/premium-deluxe-king.png';
+                  }}
+                />
               </div>
             )}
           </div>

@@ -518,7 +518,7 @@
 
 .location__map-embed {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   height: 480px;
   border-radius: 4px;
@@ -1616,17 +1616,30 @@
     transform: none;
     display: flex;
     justify-content: center;
-    width: fit-content;
-    max-width: 100%;
-    padding: 8px 16px;
-    font-size: 0.78rem;
+    width: 110px;
+    height: 110px;
+    animation: none;
   }
   .location__image-wrapper {
     padding: 8px;
   }
   .location__image,
   .location__map-embed {
-    height: 260px;
+    height: 320px;
+  }
+  .location__view-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .location__toggle-btn {
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    gap: 4px;
+  }
+  .location__toggle-btn span {
+    display: none;
   }
   .location__features {
     gap: 8px;
@@ -1738,6 +1751,213 @@
     width: 100%;
     max-width: 100%;
     min-height: 50px;
+    padding: 13px 20px;
+    font-size: 0.92rem;
+  }
+}
+
+/* ==========================================================================
+   MAP SECTION (FULL-WIDTH — BELOW CTA)
+   ========================================================================== */
+.map-section {
+  position: relative;
+  background: #06201a;
+  overflow: hidden;
+}
+
+/* ---- Header strip ---- */
+.map-section__header {
+  padding: 72px 24px 52px;
+  background: radial-gradient(circle at 50% 0%, #0e3b30 0%, #06201a 70%);
+  border-top: 1px solid rgba(223, 160, 78, 0.18);
+}
+
+.map-section__header-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+
+/* Pill badge */
+.map-section__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 2.2px;
+  color: var(--color-accent-gold, #DFA04E);
+  font-weight: 600;
+  background: rgba(223, 160, 78, 0.1);
+  padding: 5px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(223, 160, 78, 0.35);
+  text-transform: uppercase;
+}
+
+.map-section__pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2ED573;
+  box-shadow: 0 0 8px #2ED573;
+  animation: beaconPulse 2s infinite;
+  flex-shrink: 0;
+}
+
+/* Title */
+.map-section__title {
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  margin: 0;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtitle */
+.map-section__subtitle {
+  font-size: clamp(0.93rem, 1.8vw, 1.05rem);
+  color: rgba(245, 245, 240, 0.78);
+  line-height: 1.75;
+  max-width: 540px;
+  margin: 0;
+}
+
+/* Info chips */
+.map-section__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.map-section__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  font-size: 0.82rem;
+  color: rgba(245, 245, 240, 0.88);
+  font-weight: 500;
+  backdrop-filter: blur(6px);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.map-section__chip:hover {
+  border-color: rgba(223, 160, 78, 0.45);
+  background: rgba(223, 160, 78, 0.08);
+}
+
+/* Directions button */
+.map-section__directions-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #a67524 0%, #8b5e17 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 6px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background 0.25s ease;
+  box-shadow: 0 4px 16px rgba(139, 94, 23, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.map-section__directions-btn:hover {
+  background: linear-gradient(135deg, #b8832a 0%, #9a691c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(139, 94, 23, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.map-section__directions-btn:active {
+  transform: translateY(1px);
+}
+
+/* ---- Embed wrapper ---- */
+.map-section__embed-wrapper {
+  position: relative;
+  width: 100%;
+  height: 480px;
+}
+
+.map-section__iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(15%) contrast(1.05);
+}
+
+/* Subtle top fade that blends the header into the map */
+.map-section__top-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, #06201a 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   MAP SECTION — RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+  .map-section__header {
+    padding: 56px 20px 40px;
+  }
+  .map-section__embed-wrapper {
+    height: 380px;
+  }
+  .map-section__chips {
+    gap: 8px;
+  }
+  .map-section__chip {
+    font-size: 0.78rem;
+    padding: 6px 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-section__header {
+    padding: 48px 16px 36px;
+  }
+  .map-section__header-inner {
+    gap: 14px;
+  }
+  .map-section__embed-wrapper {
+    height: 320px;
+  }
+  .map-section__top-fade {
+    height: 40px;
+  }
+  .map-section__chips {
+    flex-direction: column;
+    align-items: center;
+  }
+  .map-section__chip {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+  .map-section__directions-btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
     padding: 13px 20px;
     font-size: 0.92rem;
   }

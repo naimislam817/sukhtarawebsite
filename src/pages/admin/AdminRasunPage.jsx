@@ -14,29 +14,34 @@ const AdminRasunPage = () => {
   const [savingMain, setSavingMain] = useState(false);
   const [savingMenu, setSavingMenu] = useState(false);
   const [savingGalleryIndex, setSavingGalleryIndex] = useState(null);
-  const [toast, setToast] = useState('');
+  const [toast, setToast] = useState({ msg: '', isError: false });
   const [dragOverMain, setDragOverMain] = useState(false);
   const [dragOverMenu, setDragOverMenu] = useState(false);
 
   const mainInputRef = useRef(null);
   const menuInputRef = useRef(null);
 
-  const showToast = (msg) => {
-    setToast(msg);
-    setTimeout(() => setToast(''), 3500);
+  const showToast = (msg, isError = false) => {
+    setToast({ msg, isError });
+    setTimeout(() => setToast({ msg: '', isError: false }), isError ? 8000 : 3500);
   };
 
   // Main Image upload
   const handleMainImageChange = async (file) => {
     if (!file || !file.type.startsWith('image/')) {
-      showToast('⚠️ Please upload a valid image file (JPG, PNG, WEBP).');
+      showToast('⚠️ Please upload a valid image file (JPG, PNG, WEBP).', true);
       return;
     }
     setSavingMain(true);
-    const url = await updateRasunMainImage(file);
-    setSavingMain(false);
-    if (url) {
-      showToast('✓ Main Rasun Restaurant image updated successfully!');
+    try {
+      const url = await updateRasunMainImage(file);
+      if (url) {
+        showToast('✓ Main Rasun Restaurant image updated successfully!');
+      }
+    } catch (err) {
+      showToast(`✗ ${err.message || 'Image upload failed.'}`, true);
+    } finally {
+      setSavingMain(false);
     }
   };
 
@@ -45,28 +50,38 @@ const AdminRasunPage = () => {
     if (!file) return;
     const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
     if (!isPdf) {
-      showToast('⚠️ Please upload a valid PDF document for the food menu.');
+      showToast('⚠️ Please upload a valid PDF document for the food menu.', true);
       return;
     }
     setSavingMenu(true);
-    const url = await updateRasunMenuPdf(file);
-    setSavingMenu(false);
-    if (url) {
-      showToast('✓ Rasun Food Menu PDF updated successfully!');
+    try {
+      const url = await updateRasunMenuPdf(file);
+      if (url) {
+        showToast('✓ Rasun Food Menu PDF updated successfully!');
+      }
+    } catch (err) {
+      showToast(`✗ ${err.message || 'PDF upload failed.'}`, true);
+    } finally {
+      setSavingMenu(false);
     }
   };
 
   // Ambiance gallery upload
   const handleAmbianceChange = async (index, file) => {
     if (!file || !file.type.startsWith('image/')) {
-      showToast('⚠️ Please upload a valid image file.');
+      showToast('⚠️ Please upload a valid image file.', true);
       return;
     }
     setSavingGalleryIndex(index);
-    const url = await updateRasunAmbianceImage(index, file);
-    setSavingGalleryIndex(null);
-    if (url) {
-      showToast(`✓ Ambiance photo ${index + 1} updated successfully!`);
+    try {
+      const url = await updateRasunAmbianceImage(index, file);
+      if (url) {
+        showToast(`✓ Ambiance photo ${index + 1} updated successfully!`);
+      }
+    } catch (err) {
+      showToast(`✗ ${err.message || 'Gallery image upload failed.'}`, true);
+    } finally {
+      setSavingGalleryIndex(null);
     }
   };
 
@@ -79,24 +94,26 @@ const AdminRasunPage = () => {
 
   return (
     <>
-      {toast && (
+      {toast.msg && (
         <div style={{
           position: 'fixed',
           top: 24,
           right: 24,
-          background: '#12463d',
+          background: toast.isError ? '#7f1d1d' : '#12463d',
           color: '#ffffff',
           padding: '14px 22px',
           borderRadius: 10,
           zIndex: 99999,
-          fontSize: '0.92rem',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
+          fontSize: '0.88rem',
+          boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
           display: 'flex',
           alignItems: 'center',
           gap: 10,
-          border: '1px solid #c8956c'
+          maxWidth: 420,
+          lineHeight: 1.5,
+          border: `1px solid ${toast.isError ? '#fca5a5' : '#c8956c'}`
         }}>
-          {toast}
+          {toast.msg}
         </div>
       )}
 

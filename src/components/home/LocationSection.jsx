@@ -6,7 +6,7 @@ const LocationSection = () => {
   const { location } = homeData;
   const [activeTab, setActiveTab] = useState('photo'); // 'photo' | 'map'
 
-  const googleMapsEmbedUrl = 'https://www.google.com/maps?q=Hotel+Shuktara+Indira+Road+Sher-E-Bangla+Nagar+Dhaka+1215&output=embed';
+  const googleMapsEmbedUrl = 'https://maps.google.com/maps?q=Hotel+Sukhtara+Indira+Road+Farmgate+Dhaka+1215+Bangladesh&t=m&z=16&ie=UTF8&iwloc=&output=embed';
   const googleMapsDirectionsUrl = 'https://www.google.com/maps/dir/?api=1&destination=Hotel+Shuktara+Indira+Road+Sher-E-Bangla+Nagar+Dhaka+1215';
 
   return (

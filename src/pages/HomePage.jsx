@@ -5,6 +5,7 @@ import FacilitiesSection from '../components/home/FacilitiesSection';
 import ExperiencesGallery from '../components/home/ExperiencesGallery';
 import AccommodationsSection from '../components/home/AccommodationsSection';
 import CTASection from '../components/home/CTASection';
+import MapSection from '../components/home/MapSection';
 
 const HomePage = () => {
   return (
@@ -16,9 +17,11 @@ const HomePage = () => {
       <ExperiencesGallery />
       <AccommodationsSection />
       <CTASection />
+      <MapSection />
     </>
   );
 };
 
 export default HomePage;
 export { HomePage };
+

@@ -382,34 +382,56 @@ export const HotelProvider = ({ children }) => {
   useEffect(() => { loadData(); }, []);
 
   // ── Image Upload (Supabase Storage) ────────────────────
+  // IMPORTANT: Returns a public Supabase URL or throws an error.
+  // Data URL fallback was removed — base64 strings stored in the DB
+  // are too large and are not accessible across devices (mobile won't see them).
   const uploadImage = async (file) => {
-    try {
-      const ext = file.name.split('.').pop();
-      const path = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('hotel-images')
-        .upload(path, file, { cacheControl: '3600', upsert: false });
-
-      if (uploadError) throw uploadError;
-
-      const { data } = supabase.storage.from('hotel-images').getPublicUrl(path);
-      return data.publicUrl;
-    } catch (err) {
-      console.warn('Supabase Storage upload failed, using Data URL fallback:', err.message);
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
+    // Validate file size client-side (max 10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      throw new Error('Image is too large. Please use a file under 10 MB.');
     }
+
+    const ext = file.name.split('.').pop().toLowerCase();
+    const safeName = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('hotel-images')
+      .upload(safeName, file, { cacheControl: '3600', upsert: false });
+
+    if (uploadError) {
+      // Surface a clear, actionable error message
+      const hint =
+        uploadError.message?.includes('Bucket not found')
+          ? 'Storage bucket "hotel-images" not found. Create it in Supabase Storage and set it to Public.'
+          : uploadError.message?.includes('policy') || uploadError.message?.includes('403')
+          ? 'Storage permission denied. Set the "hotel-images" bucket to Public in Supabase.'
+          : uploadError.message || 'Unknown upload error.';
+      throw new Error(`Image upload failed: ${hint}`);
+    }
+
+    const { data } = supabase.storage.from('hotel-images').getPublicUrl(safeName);
+    return data.publicUrl;
   };
 
   // ── Rooms CRUD ─────────────────────────────────────────
-  const addRoom = async (roomData, imageFile) => {
+  const addRoom = async (roomData, imageFile, galleryFiles = []) => {
     let image = roomData.image || '/images/rooms/standard-single.png';
     if (imageFile) image = await uploadImage(imageFile);
+
+    // Upload any gallery images
+    let uploadedGallery = Array.isArray(roomData.images) ? [...roomData.images] : [];
+    if (galleryFiles && galleryFiles.length > 0) {
+      for (const file of galleryFiles) {
+        if (file) {
+          try {
+            const url = await uploadImage(file);
+            if (url) uploadedGallery.push(url);
+          } catch (e) {
+            console.warn('Gallery image upload warning:', e.message);
+          }
+        }
+      }
+    }
 
     const generatedSlug = generateUniqueSlug(roomData.name, rooms);
     const tempId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'room-' + Date.now();
@@ -426,6 +448,7 @@ export const HotelProvider = ({ children }) => {
         ? roomData.amenities
         : (roomData.amenities || '').split(',').map(a => a.trim()).filter(Boolean),
       image,
+      images: uploadedGallery,
       sort_order: rooms.length,
       created_at: new Date().toISOString(),
     };
@@ -449,6 +472,7 @@ export const HotelProvider = ({ children }) => {
         category: newRoom.category,
         amenities: newRoom.amenities,
         image: newRoom.image,
+        images: newRoom.images,
         sort_order: newRoom.sort_order,
       };
 
@@ -472,12 +496,29 @@ export const HotelProvider = ({ children }) => {
     return newRoom;
   };
 
-  const updateRoom = async (id, roomData, imageFile) => {
+  const updateRoom = async (id, roomData, imageFile, galleryFiles = []) => {
     let payload = { ...roomData };
     delete payload.id;
     delete payload.created_at;
 
     if (imageFile) payload.image = await uploadImage(imageFile);
+    
+    // Upload any new gallery image files and merge with existing images
+    let uploadedGallery = Array.isArray(payload.images) ? [...payload.images] : [];
+    if (galleryFiles && galleryFiles.length > 0) {
+      for (const file of galleryFiles) {
+        if (file) {
+          try {
+            const url = await uploadImage(file);
+            if (url) uploadedGallery.push(url);
+          } catch (e) {
+            console.warn('Gallery image upload warning:', e.message);
+          }
+        }
+      }
+    }
+    payload.images = uploadedGallery;
+
     if (payload.price !== undefined) payload.price = Number(payload.price);
     if (payload.amenities && !Array.isArray(payload.amenities)) {
       payload.amenities = payload.amenities.split(',').map(a => a.trim()).filter(Boolean);
@@ -494,6 +535,13 @@ export const HotelProvider = ({ children }) => {
       const { data, error } = await supabase.from('rooms').update(payload).eq('id', id).select().single();
       if (!error && data) {
         return data;
+      } else if (error) {
+        // If 'images' column doesn't exist yet, retry without 'images' so save still succeeds
+        if (error.message?.includes("'images'")) {
+          const { images, ...safePayload } = payload;
+          const { data: retryData } = await supabase.from('rooms').update(safePayload).eq('id', id).select().single();
+          if (retryData) return retryData;
+        }
       }
     } catch (err) {
       console.warn('Supabase update room exception (persisted locally):', err.message);
@@ -562,6 +610,8 @@ export const HotelProvider = ({ children }) => {
   // ── Homepage CRUD ──────────────────────────────────────
   const updateHero = async (heroData, imageFile) => {
     let payload = { ...homepage.hero, ...heroData };
+
+    // uploadImage now throws on failure — let it bubble up to the caller
     if (imageFile) payload.backgroundImage = await uploadImage(imageFile);
 
     const { error } = await supabase
@@ -569,7 +619,8 @@ export const HotelProvider = ({ children }) => {
       .update({ hero: payload })
       .eq('id', 1);
 
-    if (error) { console.error('Update hero error:', error); return; }
+    if (error) throw new Error(`Failed to save hero to database: ${error.message}`);
+
     setHomepage(prev => ({ ...prev, hero: payload }));
   };
 
@@ -581,7 +632,7 @@ export const HotelProvider = ({ children }) => {
       .update({ experiences: payload })
       .eq('id', 1);
 
-    if (error) { console.error('Update experiences error:', error); return; }
+    if (error) throw new Error(`Failed to save experiences to database: ${error.message}`);
     setHomepage(prev => ({ ...prev, experiences: payload }));
   };
 
@@ -626,13 +677,14 @@ export const HotelProvider = ({ children }) => {
       window.dispatchEvent(new Event('storage'));
     } catch (_) {}
 
-    try {
-      await supabase
-        .from('homepage_settings')
-        .update({ rasun: updatedRasun })
-        .eq('id', 1);
-    } catch (err) {
-      console.warn('Persist rasun settings error (saved locally):', err.message);
+    const { error } = await supabase
+      .from('homepage_settings')
+      .update({ rasun: updatedRasun })
+      .eq('id', 1);
+
+    if (error) {
+      console.error('Persist rasun settings error:', error);
+      throw new Error(`Failed to save Rasun to database: ${error.message}`);
     }
   };
 
@@ -670,13 +722,14 @@ export const HotelProvider = ({ children }) => {
       window.dispatchEvent(new Event('storage'));
     } catch (_) {}
 
-    try {
-      await supabase
-        .from('homepage_settings')
-        .update({ banquet: updatedBanquet })
-        .eq('id', 1);
-    } catch (err) {
-      console.warn('Persist banquet settings error (saved locally):', err.message);
+    const { error } = await supabase
+      .from('homepage_settings')
+      .update({ banquet: updatedBanquet })
+      .eq('id', 1);
+
+    if (error) {
+      console.error('Persist banquet settings error:', error);
+      throw new Error(`Failed to save Banquet to database: ${error.message}`);
     }
   };
 
@@ -714,13 +767,14 @@ export const HotelProvider = ({ children }) => {
       window.dispatchEvent(new Event('storage'));
     } catch (_) {}
 
-    try {
-      await supabase
-        .from('homepage_settings')
-        .update({ skylight: updatedSkylight })
-        .eq('id', 1);
-    } catch (err) {
-      console.warn('Persist skylight settings error (saved locally):', err.message);
+    const { error } = await supabase
+      .from('homepage_settings')
+      .update({ skylight: updatedSkylight })
+      .eq('id', 1);
+
+    if (error) {
+      console.error('Persist skylight settings error:', error);
+      throw new Error(`Failed to save Skylight to database: ${error.message}`);
     }
   };
 
@@ -753,23 +807,43 @@ export const HotelProvider = ({ children }) => {
   // ── Contact Info CRUD ──────────────────────────────────
   const updateContact = async (updatedContact) => {
     const merged = { ...contact, ...updatedContact };
+
+    // 1. Always update local state & localStorage immediately so the UI is never blocked
     setContact(merged);
     try {
       localStorage.setItem('shuktara_contact_settings', JSON.stringify(merged));
       window.dispatchEvent(new Event('storage'));
     } catch (_) {}
 
+    // 2. Persist to Supabase — requires the 'contact' jsonb column to exist.
+    //    If it doesn't, run: ALTER TABLE homepage_settings ADD COLUMN IF NOT EXISTS contact jsonb DEFAULT '{}'::jsonb;
     try {
       const { error } = await supabase
         .from('homepage_settings')
         .update({ contact: merged })
         .eq('id', 1);
+
       if (error) {
-        console.warn('Could not persist contact to Supabase (column may need migration):', error.message);
+        if (
+          error.message?.includes("column") ||
+          error.message?.includes("schema cache") ||
+          error.code === 'PGRST204' ||
+          error.code === '42703'
+        ) {
+          console.warn(
+            '[Supabase] contact column missing in homepage_settings.\n' +
+            'Run this SQL in your Supabase dashboard:\n' +
+            'ALTER TABLE homepage_settings ADD COLUMN IF NOT EXISTS contact jsonb DEFAULT \'{}\'::jsonb;\n' +
+            'Contact info is saved locally and will sync once the column exists.'
+          );
+        } else {
+          console.warn('Could not persist contact to Supabase:', error.message);
+        }
       }
     } catch (err) {
-      console.warn('Persist contact error:', err.message);
+      console.warn('Persist contact error (saved locally):', err.message);
     }
+
     return merged;
   };
 
