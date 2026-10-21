@@ -1916,6 +1916,7 @@
   }
 
   /* Mobile carousel dots and navigation */
+  .accommodations__carousel-footer,
   .accommodations__mobile-nav {
     display: flex;
     align-items: center;
