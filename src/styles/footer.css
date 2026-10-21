@@ -64,20 +64,59 @@
 
 .footer__payment-icons {
   display: flex;
+  align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
+.footer__payment-card,
 .footer__payment-icon {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 0.7rem;
-  font-variation-settings: 'wght' 600;
-  letter-spacing: 0.5px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.8);
-  min-width: 60px;
+  background-color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  height: 32px;
+  min-width: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.footer__payment-card:hover,
+.footer__payment-icon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(223, 160, 78, 0.4);
+}
+
+.footer__payment-img {
+  height: 18px;
+  width: auto;
+  max-width: 50px;
+  object-fit: contain;
+  display: block;
+}
+
+.footer__payment-img--visa {
+  height: 14px;
+  max-width: 44px;
+}
+
+.footer__payment-img--mc {
+  height: 20px;
+  max-width: 32px;
+}
+
+.footer__payment-img--amex {
+  height: 20px;
+  max-width: 34px;
+}
+
+.footer__payment-img--bkash {
+  height: 20px;
+  max-width: 52px;
 }
 
 .footer__heading {

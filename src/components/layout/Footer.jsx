@@ -52,9 +52,18 @@ const Footer = () => {
           <div className="footer__payment">
             <p className="footer__payment-title">WE ACCEPT</p>
             <div className="footer__payment-icons">
-              <div className="footer__payment-icon">VISA</div>
-              <div className="footer__payment-icon">MC</div>
-              <div className="footer__payment-icon">AMEX</div>
+              <div className="footer__payment-card" title="Visa">
+                <img src="/images/payments/visa.svg" alt="Visa" className="footer__payment-img footer__payment-img--visa" />
+              </div>
+              <div className="footer__payment-card" title="Mastercard">
+                <img src="/images/payments/mastercard.svg" alt="Mastercard" className="footer__payment-img footer__payment-img--mc" />
+              </div>
+              <div className="footer__payment-card" title="American Express">
+                <img src="/images/payments/amex.svg" alt="American Express" className="footer__payment-img footer__payment-img--amex" />
+              </div>
+              <div className="footer__payment-card footer__payment-card--bkash" title="bKash">
+                <img src="/images/payments/bkash.svg" alt="bKash" className="footer__payment-img footer__payment-img--bkash" />
+              </div>
             </div>
           </div>
         </div>
