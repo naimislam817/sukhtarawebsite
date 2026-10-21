@@ -58,12 +58,12 @@ const AdminRoomsPage = () => {
     return cat;
   };
 
-  const handleSave = async (roomData, imageFile) => {
+  const handleSave = async (roomData, imageFile, newGalleryFiles) => {
     try {
       if (editingRoom) {
-        await updateRoom(editingRoom.id, roomData, imageFile);
+        await updateRoom(editingRoom.id, roomData, imageFile, newGalleryFiles);
       } else {
-        await addRoom(roomData, imageFile);
+        await addRoom(roomData, imageFile, newGalleryFiles);
       }
       setShowModal(false);
       setEditingRoom(null);

@@ -57,3 +57,31 @@ ON homepage_settings FOR UPDATE
 TO public 
 USING (true)
 WITH CHECK (true);
+
+-- 5. Enable public read, insert, update, delete policies on rooms
+ALTER TABLE rooms ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow public read rooms" ON rooms;
+CREATE POLICY "Allow public read rooms" 
+ON rooms FOR SELECT 
+TO public 
+USING (true);
+
+DROP POLICY IF EXISTS "Allow public insert rooms" ON rooms;
+CREATE POLICY "Allow public insert rooms" 
+ON rooms FOR INSERT 
+TO public 
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public update rooms" ON rooms;
+CREATE POLICY "Allow public update rooms" 
+ON rooms FOR UPDATE 
+TO public 
+USING (true)
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public delete rooms" ON rooms;
+CREATE POLICY "Allow public delete rooms" 
+ON rooms FOR DELETE 
+TO public 
+USING (true);

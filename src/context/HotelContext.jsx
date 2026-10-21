@@ -476,7 +476,7 @@ export const HotelProvider = ({ children }) => {
         sort_order: newRoom.sort_order,
       };
 
-      const { data, error } = await supabase.from('rooms').insert(payload).select().single();
+      const { data, error } = await supabase.from('rooms').insert(payload).select().maybeSingle();
       if (!error && data) {
         setRooms(prev => {
           const synced = prev.map(r => (r.id === tempId ? { ...r, ...data } : r));
@@ -532,14 +532,14 @@ export const HotelProvider = ({ children }) => {
     } catch (_) {}
 
     try {
-      const { data, error } = await supabase.from('rooms').update(payload).eq('id', id).select().single();
+      const { data, error } = await supabase.from('rooms').update(payload).eq('id', id).select().maybeSingle();
       if (!error && data) {
         return data;
       } else if (error) {
         // If 'images' column doesn't exist yet, retry without 'images' so save still succeeds
         if (error.message?.includes("'images'")) {
           const { images, ...safePayload } = payload;
-          const { data: retryData } = await supabase.from('rooms').update(safePayload).eq('id', id).select().single();
+          const { data: retryData } = await supabase.from('rooms').update(safePayload).eq('id', id).select().maybeSingle();
           if (retryData) return retryData;
         }
       }
