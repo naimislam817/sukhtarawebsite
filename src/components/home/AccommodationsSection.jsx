@@ -9,14 +9,13 @@ import '../../styles/home.css';
 const AccommodationsSection = () => {
   const { accommodations } = homeData;
   const { rooms } = useHotel();
-  const [mobileIndex, setMobileIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const carouselTrackRef = useRef(null);
 
   // Use admin-managed published rooms if available, else fall back to homeData
   const displayRooms = rooms && rooms.length > 0
     ? rooms
         .filter(r => r.status === 'published')
-        .slice(0, 6)
         .map(r => ({
           name: r.name,
           description: r.description,
@@ -32,7 +31,7 @@ const AccommodationsSection = () => {
   const total = displayRooms.length;
 
   const scrollToSlide = (idx) => {
-    setMobileIndex(idx);
+    setCurrentIndex(idx);
     if (carouselTrackRef.current) {
       const card = carouselTrackRef.current.children[idx];
       if (card) {
@@ -44,21 +43,55 @@ const AccommodationsSection = () => {
   const handleScroll = () => {
     if (!carouselTrackRef.current) return;
     const scrollLeft = carouselTrackRef.current.scrollLeft;
-    const cardWidth = carouselTrackRef.current.children[0]?.offsetWidth || 300;
-    const newIdx = Math.round(scrollLeft / cardWidth);
-    if (newIdx >= 0 && newIdx < total && newIdx !== mobileIndex) {
-      setMobileIndex(newIdx);
+    const cardWidth = carouselTrackRef.current.children[0]?.offsetWidth || 340;
+    const newIdx = Math.round(scrollLeft / (cardWidth + 24));
+    if (newIdx >= 0 && newIdx < total && newIdx !== currentIndex) {
+      setCurrentIndex(newIdx);
     }
+  };
+
+  const slidePrev = () => {
+    scrollToSlide(Math.max(0, currentIndex - 1));
+  };
+
+  const slideNext = () => {
+    scrollToSlide(Math.min(total - 1, currentIndex + 1));
   };
 
   return (
     <section className="accommodations">
       <div className="accommodations__container">
-        <SectionTitle title={accommodations.title} light />
+        <div className="accommodations__header-row">
+          <SectionTitle title={accommodations.title} light />
 
-        {/* Accommodations Grid (Desktop: 3-column / Mobile: Horizontal Swipe Snap Carousel) */}
+          {/* Desktop Carousel Controls */}
+          {total > 1 && (
+            <div className="accommodations__desktop-nav" aria-label="Room slides navigation">
+              <button 
+                type="button" 
+                className="accommodations__nav-btn"
+                onClick={slidePrev}
+                disabled={currentIndex === 0}
+                aria-label="Previous rooms"
+              >
+                ‹
+              </button>
+              <button 
+                type="button" 
+                className="accommodations__nav-btn"
+                onClick={slideNext}
+                disabled={currentIndex === total - 1}
+                aria-label="Next rooms"
+              >
+                ›
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Accommodations Slider Track (Desktop & Mobile Swipe/Snap Carousel) */}
         <div 
-          className="accommodations__grid accommodations__grid--mobile-carousel"
+          className="accommodations__carousel-track"
           ref={carouselTrackRef}
           onScroll={handleScroll}
         >
@@ -98,40 +131,44 @@ const AccommodationsSection = () => {
           ))}
         </div>
 
-        {/* Mobile Carousel Indicators & Arrow Controls */}
-        <div className="accommodations__mobile-nav" aria-hidden="true">
-          <button 
-            type="button" 
-            className="accommodations__nav-btn"
-            onClick={() => scrollToSlide(Math.max(0, mobileIndex - 1))}
-            disabled={mobileIndex === 0}
-            aria-label="Previous room"
-          >
-            ‹
-          </button>
-          
-          <div className="accommodations__dots">
-            {displayRooms.map((_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                className={`accommodations__dot ${idx === mobileIndex ? 'active' : ''}`}
-                onClick={() => scrollToSlide(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
+        {/* Carousel Indicators & Navigation Controls */}
+        {total > 1 && (
+          <div className="accommodations__carousel-footer">
+            <button 
+              type="button" 
+              className="accommodations__nav-btn accommodations__nav-btn--mobile"
+              onClick={slidePrev}
+              disabled={currentIndex === 0}
+              aria-label="Previous room"
+            >
+              ‹
+            </button>
+            
+            <div className="accommodations__dots" role="tablist" aria-label="Room slides">
+              {displayRooms.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  role="tab"
+                  aria-selected={idx === currentIndex}
+                  className={`accommodations__dot ${idx === currentIndex ? 'active' : ''}`}
+                  onClick={() => scrollToSlide(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
 
-          <button 
-            type="button" 
-            className="accommodations__nav-btn"
-            onClick={() => scrollToSlide(Math.min(total - 1, mobileIndex + 1))}
-            disabled={mobileIndex === total - 1}
-            aria-label="Next room"
-          >
-            ›
-          </button>
-        </div>
+            <button 
+              type="button" 
+              className="accommodations__nav-btn accommodations__nav-btn--mobile"
+              onClick={slideNext}
+              disabled={currentIndex === total - 1}
+              aria-label="Next room"
+            >
+              ›
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

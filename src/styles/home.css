@@ -1056,11 +1056,110 @@
   background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
 }
 
-.accommodations__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 35px;
-  margin-top: 50px;
+.accommodations__header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.accommodations__header-row .section-title {
+  margin-bottom: 0;
+}
+
+.accommodations__desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+/* Slider track for carousel on all viewports */
+.accommodations__carousel-track {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 8px 30px;
+  margin: 10px -8px 0;
+  scrollbar-width: none;
+}
+
+.accommodations__carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.accommodations__carousel-track .accommodations__card {
+  flex: 0 0 calc(33.333% - 19px);
+  min-width: 310px;
+  scroll-snap-align: start;
+}
+
+.accommodations__carousel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.accommodations__nav-btn--mobile {
+  display: none;
+}
+
+.accommodations__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.accommodations__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.accommodations__dot.active {
+  width: 26px;
+  border-radius: 10px;
+  background: var(--color-accent-gold);
+  box-shadow: 0 0 10px rgba(223, 160, 78, 0.6);
+}
+
+.accommodations__nav-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(18, 70, 61, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(223, 160, 78, 0.45);
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.accommodations__nav-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #dfa04e 0%, #b77322 100%);
+  color: #0f172a;
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(223, 160, 78, 0.45);
+}
+
+.accommodations__nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 .accommodations__card {
@@ -1529,9 +1628,9 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 18px;
   }
-  .accommodations__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
+  .accommodations__carousel-track .accommodations__card {
+    flex: 0 0 calc(50% - 14px);
+    min-width: 280px;
   }
   .facilities-section__list {
     grid-template-columns: 1fr;
@@ -1590,11 +1689,15 @@
   .accommodations {
     padding: 70px 0;
   }
-  .accommodations__grid {
-    grid-template-columns: 1fr;
-    max-width: 440px;
-    margin-left: auto;
-    margin-right: auto;
+  .accommodations__desktop-nav {
+    display: none;
+  }
+  .accommodations__nav-btn--mobile {
+    display: flex;
+  }
+  .accommodations__carousel-track {
+    gap: 18px;
+    padding: 15px 4px 25px;
   }
   .experiences {
     padding: 70px 0;
@@ -1699,54 +1802,92 @@
   .stats__reviews {
     font-size: 0.7rem;
   }
-  /* Facilities on small screens */
-  .facilities-section__item {
-    padding: 26px 16px 20px;
+  /* Facilities on small screens: Clean, modern mobile card layout */
+  .facilities-section {
+    padding: 60px 0;
+  }
+
+  .facilities-section__list {
+    grid-template-columns: 1fr;
     gap: 16px;
+    margin-top: 32px;
+  }
+
+  .facilities-section__item {
+    padding: 20px 18px;
+    gap: 14px;
     align-items: flex-start;
-    border-radius: 10px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(18, 53, 46, 0.06);
+    border: 1px solid rgba(18, 53, 46, 0.08);
   }
+
   .facilities-section__badge {
-    top: 10px;
-    right: 12px;
-    font-size: 0.62rem;
-    padding: 2px 8px;
+    position: static;
+    display: inline-flex;
+    align-self: flex-start;
+    margin-bottom: 6px;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    letter-spacing: 0.8px;
   }
+
   .facilities-section__icon {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
-    margin-top: 2px;
+    margin-top: 0;
+    flex-shrink: 0;
   }
+
   .facilities-section__icon svg {
     width: 22px;
     height: 22px;
   }
-  .facilities-section__item-title {
-    font-size: 1.1rem;
+
+  .facilities-section__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
   }
+
+  .facilities-section__item-title {
+    font-size: 1.05rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
   .facilities-section__item-desc {
     font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0;
   }
-  /* Accommodations on small screens: Horizontal Carousel */
-  .accommodations__grid--mobile-carousel {
-    display: flex !important;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+
+  .facilities-section__features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .facilities-section__feature-tag {
+    font-size: 0.72rem;
+    padding: 4px 9px;
+    border-radius: 6px;
+  }
+  /* Accommodations on small screens: Horizontal Carousel Card sizing */
+  .accommodations__carousel-track {
     gap: 16px;
-    padding: 10px 16px 20px;
-    margin: 30px -16px 0;
-    scrollbar-width: none; /* Firefox */
+    padding: 10px 12px 20px;
+    margin: 20px -12px 0;
   }
 
-  .accommodations__grid--mobile-carousel::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
-  }
-
-  .accommodations__grid--mobile-carousel .accommodations__card {
+  .accommodations__carousel-track .accommodations__card {
     flex: 0 0 85%;
     max-width: 320px;
+    min-width: 260px;
     scroll-snap-align: center;
     border-radius: 12px;
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
