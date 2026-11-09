@@ -6,7 +6,8 @@ import '../../styles/whatsapp.css';
 const WhatsAppButton = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { contact: liveContact } = useHotel();
-  const whatsappNum = liveContact?.whatsapp?.number || liveContact?.whatsapp || siteData.contact.whatsapp;
+  const rawNum = liveContact?.whatsapp?.number || liveContact?.whatsapp || siteData.contact.whatsapp;
+  const whatsappClean = String(rawNum || '8801400334422').replace(/[^0-9]/g, '');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,7 +19,7 @@ const WhatsAppButton = () => {
 
   return (
     <a
-      href={`https://wa.me/${whatsappNum}`}
+      href={`https://wa.me/${whatsappClean}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"

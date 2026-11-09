@@ -13,9 +13,9 @@ const HomePage = () => {
       <HeroSection />
       <LocationSection />
       <StatsCounter />
+      <AccommodationsSection />
       <FacilitiesSection />
       <ExperiencesGallery />
-      <AccommodationsSection />
       <CTASection />
       <MapSection />
     </>
