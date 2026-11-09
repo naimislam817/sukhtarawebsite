@@ -1244,7 +1244,7 @@
   overflow: hidden;
   height: 260px;
   position: relative;
-  background: #0f1a18;
+  background: transparent;
   flex-shrink: 0;
 }
 
@@ -1308,14 +1308,14 @@
 .accommodations__image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center center;
   display: block;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .accommodations__card:hover .accommodations__image {
-  transform: scale(1.08);
+  transform: scale(1.03);
 }
 
 .accommodations__info {
