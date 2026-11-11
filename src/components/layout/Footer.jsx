@@ -35,10 +35,12 @@ const Footer = () => {
   const phone1Tel  = String(phone1).replace(/[^0-9+]/g, '');
   const phone2Tel  = String(phone2).replace(/[^0-9+]/g, '');
 
-  const whatsappNum     = c.whatsapp?.number  || c.whatsapp?.display || siteData.contact.whatsapp;
-  const whatsappDisplay = c.whatsapp?.display || c.whatsapp?.number  || whatsappNum;
+  const rawWa = c.whatsapp?.number || c.whatsapp?.display || siteData.contact.whatsapp || '8801400334422';
+  let waDigits = String(rawWa).replace(/[^0-9]/g, '');
+  if (waDigits.startsWith('01')) waDigits = '88' + waDigits;
+  const whatsappClean = waDigits.length >= 11 ? waDigits : '8801400334422';
+  const whatsappDisplay = c.whatsapp?.display || '+880 1400-334422';
   const whatsappMsg     = encodeURIComponent(c.whatsapp?.prefilledMessage || "Hello, I'd like to inquire about a room.");
-  const whatsappClean   = String(whatsappNum || '').replace(/[^0-9]/g, '');
 
   return (
     <footer className="footer">

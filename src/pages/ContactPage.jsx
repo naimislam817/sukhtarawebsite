@@ -104,7 +104,10 @@ const ContactPage = () => {
   const email1 = contact.emails?.[0]?.email || 'info@hotelshuktara.com';
   const email2 = contact.emails?.[1]?.email || 'reservation@hotelshuktara.com';
 
-  const whatsappNum = contact.whatsapp?.number || '8801400334422';
+  const rawWa = contact.whatsapp?.number || '8801400334422';
+  let waDigits = String(rawWa).replace(/[^0-9]/g, '');
+  if (waDigits.startsWith('01')) waDigits = '88' + waDigits;
+  const whatsappNum = waDigits.length >= 11 ? waDigits : '8801400334422';
   const whatsappMsg = encodeURIComponent(
     contact.whatsapp?.prefilledMessage || 'Hello, I would like to inquire about a room.'
   );
