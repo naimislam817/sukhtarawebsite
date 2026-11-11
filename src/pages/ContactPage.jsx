@@ -107,7 +107,7 @@ const ContactPage = () => {
   const rawWa = contact.whatsapp?.number || '8801400334422';
   let waDigits = String(rawWa).replace(/[^0-9]/g, '');
   if (waDigits.startsWith('01')) waDigits = '88' + waDigits;
-  const whatsappNum = waDigits.length >= 11 ? waDigits : '8801400334422';
+  const whatsappNum = (waDigits.length === 13 && !waDigits.includes('3322')) ? waDigits : '8801400334422';
   const whatsappMsg = encodeURIComponent(
     contact.whatsapp?.prefilledMessage || 'Hello, I would like to inquire about a room.'
   );

@@ -7,14 +7,15 @@ const WhatsAppButton = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { contact: liveContact } = useHotel();
   
-  // Prefer live number, sanitize, ensure 880 prefix and fallback strictly to verified 8801400334422
+  // Extract number, clean it, and if it's the broken/typo number or anything other than valid 11/13 digits, force 8801400334422
   let raw = liveContact?.whatsapp?.number || liveContact?.whatsapp || siteData.contact.whatsapp || '8801400334422';
   let digits = String(raw).replace(/[^0-9]/g, '');
   if (digits.startsWith('01')) {
     digits = '88' + digits;
   }
-  // Sanity check: must be at least 13 digits for Bangladesh (8801XXXXXXXX)
-  const whatsappClean = (digits.length >= 11) ? digits : '8801400334422';
+  
+  // Guard against typo '3322' or wrong length (Bangladesh international numbers must be 13 digits starting with 8801)
+  const whatsappClean = (digits.length === 13 && !digits.includes('3322')) ? digits : '8801400334422';
 
   useEffect(() => {
     const handleScroll = () => {

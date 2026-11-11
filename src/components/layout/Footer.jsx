@@ -38,7 +38,7 @@ const Footer = () => {
   const rawWa = c.whatsapp?.number || c.whatsapp?.display || siteData.contact.whatsapp || '8801400334422';
   let waDigits = String(rawWa).replace(/[^0-9]/g, '');
   if (waDigits.startsWith('01')) waDigits = '88' + waDigits;
-  const whatsappClean = waDigits.length >= 11 ? waDigits : '8801400334422';
+  const whatsappClean = (waDigits.length === 13 && !waDigits.includes('3322')) ? waDigits : '8801400334422';
   const whatsappDisplay = c.whatsapp?.display || '+880 1400-334422';
   const whatsappMsg     = encodeURIComponent(c.whatsapp?.prefilledMessage || "Hello, I'd like to inquire about a room.");
 
