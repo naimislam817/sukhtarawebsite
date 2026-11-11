@@ -42,9 +42,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Please enter your phone number.' });
     }
 
-    const hotelNotificationEmail = 'info@hotelshuktara.com';
-    const backupEmail = process.env.RESERVATION_EMAIL || 'reservation@hotelshuktara.com';
-    const recipientEmails = [hotelNotificationEmail, backupEmail].filter((v, i, a) => a.indexOf(v) === i);
+    const primaryNotificationEmail = 'reservation@hotelshuktara.com';
+    const fallbackEmail = process.env.RESERVATION_EMAIL || 'info@hotelshuktara.com';
+    const recipientEmails = [primaryNotificationEmail, fallbackEmail].filter((v, i, a) => a.indexOf(v) === i);
 
     const safeName = escapeHtml(fullName.trim());
     const safeEmail = escapeHtml(email.trim());
@@ -56,76 +56,122 @@ export default async function handler(req, res) {
     const safeGuests = escapeHtml(String(numGuests));
     const safeMsg = escapeHtml(specialRequest || 'None');
     const safeId = escapeHtml(bookingId);
+    const formattedDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Dhaka', dateStyle: 'medium', timeStyle: 'short' });
 
     // ── Email 1: Hotel Staff Notification ──────────────────────────
-    const staffSubject = `[New Room Reservation] ${safeRoom} - ${safeName} (${safeGuests} Guests)`;
+    const staffSubject = `🛎️ New Reservation [${safeId}]: ${safeRoom} — ${safeName}`;
     const staffHtml = `
-      <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background: #ffffff;">
-        <div style="background-color: #0e3b30; color: #ffffff; padding: 24px; text-align: center;">
-          <h1 style="margin: 0; font-size: 20px; font-weight: bold; letter-spacing: 1px; color: #DFA04E;">HOTEL SHUKTARA (PVT.) LTD.</h1>
-          <p style="margin: 6px 0 0; font-size: 14px; opacity: 0.9;">New Online Room Reservation Request</p>
-        </div>
-
-        <div style="padding: 24px; background-color: #faf8f5;">
-          <div style="background: #ffffff; padding: 16px 20px; border-radius: 6px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-            <p style="margin: 0; font-size: 13px; color: #64748b;">Booking Reference</p>
-            <p style="margin: 4px 0 0; font-size: 18px; font-weight: bold; color: #0e3b30;">${safeId}</p>
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      </head>
+      <body style="margin: 0; padding: 20px; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+        <div style="max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;">
+          
+          <!-- Header Banner -->
+          <div style="background: linear-gradient(135deg, #091714 0%, #12463d 100%); padding: 32px 24px; text-align: center; border-bottom: 3px solid #dfa04e;">
+            <p style="margin: 0 0 6px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #dfa04e; font-weight: 700;">Direct Website Booking</p>
+            <h1 style="margin: 0; font-size: 22px; color: #ffffff; font-weight: 700; letter-spacing: 1px;">HOTEL SHUKTARA DHAKA</h1>
+            <p style="margin: 6px 0 0; font-size: 13px; color: rgba(255,255,255,0.8);">New Guest Reservation Alert</p>
           </div>
 
-          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-              <td style="padding: 10px 0; font-weight: bold; color: #475569; width: 170px;">Guest Name:</td>
-              <td style="padding: 10px 0; color: #0f172a; font-weight: 600;">${safeName}</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-              <td style="padding: 10px 0; font-weight: bold; color: #475569;">Email Address:</td>
-              <td style="padding: 10px 0; color: #0f172a;"><a href="mailto:${safeEmail}" style="color: #0e3b30; font-weight: bold;">${safeEmail}</a></td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-              <td style="padding: 10px 0; font-weight: bold; color: #475569;">Phone Number:</td>
-              <td style="padding: 10px 0; color: #0f172a;"><a href="tel:${safePhone}" style="color: #0e3b30; font-weight: bold;">${safePhone}</a></td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-              <td style="padding: 10px 0; font-weight: bold; color: #475569;">Room Selected:</td>
-              <td style="padding: 10px 0; color: #0f172a; font-weight: 600; color: #a67524;">${safeRoom}</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-              <td style="padding: 10px 0; font-weight: bold; color: #475569;">Number of Rooms:</td>
-              <td style="padding: 10px 0; color: #0f172a;">${safeRooms} Room(s)</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-              <td style="padding: 10px 0; font-weight: bold; color: #475569;">Number of Persons / Guests:</td>
-              <td style="padding: 10px 0; color: #0f172a; font-weight: 600;">${safeGuests} Guest(s)</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-              <td style="padding: 10px 0; font-weight: bold; color: #475569;">Check-In Date:</td>
-              <td style="padding: 10px 0; color: #0f172a;">${safeCheckIn}</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-              <td style="padding: 10px 0; font-weight: bold; color: #475569;">Check-Out Date:</td>
-              <td style="padding: 10px 0; color: #0f172a;">${safeCheckOut}</td>
-            </tr>
-          </table>
-
-          <div style="margin-top: 20px; padding: 16px; background-color: #ffffff; border-left: 4px solid #a67524; border-radius: 4px; border: 1px solid #e2e8f0; border-left-width: 4px;">
-            <p style="margin: 0 0 6px; font-weight: bold; color: #0e3b30;">Special Requests / Flight Details:</p>
-            <p style="margin: 0; color: #334155; line-height: 1.6; white-space: pre-wrap;">${safeMsg}</p>
+          <!-- Highlight Status Strip -->
+          <div style="background-color: #fdf6ec; border-bottom: 1px solid #f9e7cd; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <span style="font-size: 12px; color: #78350f; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Booking ID</span>
+              <p style="margin: 2px 0 0; font-size: 18px; font-weight: 800; color: #12463d; font-family: monospace;">${safeId}</p>
+            </div>
+            <div style="text-align: right;">
+              <span style="display: inline-block; background: #12463d; color: #dfa04e; font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;">Status: Pending Confirmation</span>
+              <p style="margin: 4px 0 0; font-size: 11px; color: #78350f;">Booked: ${formattedDate} (BST)</p>
+            </div>
           </div>
 
-          <div style="margin-top: 24px; text-align: center;">
-            <a href="mailto:${safeEmail}?subject=Reservation%20Confirmation%20-%20Hotel%20Shuktara%20[${safeId}]" style="display: inline-block; background: #0e3b30; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 14px; margin-right: 10px;">
-              Reply to Guest
-            </a>
-            <a href="tel:${safePhone}" style="display: inline-block; background: #a67524; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 14px;">
-              Call Guest Directly
-            </a>
-          </div>
-        </div>
+          <!-- Body Content -->
+          <div style="padding: 28px 24px;">
 
-        <div style="background-color: #061813; color: #94a3b8; padding: 14px 24px; text-align: center; font-size: 12px;">
-          Hotel Shuktara (Pvt.) Ltd. — HH 20/A, Indira Road, Sher-E-Bangla Nagar, Dhaka-1215
+            <!-- Section 1: Guest Information -->
+            <h3 style="margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #12463d; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
+              👤 Guest Details
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px;">
+              <tr style="background: #f8fafc;">
+                <td style="padding: 10px 14px; color: #64748b; font-weight: 600; width: 140px; border-radius: 6px 0 0 6px;">Full Name:</td>
+                <td style="padding: 10px 14px; color: #0f172a; font-weight: 700; font-size: 15px; border-radius: 0 6px 6px 0;">${safeName}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 14px; color: #64748b; font-weight: 600;">Phone Number:</td>
+                <td style="padding: 10px 14px; color: #0f172a;">
+                  <a href="tel:${safePhone}" style="color: #12463d; font-weight: 700; text-decoration: none; font-size: 15px;">📞 ${safePhone}</a>
+                  <a href="https://wa.me/${safePhone.replace(/[^0-9]/g, '')}" style="margin-left: 10px; display: inline-block; background: #25D366; color: #ffffff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px; text-decoration: none;">WhatsApp</a>
+                </td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td style="padding: 10px 14px; color: #64748b; font-weight: 600; border-radius: 6px 0 0 6px;">Email Address:</td>
+                <td style="padding: 10px 14px; color: #0f172a; border-radius: 0 6px 6px 0;">
+                  <a href="mailto:${safeEmail}" style="color: #12463d; font-weight: 600; text-decoration: underline;">${safeEmail}</a>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Section 2: Stay Details -->
+            <h3 style="margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #12463d; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
+              🏨 Stay & Room Information
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px;">
+              <tr style="background: #f8fafc;">
+                <td style="padding: 10px 14px; color: #64748b; font-weight: 600; width: 140px; border-radius: 6px 0 0 6px;">Room Category:</td>
+                <td style="padding: 10px 14px; color: #12463d; font-weight: 800; font-size: 15px; border-radius: 0 6px 6px 0;">${safeRoom}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 14px; color: #64748b; font-weight: 600;">Check-In Date:</td>
+                <td style="padding: 10px 14px; color: #0f172a; font-weight: 700;">📅 ${safeCheckIn}</td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td style="padding: 10px 14px; color: #64748b; font-weight: 600; border-radius: 6px 0 0 6px;">Check-Out Date:</td>
+                <td style="padding: 10px 14px; color: #0f172a; font-weight: 700; border-radius: 0 6px 6px 0;">📅 ${safeCheckOut}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 14px; color: #64748b; font-weight: 600;">Rooms & Guests:</td>
+                <td style="padding: 10px 14px; color: #0f172a; font-weight: 600;">
+                  ${safeRooms} Room(s) &bull; ${safeGuests} Guest(s)
+                </td>
+              </tr>
+            </table>
+
+            <!-- Section 3: Special Request -->
+            <h3 style="margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #12463d; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
+              💬 Special Requests & Notes
+            </h3>
+            <div style="background: #f8fafc; border-left: 4px solid #dfa04e; padding: 14px 18px; border-radius: 0 8px 8px 0; margin-bottom: 28px;">
+              <p style="margin: 0; color: #334155; font-size: 14px; line-height: 1.6; font-style: ${specialRequest ? 'normal' : 'italic'};">
+                ${safeMsg}
+              </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="text-align: center; padding-top: 8px;">
+              <a href="tel:${safePhone}" style="display: inline-block; background: #12463d; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; margin: 4px; box-shadow: 0 4px 12px rgba(18,70,61,0.25);">
+                📞 Call Guest Now
+              </a>
+              <a href="mailto:${safeEmail}?subject=Reservation%20Confirmed%20-%20Hotel%20Shuktara%20[${safeId}]" style="display: inline-block; background: #dfa04e; color: #091714; text-decoration: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; margin: 4px; box-shadow: 0 4px 12px rgba(223,160,78,0.3);">
+                ✉️ Reply via Email
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Footer -->
+          <div style="background-color: #091714; color: #94a3b8; padding: 18px 24px; text-align: center; font-size: 12px; border-top: 1px solid rgba(223,160,78,0.2);">
+            <p style="margin: 0 0 4px; color: #ffffff; font-weight: 600;">Hotel Shuktara (Pvt.) Ltd. Dhaka</p>
+            <p style="margin: 0; color: #64748b;">HH 20/A, Indira Road, Sher-E-Bangla Nagar, Dhaka-1215 &bull; Hotline: +880 1400-334422</p>
+          </div>
+
         </div>
-      </div>
+      </body>
+      </html>
     `;
 
     // ── Email 2: Guest Confirmation Receipt ────────────────────────
