@@ -6,8 +6,8 @@ import '../../styles/admin.css';
 const AdminLoginPage = () => {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('admin@hotelshuktara.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPwd, setShowPwd] = useState(false);
   const [remember, setRemember] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,6 @@ const AdminLoginPage = () => {
       navigate('/admin/rooms', { replace: true });
     }
   }, [isAuthenticated, navigate]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,11 +30,6 @@ const AdminLoginPage = () => {
     } else {
       setError(result.error || 'Login failed. Please try again.');
     }
-  };
-
-  const fillDemo = () => {
-    setEmail('admin@hotelshuktara.com');
-    setPassword('admin123');
   };
 
   return (
@@ -147,15 +141,6 @@ const AdminLoginPage = () => {
             )}
           </button>
         </form>
-
-        <button type="button" className="admin-demo-pill" onClick={fillDemo}>
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          Demo credentials already filled
-        </button>
       </div>
     </div>
   );

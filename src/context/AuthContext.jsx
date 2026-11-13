@@ -18,24 +18,14 @@ export const AuthProvider = ({ children }) => {
           name: session.user.user_metadata?.name || 'Admin',
         });
         setIsAuthenticated(true);
-        setLoading(false);
       } else {
-        // 2. Check cached demo session
-        const cachedDemo = localStorage.getItem('shuktara_admin_demo_user');
-        if (cachedDemo) {
-          try {
-            const parsed = JSON.parse(cachedDemo);
-            setUser(parsed);
-            setIsAuthenticated(true);
-          } catch {
-            localStorage.removeItem('shuktara_admin_demo_user');
-          }
-        }
-        setLoading(false);
+        setUser(null);
+        setIsAuthenticated(false);
       }
+      setLoading(false);
     });
 
-    // Listen for auth changes
+    // 2. Listen for Supabase auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         setUser({
@@ -44,7 +34,11 @@ export const AuthProvider = ({ children }) => {
           name: session.user.user_metadata?.name || 'Admin',
         });
         setIsAuthenticated(true);
+      } else {
+        setUser(null);
+        setIsAuthenticated(false);
       }
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -54,36 +48,25 @@ export const AuthProvider = ({ children }) => {
     const normalizedEmail = (email || '').trim().toLowerCase();
     const cleanPassword = (password || '').trim();
 
-    // 1. Demo Credentials Check (instant access, 0 console network errors)
-    if (
-      normalizedEmail === 'admin@hotelshuktara.com' &&
-      (cleanPassword === 'admin123' || cleanPassword === 'admin')
-    ) {
-      const demoUser = {
-        id: 'admin-hotel-shuktara',
-        email: 'admin@hotelshuktara.com',
-        name: 'Hotel Shuktara Admin',
-      };
-      localStorage.setItem('shuktara_admin_demo_user', JSON.stringify(demoUser));
-      setUser(demoUser);
-      setIsAuthenticated(true);
-      return { success: true, user: demoUser };
-    }
-
-    // 2. If custom credentials entered, authenticate via Supabase
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password: cleanPassword });
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: normalizedEmail,
+        password: cleanPassword,
+      });
+
       if (error) {
         return { success: false, error: error.message };
       }
+
       if (data?.user) {
-        setUser({
+        const authedUser = {
           id: data.user.id,
           email: data.user.email,
           name: data.user.user_metadata?.name || 'Admin',
-        });
+        };
+        setUser(authedUser);
         setIsAuthenticated(true);
-        return { success: true, user: data.user };
+        return { success: true, user: authedUser };
       }
     } catch (err) {
       return { success: false, error: err.message || 'Login failed' };
@@ -91,17 +74,16 @@ export const AuthProvider = ({ children }) => {
 
     return {
       success: false,
-      error: 'Invalid email or password. Use demo credentials: admin@hotelshuktara.com / admin123',
+      error: 'Invalid email or password.',
     };
   };
 
   const logout = async () => {
     try {
       await supabase.auth.signOut();
-    } catch {
-      // ignore
+    } catch (err) {
+      console.warn('Sign out error:', err);
     }
-    localStorage.removeItem('shuktara_admin_demo_user');
     setUser(null);
     setIsAuthenticated(false);
   };

@@ -191,26 +191,6 @@
   transform: scale(0.99);
 }
 
-.admin-demo-pill {
-  margin-top: 20px;
-  background: #f7fafc;
-  border: 1px solid #edf2f7;
-  border-radius: 30px;
-  padding: 8px 16px;
-  font-size: 0.8rem;
-  color: #4a5568;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
-}
-
-.admin-demo-pill:hover {
-  background: #edf2f7;
-  border-color: #cbd5e0;
-}
-
 /* ----------------------------------------------------
    2. Admin Layout & Sidebar (Mockup 3)
    ---------------------------------------------------- */
